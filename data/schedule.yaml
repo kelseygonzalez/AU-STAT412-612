@@ -1,292 +1,282 @@
 lessons:
-  - title: 'Evaluation and causation'
+  - title: 'Intro to R'
     header: True
-
-  - title: '<span class="content-title">Evaluation and the causal revolution</span>'
-    session: "Session 1"
-    date: "January 11–15"
-    date_start: "January 11"
-    date_end: "January 15"
-    content: "01-content"
-    example: "rstudio-tidyverse"
+    
+  - title: '<span class="content-title">Week 1: Getting Started</span>'
+    session: "Monday"
+    date: "January 21–24"
+    date_start: "January 21"	
+    date_end:	"January 24"
+    lecture: "01-lecture"
+    reading: "01-reading"
     bg: 1
     
-  - title: 'Weekly check-in 1'
-    date: "January 19"
-    assignment: "weekly-check-in"
-    bg: 1
 
-  - title: 'Problem set 1'
-    date: "January 19"
-    assignment: "01-problem-set"
-    bg: 1
-    bottomborder: True
-
-  - title: '<span class="content-title">Regression and inference</span>'
-    session: "Session 2"
-    date: "January 19–22"
-    date_start: "January 19"
-    date_end: "January 22"
-    content: "02-content"
+  - title: '<span class="content-title">Week 2: R & RMarkdown </span>'
+    session: "Monday"
+    date: "January 25-31"
+    date_start: "January 25"	
+    date_end:	"January 31"
+    lecture: "02-lecture"
     bg: 2
 
-  - title: 'Weekly check-in 2'
-    date: "January 25"
-    assignment: "weekly-check-in"
-    bg: 2
-
-  - title: 'Problem set 2'
-    date: "January 25"
-    assignment: "02-problem-set"
+  - title: 'Lab 1'
+    session: "Thursday"
+    date: "January 28"
+    lab: "01-lab"
+    reading: "01-reading"
     bg: 2
     bottomborder: True
 
-  - title: '<span class="content-title">Theories of change and logic models</span>'
-    session: "Session 3"
-    date: "January 25–29"
-    date_start: "January 25"
-    date_end: "January 29"
-    content: "03-content"
+
+  - title: '<span class="content-title"> Week 3: Visualization</span>'
+    session: "Monday"
+    date: "February 1-7"
+    date_start: "February 1"	
+    date_end:	"February 7"
+    lecture: "03-lecture"
     bg: 1
 
-  - title: 'Weekly check-in 3'
-    date: "February 1"
-    assignment: "weekly-check-in"
+  - title: 'Lab 2'
+    session: "Thursday"
+    date: "February 5"
+    lab: "02-lab"
+    reading: "02-reading"
     bg: 1
 
-  - title: "Evaluation: Background and theory"
-    date: "February 1"
-    assignment: "01-eval-background-theory"
-    bg: 1
-    bottomborder: True
-
-  - title: '<span class="content-title">Measurement and DAGs</span>'
-    session: "Session 4"
-    date: "February 1–5"
-    date_start: "February 1"
-    date_end: "February 5"
-    content: "04-content"
-    example: "dags"
-    bg: 2
-
-  - title: 'Weekly check-in 4'
-    date: "February 8"
-    assignment: "weekly-check-in"
-    bg: 2
-
-  - title: "Evaluation: Measurement"
-    date: "February 8"
-    assignment: "02-eval-measurement"
-    bg: 2
-    bottomborder: True
-
-  - title: '<span class="content-title">DAGs and potential outcomes</span>'
-    session: "Session 5"
-    date: "February 8–12"
-    date_start: "February 8"
-    date_end: "February 12"
-    content: "05-content"
-    example: "po-ate-cate"
-    bg: 1
-
-  - title: 'Weekly check-in 5'
-    date: "February 15"
-    assignment: "weekly-check-in"
-    bg: 1
-
-  - title: "Evaluation: Causal model"
-    date: "February 15"
-    assignment: "03-eval-dag"
+  - title: "Homework 1: Visualization and Markdown"
+    date: "February 7"
+    homework: "01-hw"
     bg: 1
     bottomborder: True
 
-  - title: '<span class="content-title">Threats to validity</span>'
-    session: "Session 6"
-    date: "February 15–19"
-    date_start: "February 15"
-    date_end: "February 19"
-    content: "06-content"
+  - title: '<span class="content-title">Week 4: Exploratory Data Analysis</span>'
+    session: "Monday"
+    date: "February 8-14"
+    date_start: "February 8"	
+    date_end:	"February 14"
+    lecture: "04-lecture"
     bg: 2
 
-  - title: 'Weekly check-in 6'
-    date: "February 22"
-    assignment: "weekly-check-in"
+  - title: 'Lab 3'
+    session: "Thursday"
+    date: "February 12"
+    lab: "03-lab"
+    reading: "03-reading"
+    bg: 2
+    bottomborder: True
+
+  - title: 'Data Wrangling'
+    header: True    
+
+  - title: '<span class="content-title">Week 5: Data Wrangling I</span>'
+    session: "Monday"
+    date: "February 15-21"
+    date_start: "February 15"	
+    date_end:	"February 21"
+    lecture: "05-lecture"
+    bg: 1
+
+  - title: 'Lab 4'
+    session: "Thursday"
+    date: "February 19"
+    lab: "04-lab"
+    reading: "04-reading"
+    bg: 1
+    bottomborder: True
+
+  - title: '<span class="content-title">Week 6: Data Wrangling II</span>'
+    session: "Monday"
+    date: "February 22-28"
+    date_start: "February 22"	
+    date_end:	"February 28"
+    lecture: "05-lecture"
     bg: 2
 
-  - title: "Evaluation: Threats to validity"
-    date: "February 22"
-    assignment: "04-eval-threats"
+
+  - title: 'Lab 5'
+    session: "Thursday"
+    date: "February 26"
+    lab: "05-lab"
+    reading: "05-reading"
+    bg: 2
+
+  - title: "Homework 2: Wrangling"
+    date: "February 28"
+    homework: "02-hw"
+    bg: 2
+
+  - title: "Final Project Group & Data"
+    date: "February 28"
+    homework: "01-final-project.Rmarkdown"
+    bg: 2
+    bottomborder: True    
+    
+  - title: '<span class="content-title">Week 7: Tidying data with tidyr</span>'
+    session: "Monday"
+    date: "March 1-7"
+    date_start: "March 1"	
+    date_end:	"March 7"
+    lecture: "07-lecture"
+    bg: 1
+
+  - title: 'Lab 6'
+    session: "Thursday"
+    date: "March 5"
+    lab: "06-lab"
+    reading: "06-reading"
+    bg: 1
+    bottomborder: True
+
+
+  - title: '<span class="content-title">Week 8: Wellness Week</span>'
+    date: "March 8-14"
+    date_start: "March 8"	
+    date_end:	"March 14"
     bg: 2
     
-  - title: '<i class="fas fa-star"></i> **Exam 1**'
-    date: "February 22–28"
-    date_start: "February 22"
-    date_end: "March 1"
-    bg: 3
+  - title: "Project Progress Report"
+    date: "March 14"
+    homework: "02-final-project.Rmarkdown"
+    bg: 2
+    bottomborder: True      
 
-  - title: 'Tools and methods'
-    header: True
-
-  - title: '<span class="content-title">Randomization and matching</span>'
-    session: "Session 7"
-    example: "matching-ipw"
-    date: "February 22–26"
-    date_start: "February 22"
-    date_end: "February 26"
-    content: "07-content"
+  - title: '<span class="content-title">Week 9: Relational Data and joins</span>'
+    session: "Monday"
+    date: "March 15-21"
+    date_start: "March 15"	
+    date_end:	"March 21"
+    lecture: "08-lecture"
     bg: 1
 
-  - title: 'Weekly check-in 7'
-    date: "March 1"
-    assignment: "weekly-check-in"
+  - title: 'Lab 7'
+    session: "Thursday"
+    date: "March 19"
+    lab: "07-lab"
+    reading: "07-reading"
     bg: 1
 
-  - title: "Problem set 3"
-    date: "March 1"
-    assignment: "03-problem-set"
+  - title: "Homework 3: Pivots & Joins"
+    date: "March 21"
+    homework: "03-hw"
     bg: 1
     bottomborder: True
 
-  - title: '<span class="content-title">Difference-in-differences I + II</span>'
-    session: "Sessions 8–9"
-    example: "diff-in-diff"
-    date: "March 1–12"
-    date_start: "March 12"
-    date_end: "March 12"
-    content: "08-content"
+  - title: 'Data Types'
+    header: True    
+
+  - title: '<span class="content-title"> Week 10: Working with strings with stringr</span>'
+    session: "Monday"
+    date: "March 22–28"
+    date_start: "March 22"	
+    date_end:	"March 28"
+    lecture: "10-lecture"
     bg: 2
 
-  - title: 'Weekly check-in 8'
-    date: "March 8"
-    assignment: "weekly-check-in"
-    bg: 2
-
-  - title: "Problem set 4"
-    date: "March 8"
-    assignment: "04-problem-set"
-    bg: 2
-
-  - title: 'Weekly check-in 9'
-    date: "March 22"
-    assignment: "weekly-check-in"
-    bg: 2
-
-  - title: "Problem set 5"
-    date: "March 22"
-    assignment: "05-problem-set"
+  - title: 'Lab 8'
+    session: "Thursday"
+    date: "March 26"
+    lab: "08-lab"
+    reading: "08-reading"
     bg: 2
     bottomborder: True
+
+
+  - title: '<span class="content-title">Week 11: Factors and Dates</span>'
+    session: "Monday"
+    date: "March 29–April 4"
+    date_start: "March 29"	
+    date_end:	"April 4"
+    lecture: "11-lecture"
+    bg: 1
+
+  - title: 'Lab 9'
+    session: "Thursday"
+    date: "April 2"
+    lab: "09-lab"
+    reading: "09-reading"
+    bg: 1
     
-  - title: '<span class="content-title">Regression discontinuity I</span>'
-    session: "Session 10"
-    date: "March 22–26"
-    date_start: "March 22"
-    date_end: "March 26"
-    content: "10-content"
-    example: "rdd"
-    bg: 1
-
-  - title: 'Weekly check-in 10'
-    date: "March 29"
-    assignment: "weekly-check-in"
-    bg: 1
-
-  - title: "Problem set 6"
-    date: "March 29"
-    assignment: "06-problem-set"
+  - title: "Homework 4: Data Types"
+    date: "April 4"
+    homework: "04-hw"
     bg: 1
     bottomborder: True
-
-  - title: '<span class="content-title">Instrumental variables I</span>'
-    session: "Session 11"
-    date: "March 29–April 2"
-    date_start: "March 29"
-    date_end: "April 2"
-    content: "11-content"
-    example: "iv"
+  
+  - title: 'Functional Programming'
+    header: True   
+    
+  - title: '<span class="content-title">Week 12: Functions & Control Flow</span>'
+    session: "Monday"
+    date: "April 5–11"
+    date_start: "April 5"	
+    date_end:	"April 11"
+    lecture: "12-lecture"
     bg: 2
 
-  - title: 'Weekly check-in 11'
-    date: "April 5"
-    assignment: "weekly-check-in"
-    bg: 2
-
-  - title: "Problem set 7"
-    date: "April 5"
-    assignment: "07-problem-set"
+  - title: 'Lab 10'
+    session: "Thursday"
+    date: "April 7"
+    lab: "10-lab"
+    reading: "10-reading"
     bg: 2
     bottomborder: True
 
-  - title: '<span class="content-title">Instrumental variables II + Regression discontinuity II</span>'
-    session: "Session 12"
-    date: "April 5–9"
-    date_start: "April 5"
-    date_end: "April 9"
-    content: "12-content"
-    example: "rdd-fuzzy"
-    bg: 1
 
-  - title: 'Weekly check-in 12'
-    date: "April 12"
-    assignment: "weekly-check-in"
-    bg: 1
-
-  - title: "Problem set 8"
-    date: "April 12"
-    assignment: "08-problem-set"
-    bg: 1
-
-  - title: '<i class="fas fa-star"></i> **Exam 2**'
+  - title: '<span class="content-title">Week 13: Loops & Iteration</span>'
+    session: "Monday"
     date: "April 12–18"
     date_start: "April 12"
     date_end: "April 18"
-    bg: 3
+    lecture: "13-lecture"
+    bg: 1
 
-  - title: 'Applied evaluation'
-    header: True
+  - title: 'Lab 11'
+    session: "Thursday"
+    date: "April 14"
+    lab: "11-lab"
+    reading: "11-reading"
+    bg: 1
 
-  - title: '<span class="content-title">Choosing and planning ethical evaluations</span>'
-    session: "Session 13"
-    date: "April 12–16"
-    date_start: "April 12"
-    date_end: "April 16"
-    content: "13-content"
-    example: "synthetic-data"
-    bg: 2
-
-  - title: 'Weekly check-in 13'
-    date: "April 19"
-    assignment: "weekly-check-in"
-    bg: 2
-
-  - title: "Problem set 9"
-    date: "April 19"
-    assignment: "09-problem-set"
-    bg: 2
+  - title: "Homework 5: Functions & Flow"
+    date: "April 18"
+    homework: "05-hw"
+    bg: 1
     bottomborder: True
 
-  - title: '<span class="content-title">Ethics, stories, and curiosity</span>'
-    session: "Session 14"
-    date: "April 19–23"
+  - title: 'Cushion Week'
+    header: True      
+
+  - title: '<span class="content-title"> Week 14a: Cushion Period</span>'
+    session: "Monday"
+    date: "April 19–22"
     date_start: "April 19"
-    date_end: "April 23"
-    content: "14-content"
-    bg: 1
-
-  - title: 'Weekly check-in 14'
-    date: "April 26"
-    assignment: "weekly-check-in"
-    bg: 1
-    bottomborder: True
-
-  - title: '<span class="content-title">Work session</span>'
-    date: "April 26"
+    date_end: "April 22"
     bg: 2
 
-  - title: '<span class="fake-header-table">Final</span>'
-    header: True
+  - title: 'Final Projects'
+    header: True      
 
-  - title: '<i class="fas fa-star"></i> **Final project due** (submit online by 11:59 PM)'
-    date: "May 3"
-    assignment: "final-project"
-    bg: 3
+  - title: '<span class="content-title"> Week 14b: Project Presentations</span>'
+    session: "Thursday"
+    date: "April 22–26"
+    date_start: "April 22"
+    date_end: "April 26"
+    bg: 2
+
+  - title: '<i class="fas fa-star"></i> **Final Project Report**'
+    date: "April 22"
+    homework: "03-final-project.Rmarkdown"
+    bg: 2
+    bottomborder: True  
+    
+  - title: '<i class="fas fa-star"></i> **Final Project Presentation**'
+    date: "April 22"
+    homework: "04-final-project.Rmarkdown"
+    bg: 2
+    bottomborder: True  
+    
+  - title: "Presentations continued"
+    session: "Monday"
+    date: "April 26"
+    bg: 2

@@ -84,7 +84,7 @@ taxonomies:
   publication_type: publication_types
   tag: tags
 
-theme: wowchemy-hugo-modules
+theme: "wowchemy-hugo-modules"
 
 module:
   imports:

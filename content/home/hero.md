@@ -5,22 +5,22 @@ headless: true
 active: true
 weight: 10
 
-title: "Program Evaluation for Public Service"
+title: "Statistical Programming in R"
 
 # Hero image (optional). Enter filename of an image in the `static/media/` folder.
-hero_media: eval_hires.png
+hero_media: hex-tidyverse.png
 
 design:
   background:
     # Background gradient
-    gradient_start: '#A52C60'
-    gradient_end: '#CF4446'
+    gradient_start: '#1b3a4b'
+    gradient_end: '#3e1f47'
 
     # Text color (true=light or false=dark).
     text_color_light: true
 
 cta_note:
-  label: PMAP 8141 • Spring 2021<br>Andrew Young School of Policy Studies<br>Georgia State University
+  label: STAT 412/612 • Spring 2021<br>Department of Math & Statistics<br>College of Arts & Sciences<br>American University
 ---
 
-**Combine research design, causal inference, and econometric tools to measure the effects of social programs**
+**Learn the basics of programming using the open source statistical program R, an interactive programming language for data science.**

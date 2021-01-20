@@ -11,16 +11,28 @@
             <td style="width:56%;text-align:left">{{ .title | markdownify }}</td>
 
             {{- if .header }}
-
-            <td style="width:8%;text-align:center" class="mid-table-header">Content</td>
-            <td style="width:8%;text-align:center" class="mid-table-header">Example</td>
-            <td style="width:8%;text-align:center" class="mid-table-header">Assignment</td>
+            
+            <td style="width:8%;text-align:center" class="mid-table-header">Lecture</td>
+            <td style="width:8%;text-align:center" class="mid-table-header">Reading</td>
+            <td style="width:8%;text-align:center" class="mid-table-header">Lab</td>
+            <td style="width:8%;text-align:center" class="mid-table-header">Homework</td>
 
             {{- else }}
-
-            {{- if .content }}
+            
+            {{- if .lecture }}
             <td align="center" style="width:10%;text-align:center"><a
-                    href="{{ .Site.baseurl }}/content/{{ .content }}/">
+                    href="{{ .Site.baseurl }}/material/lectures/{{ .lecture }}/">
+                    <i class="fas fa-users fa-lg"></i></a></td>
+            {{- else }}
+            <td align="center" style="width:10%;text-align:center">
+                <font color="f1f1f1">
+                    <i class="fas fa-users fa-lg"></i></font>
+            </td>
+            {{- end }}
+
+            {{- if .reading }}
+            <td align="center" style="width:10%;text-align:center"><a
+                    href="{{ .Site.baseurl }}/material/readings/{{ .reading }}/">
                     <i class="fas fa-book-reader fa-lg"></i></a></td>
             {{- else }}
             <td align="center" style="width:10%;text-align:center">
@@ -29,9 +41,9 @@
             </td>
             {{- end }}
 
-            {{- if .example }}
+            {{- if .lab }}
             <td align="center" style="width:10%;text-align:center"><a
-                    href="{{ .Site.baseurl }}/example/{{ .example }}/">
+                    href="{{ .Site.baseurl }}/assignment/lab/{{ .lab }}/">
                     <i class="fas fa-laptop-code fa-lg"></i></a></td>
             {{- else }}
             <td align="center" style="width:10%;text-align:center">
@@ -40,9 +52,9 @@
             </td>
             {{- end }}
 
-            {{- if .assignment }}
+            {{- if .homework }}
             <td align="center" style="width:10%;text-align:center"><a
-                    href="{{ .Site.baseurl }}/assignment/{{ .assignment }}/">
+                    href="{{ .Site.baseurl }}/assignment/hw/{{ .homework }}/">
                     <i class="fas fa-pencil-ruler fa-lg"></i></a></td>
             {{- else }}
             <td align="center" style="width:10%;text-align:center">

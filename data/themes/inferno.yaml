@@ -5,18 +5,18 @@ name: "Inferno"
 light: true
 
 # Primary
-primary: "#CF4446"
+primary: "#1b3a4b"
 
 # Links
-link: "#CF4446"
+link: "#1b3a4b"
 link_hover: "#F6D645"
 
 # Menu
 menu_primary: "#fff"
-menu_text: "#CF4446"
-menu_text_active: "#FB9E07"
+menu_text: "#1b3a4b"
+menu_text_active: "#3e1f47"
 menu_title: "#494949"
 
 # Home sections
-home_section_odd: "rgb(255, 255, 255)"
-home_section_even: "rgb(247, 247, 247)"
+home_section_odd: "#f7f1f9"
+home_section_even: "#dbe5e6"

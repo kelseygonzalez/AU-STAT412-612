@@ -18,93 +18,40 @@ library(pander)
 
 `r blogdown::shortcode("courseinfo")`
 
-## Course objectives
+## Course Description
 
-By the end of this course, you (1) will be literate in the language of causal inference, (2) will communicate evaluation outcomes clearly, and (3) will understand the ethics and limits of data analysis by designing, critiquing, coding, and running rigorous, valid, and feasible evaluations of public sector programs focused on society’s most pressing problems.
+Purpose: Develop your *competence*, *creativity*, and *confidence* as a data scientist working with R.
 
-Specifically, you'll be able to:
+Classes cover multiple data science methods focused on collecting, organizing, and analyzing data to build models and communicate analytical results in a reproducible manner. You will use R tidyverse packages to  acquire, clean, and tidy data; develop numerical and graphical displays;  write basic functions, and present/communicate your process, findings and recommendations.  For the final project, you will work in a small group to complete an analysis of complex data and communicate the elements of the analysis and the results in writing and through an oral presentation.  
 
-- Explain the philosophy of causation
-- Identify and diagram program logic models
-- Outline theories of change with directed acyclic graphs (DAGs)
-- Summarize key threats to causal inference, identify these threats in evaluations, and mitigate these threats with research design
-- Develop rigorous and valid statistical measures
-- Run statistical models
-- Explain the theory, research design, methods, and results of evaluations to all types of stakeholders, from highly trained econometricians to the general public
-- Share your analyses and data with the public
-- Identify ethical issues and limits in data science and program evaluation
-- Become curious and confident in consuming and producing evaluations
+This course provides experience in the use of tidyverse packages `ggplot2`, `dplyr`, `tidyr`, `stringr`, `readr`, `forcats`, and `lubridate`, and the use of R Markdown and RStudio. It also assumes some basic knowledge of statistical analysis. 
 
 
-## Course philosophy
+## Course Objectives
 
-Classical statistics classes spend substantial time covering probability theory, null hypothesis testing, and other statistical tests first developed hundreds of years ago. Some classes don't use software or actual real data and instead live in the world of mathematical proofs. They can be math-heavy and full of often unintuitive concepts and equations.
+Upon completing this course, students will be able to:
 
-In this class, we will take the opposite approach. We *begin* with data and learn how to tidy, wrangle, manipulate, and visualize it with code. Later in the semester we'll turn to the powerful toolbox of causal inference approaches, but continue to keep the focus on data as we do so.
+1. Develop a regular workflow to execute reproducible research and analysis using R and R Studio and communicate the results and implications to others.
+1. Install and use R packages for specific applications
+1. Import data from a variety of external sources
+1. Use tidyverse capabilities to transform data to support analysis in R 
+1. Use tidyverse graphical tools to visualize and understand data
+1. Write basic R functions using control and data structures
+1. Employ R functions to conduct statistical analysis and inference
+1. Generate research or analytical reports and presentations using R Markdown and basic LaTeX capabilities.
+1. Deliver an oral presentation describing your data science analysis to an audience.
 
-In other words, there's way less of this:
+## Course Prerequisites
+STAT 412 requires two mathematics or statistics courses at or above the 200-level as a prerequisite. 
+STAT 612 requires successful completion of,  or concurrent enrollment in, STAT 614: Statistical Methods.
 
-$$
-f(x) = \dfrac{1}{\sqrt{2\pi}} e^{-\frac12 x^2}
-$$
-
-And way more of this:
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">summary_monthly_temp <span style="color:#f92672">&lt;-</span> weather <span style="color:#f92672">%&gt;%</span>
-  <span style="color:#a6e22e">group_by</span>(month) <span style="color:#f92672">%&gt;%</span>
-  <span style="color:#a6e22e">summarize</span>(mean <span style="color:#f92672">=</span> <span style="color:#a6e22e">mean</span>(temp),
-            std_dev <span style="color:#f92672">=</span> <span style="color:#a6e22e">sd</span>(temp))
-</code></pre></div>
-
-Over the last decade there has been a revolution in statistical and scientific computing. Open source languages like R and Python have overtaken older (and expensive!) corporate software packages like SAS and SPSS, and there are now thousands of books and blog posts and other online resources with excellent tutorials about how to analyze pretty much any kind of data.
-
-This class will expose you to [R](https://cran.r-project.org/)—one of the most popular, sought-after, and in-demand statistical programming languages. Armed with the foundation of R skills you'll learn in this class, you'll know enough to be able to find how to analyze any sort of data-based question in the future.
-
-## Important pep talk!
-
-I *promise* you can succeed in this class.
-
-Learning R can be difficult at first—it's like learning a new language, just like Spanish, French, or Chinese. Hadley Wickham—the chief data scientist at RStudio and the author of some amazing R packages you'll be using like `ggplot2`—[made this wise observation](https://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/):
-
-> It’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.
-
-Even experienced programmers and evaluators find themselves bashing their heads against seemingly intractable errors. If you're finding yourself taking way too long hitting your head against a wall and not understanding, take a break, talk to classmates, e-mail me, etc.
-
-```{r echo=FALSE, out.width="60%"}
-# https://twitter.com/allison_horst/status/1213275783675822080
-knitr::include_graphics("/img/syllabus/hosrt_error_tweet.png", error = FALSE)
-```
-
-[![Alison Horst: Gator error](/img/syllabus/gator_error.jpg)](https://twitter.com/allison_horst/status/1213275783675822080)
-
-
-## Course materials
-
-Most of the readings in this class are free.
-
-### Books
-
-We will only use one physical textbook. There are three official textbooks for the class:
-
-- Paul J. Gertler et al., *Impact Evaluation in Practice*, 2nd ed. (Inter-American Development Bank; World Bank, 2016), <https://openknowledge.worldbank.org/handle/10986/25030.> ([**Free!**](https://openknowledge.worldbank.org/handle/10986/25030))
-- Scott Cunningham, Causal Inference: The Mixtape (New Haven, CT: Yale University Press, 2021), <https://mixtape.scunning.com/>. ([**Also free(!)**](https://mixtape.scunning.com/), but there's also a print version for <span>$35</span> that you might want to get for reference after the class is over)
-- Joshua D. Angrist and Jörn-Steffen Pischke, Mastering ’Metrics: The Path from Cause to Effect (Princeton, NJ: Princeton University Press, 2015). (**<span>$25</span> used or <span>$30</span> new at [Amazon](https://www.amazon.com/Mastering-Metrics-Path-Cause-Effect/dp/0691152845/))**
-
-The World Bank's *Impact Evaluation in Practice* will be our main textbook. It's written at a general, easy-to-understand level with relatively minimal math. *Mastering 'Metrics* goes into more depth about the mechanics of different causal inference approaches and has a bit more math, but it's still fairly accessible. *Causal Inference: The Mixtape* has even more math, but hopefully not an excessively terrifying amount.
-
-*You do not need to understand all the equations and notation.* If your eyes start to gloss over the Greek letters and subscripts, it's okay. Try to learn them, but don't stress out about it too much.
-
-### Articles, book chapters, and other materials
-
-There will also occasionally be additional articles and videos to read and watch. When this happens, links to these other resources will be included on the reading page for that week.
-
-### R and RStudio
+## Computing Environment
+* Access to a computer with an operating system capable of running R 4.0
+* Access to reliable internet capable of supporting Zoom video sessions
 
 You will do all of your analysis with the open source (and free!) programming language [R](https://cran.r-project.org/). You will use [RStudio](https://www.rstudio.com/) as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.
 
 R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free [RStudio.cloud](http://rstudio.cloud/) service, which lets you run a full instance of RStudio in your web browser. This means you won't have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.
-
-RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets or more complicated analysis. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud. This isn't necessary, but it's helpful.
 
 You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/resource/install/)
 
@@ -118,23 +65,29 @@ If you use Twitter, post R-related questions and content with [#rstats](https://
 
 Searching for help with R on Google can sometimes be tricky because the program name is, um, a single letter. Google is generally smart enough to figure out what you mean when you search for "r scatterplot", but if it does struggle, try searching for "rstats" instead (e.g. "rstats scatterplot").
 
-Additionally, we have a class chatroom at [Slack](https://gsuevalf2020.slack.com) where anyone in the class can ask questions and anyone can answer. **I will monitor Slack regularly and will respond quickly.** (It's one of the rare Slack workspaces where I actually have notifications enabled!) Ask questions about the readings, assignments, and project. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
-
-
-## Course schedule
-
-We have no regularly scheduled meeting times. There may be an occasional live Webex-streamed (and recorded for later) lab or two during the semester, if we can coordinate a time.
-
-Instead, 100% of the class content is asynchronous. You can do the readings and watch the videos on your own schedule at whatever time works best for you. Many of you work full time and you have childcare and parental care responsibilities, leaving you with only evenings for coursework. I've designed this asynchronous system with *you specifically* in mind. I also can only really do teaching work at night when my kids are in bed—I recorded all these videos between like 10 PM and 2 AM. We're all in similar pandemic boats.
-
-Each session has a set of readings and an accompanying lecture. I would **strongly** recommend working through the readings before watching the lecture, but you can do it in whatever order you want.
-
-
-## Course policies
+## Expectations of this Course
 
 **Be nice. Be honest. Don't cheat.**
 
-We will also follow [Georgia State's Code of Conduct](https://codeofconduct.gsu.edu/).
+#### Students are expected to:
+
+* Attend all class meetings. Regular attendance contributes greatly to your performance in this course. If on the rare occasion you have to miss class, you are responsible for any materials and learning outcomes from missed class. Please obtain and review the materials from the missed class BEFORE the next class meeting.
+* Engage online with instructor and peers; Ask Questions and volunteer answers to questions and to show your code during class.
+Respond to emails within 2 days
+* Review assignments early.  Do not wait until the day before the assignments are due to assess their difficulty. As class gets closer my ability to help troubleshoot is reduced. 
+* Use the packages and methods taught in this class. There are usually multiple ways to solve a problem. Creativity is encouraged; excessive use of Base R or other packages is not and will be penalized in assignment solutions. No assignment will require the use of a package not discussed in this class or in the notes.
+* Search for solutions. Data scientists must learn to discover solutions for themselves.  You may have to research (e.g., use Google, stackoverflow, etc.) to do your assignments.  The course books and lectures will NOT provide every single detail you need to know to do an assignment. 
+* Ask Questions after a reasonable amount of troubleshooting and searching. Do not spend hours on a single issue with your code. It is okay to ask me or others about an issue as long as you do not just copy someone else's solution. All work must be your own.  
+* Submit assignments by the corresponding deadline. I will accept late or redone assignments but there will be a scoring penalty.
+
+We will also follow [American University's Code of Conduct](https://www.american.edu/policies/students/student-conduct-code.cfm).
+
+Violation of [AU's Academic Integrity Code](https://www.american.edu/academics/integrity/code.cfm) will result in an F in the course and possible disciplinary action.^[So seriously, just don't cheat or plagiarize!] All violations will be formally reported to the Dean of Students.
+
+#### The instructor will:
+
+* respond to emails within 24 hours
+* grade assignments within 4 days of the assignment deadline.
 
 This syllabus reflects a plan for the semester. Deviations may become necessary as the semester progresses.
 
@@ -146,59 +99,50 @@ Please watch this video:
 
 Student hours are set times dedicated to all of you (most professors call these "office hours"; I don't^[There's fairly widespread misunderstanding about what office hours actually are! [Many students often think that they are the times I *shouldn't* be disturbed](https://www.chronicle.com/article/Can-This-Man-Change-How-Elite/245714/), which is the exact opposite of what they're for!]). This means that I will be ~~in my office~~ at home (wistfully) waiting for you to ~~come by~~ talk to me remotely with whatever questions you have. This is the best and easiest way to find me and the best chance for discussing class material and concerns.
 
-Because of the pandemic, we cannot meet in person. I can meet you online via Webex. [Make an appointment with me here](https://calendly.com/andrewheiss/), and then use this link to talk to me during student hours: <https://gsumeetings.webex.com/meet/aheiss>. You can also find me through e-mail and Slack.
+Because of the pandemic, we cannot meet in person. I can meet you online via Zoom [Make an appointment with me here](https://calendly.com/kelseygonzalez/office-hours). You can also find me through e-mail and on Canvas.
 
-### Learning during a pandemic
+### Zoom
+We will be operating in a distributed online classroom this semester. While much of the material will be the same as in a face-to-face classroom several special considerations to maximize the learning opportunities for each student are discussed below.
 
-Life absolutely sucks right now. None of us is really okay. **We're all just pretending.**
+#### Use of Zoom Video Conference Capabilities
 
-You most likely know people who have lost their jobs, have tested positive for COVID-19, have been hospitalized, or perhaps have even died. You all have increased (or possibly decreased) work responsibilities and increased family care responsibilities—you might be caring for extra people (young and/or old!) right now, and you are likely facing uncertain job prospects (or have been laid off!).
+We will use the Zoom video conference tool for all class meetings and office hours. To have full access to the capabilities, sign into Zoom before each class using your @american.edu email address (Not your @student.american.edu address).  
 
-**I'm fully committed to making sure that you learn everything you were hoping to learn from this class!** I will make whatever accommodations I can to help you finish your exercises, do well on your projects, and learn and understand the class material. Under ordinary conditions, I am flexible and lenient with grading and course expectations when students face difficult challenges. Under pandemic conditions, that flexibility and leniency is intensified.
+Use the [Zoom Test Meeting Room](https://zoom.us/test) to test your connection.
 
-If you tell me you're having trouble, I will not judge you or think less of you. I hope you'll extend me the same grace.
+There are multiple links below where you can access Zoom student tutorials to learn about the tool, how to access your meeting room, and share your screen.
 
-You *never* owe me personal information about your health (mental or physical). You are *always* welcome to talk to me about things that you're going through, though. If I can't help you, I usually know somebody who can.
+#### Recording
 
-If you need extra help, or if you need more time with something, or if you feel like you're behind or not understanding everything, **do not suffer in silence!** Talk to me! I will work with you. **I promise.**
+* I will be recording most of each class period using Zoom. The recordings will be available the day after class.  
+Recordings may be used for other sections of this course.
+* I will usually announce when I start and when I stop recording. During recording you may ask questions at any time, but they will be recorded. I will also ask students to share their screens during labs or exercises which may be recorded. I also encourage questions before the recordings start and after they stop as well in case you have a question but don’t want to be recorded.
 
-*Please* sign up for a time to meet with me during student hours at <https://calendly.com/andrewheiss/>. I'm also available through e-mail and Slack. I've enabled notifications on my Slack account, so I'll see your messages quickly!
+*Recording Policies*
 
-I want you to learn lots of things from this class, but I primarily want you to stay healthy, balanced, and grounded during this crisis.
+Faculty may record classroom lectures or discussions for pedagogical use, future student reference, or to meet the accommodation needs of students with a documented disability. These recordings are limited to personal use and may not be distributed, shared, sold, or posted on social media outlets without the written permission of faculty.
 
-### Late work
+Students are not permitted to make visual or audio recordings, including live streaming, of classroom lectures or any class related content, using any type of recording devices (e.g., smart phone, computer, digital recorder, etc.) unless prior permission from the instructor and all students in the class. If permission is granted, personal use and sharing of recordings and any electronic copies of course materials (e.g., digital handouts, formulas, lecture notes and any classroom discussions online or otherwise) is limited to the personal use of students registered in the course and for educational purposes only, even after the end of the course. Exceptions will be made for students who present a signed Letter of Accommodation from the Academic Support and Access Center.
+Unauthorized downloading, file sharing, distribution of any part of a recorded lecture or course materials, solutions, or using information for purposes other than the student’s own learning may be deemed a violation of American University’s Student Conduct Code (Links to an external site.) and subject to disciplinary action (see Student Conduct Code VI. Prohibited Conduct).
+Using the Camera
 
-You will lose 1 point per day for each day a problem set is late. This is designed to not be a huge penalty (3 days late = 27/30 points on a problem set that gets a ✓), but instead is a commitment device to help you stay on schedule.
+I will keep my camera on during class. I encourage you to turn yours on when you are speaking, but you are not required to do so. If you choose to use your camera, please check your background to ensure it is appropriate for sharing with others.
 
-### Counseling and Psychological Services (CPS)
+#### Microphones
 
-Life at GSU can be complicated and challenging (especially during a pandemic!). You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. [Counseling and Psychological Services (CPS)](https://education.gsu.edu/cps/) provides free, *confidential* support for students who are struggling with mental health and emotional challenges. The CPS office is staffed by professional psychologists who are attuned to the needs of all types of college and professional students. Please do not hesitate to contact CPS for assistance—getting help is a smart and courageous thing to do.
+Please keep your microphone on mute unless you are speaking. If you forget, I will probably mute it for you to reduce background noise and potential audio feedback (if you are using your computer speakers). However, you can unmute to ask a question at any time or “raise your hand”.
 
-### Basic needs security
+#### Chat Pane
 
-If you have difficulty affording groceries or accessing sufficient food to eat every day, or if you lack a safe and stable place to live, and you believe this may affect your performance in this course, please contact the [Dean of Students](https://deanofstudents.gsu.edu/) for support. They can provide a host of services including free groceries from the [Panther Pantry](https://nutrition.gsu.edu/panther-pantry/) and assisting with homelessness with the [Embark Network](https://deanofstudents.gsu.edu/student-assistance/embark/). Additionally, please talk to me if you are comfortable in doing so. This will enable me to provide any resources that I might possess.
+I will try to check the chat as I'm teaching, but if I miss something feel free to speak up or raise your hand.
 
-### Lauren's Promise
+##### Presenter Privileges
 
-**I will listen and believe you if someone is threatening you.**
+All students will have presenter privileges. This means you can share your screen with the group. That is often helpful to show a solution to an exercise or lab or help debug some code. It is likely that you will share you screen more than once with the course during the semester - practice this and make sure your desktop is appropriate. 
 
-Lauren McCluskey, a 21-year-old honors student athlete, [was murdered on October 22, 2018 by a man she briefly dated on the University of Utah campus](https://www.sltrib.com/opinion/commentary/2019/02/10/commentary-failing-lauren/). We must all take action to ensure that this never happens again.
+##### Breakout Rooms
 
-If you are in immediate danger, call 911 or GSU police (404-413-3333).
-
-If you are experiencing sexual assault, domestic violence, or stalking, please report it to me and I will connect you to resources or call [GSU's Counseling and Psychological Services](https://counselingcenter.gsu.edu/crisis-services/concern-self/immediate-help/) (404-413-1640).
-
-Any form of sexual harassment or violence will not be excused or tolerated at Georgia State. GSU has instituted procedures to respond to violations of these laws and standards, programs aimed at the prevention of such conduct, and intervention on behalf of the victims. Georgia State University Police officers will treat victims of sexual assault, domestic violence, and stalking with respect and dignity. Advocates on campus and in the community can help with victims' physical and emotional health, reporting options, and academic concerns.
-
-### Academic honesty
-
-Violation of [GSU's Policy on Academic Honesty](https://deanofstudents.gsu.edu/faculty-staff-resources/academic-honesty/) will result in an F in the course and possible disciplinary action.^[So seriously, just don't cheat or plagiarize!] All violations will be formally reported to the Dean of Students.
-
-### Special needs
-
-Students who wish to request accommodation for a disability may do so by registering with the [Office of Disability Services](https://disability.gsu.edu/). Students may only be accommodated upon issuance by the Office of Disability Services of a signed [Accommodation Plan](https://disability.gsu.edu/services/how-to-register/) and are responsible for providing a copy of that plan to instructors of all classes in which accommodations are sought.
-
-Students with special needs should then make an appointment with me during the first week of class to discuss any accommodations that need to be made.
+Zoom allows me to create breakout rooms where the class is divided into groups, each in their “own room” for collaboration. We will do this for labs and potentially for project meetings.  I can also create an individual breakout room to troubleshoot an issue with your code.
 
 
 ## Assignments and grades
@@ -208,24 +152,21 @@ You can find descriptions for all the assignments on the [assignments page](/ass
 ```{r assignments-grades, include=FALSE}
 assignments <- tribble(
   ~Points,   ~Assignment,
-  10 * 14,   "Weekly check-ins (14 × 10)",
-  8 * 30,    "Problem sets (8 × 30)",
-  4 * 30,    "Evaluation assignments (4 × 30)",
-  100,       "Exam 1",
-  100,       "Exam 2",
-  200,       "Final project"
+  (10/12) * 12,    "Labs",
+  8 * 5,    "Assignments",
+  50,       "Final project"
 ) %>%
   mutate(Percent = Points / sum(Points),
          Percent = scales::percent(Percent))
 
 grading <- tribble(
   ~Grade, ~Range, ~Grade1, ~Range1,
-  "A",  "93–100%", "C",  "73–76%",
-  "A−", "90–92%", "C−", "70–72%",
-  "B+", "87–89%", "D+", "67–69%",
-  "B",  "83–86%", "D",  "63–66%",
-  "B−", "80–82%", "D−", "60–62%",
-  "C+", "77–79%", "F",  "< 60%"
+  "A",  "93 to 100", "C+", "77 to 79.99",
+  "A−", "90 to 92.99", "C",  "70 to 76.99",
+  "B+", "87 to 89.99", "D", "60 to 69",
+  "B",  "83 to 86.99", "F",  "< 59.99",
+  "B−", "80 to 82.99", "", ""
+   
 )
 ```
 
@@ -253,8 +194,47 @@ grading %>%
 <div>
 
 
-## Star Wars
 
-Once you have read this entire syllabus and [the assignments page](/assignment/), please [click here](mailto:aheiss@gsu.edu) and e-mail me a picture of a *cute* Star Wars character.^[Baby Yoda, Babu Frik, porgs, etc. are all super fair game.] Brownie points if it's animated.
 
-`r blogdown::shortcode("figure", src = "https://media.giphy.com/media/j4q4h9uWKWwnYT1k3Z/giphy.gif", alt = "Baby Yoda with IG-11", lightbox = "false")`
+## Important pep talk!
+
+I *promise* you can succeed in this class.
+
+Learning R can be difficult at first—it's like learning a new language, just like Spanish, French, or Chinese. Hadley Wickham—the chief data scientist at RStudio and the author of some amazing R packages you'll be using like `ggplot2`—[made this wise observation](https://r-posts.com/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/):
+
+> It’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.
+
+Even experienced programmers and evaluators find themselves bashing their heads against seemingly intractable errors. If you're finding yourself taking way too long hitting your head against a wall and not understanding, take a break, talk to classmates, e-mail me, etc.
+
+```{r echo=FALSE, out.width="60%"}
+# https://twitter.com/allison_horst/status/1213275783675822080
+knitr::include_graphics("/img/syllabus/hosrt_error_tweet.png", error = FALSE)
+```
+
+[![Alison Horst: Gator error](/img/syllabus/gator_error.jpg)](https://twitter.com/allison_horst/status/1213275783675822080)
+
+
+## Mental Health
+
+### Learning during a pandemic
+
+Life absolutely sucks right now. None of us is really okay. **We're all just pretending.**
+
+You most likely know people who have lost their jobs, have tested positive for COVID-19, have been hospitalized, or perhaps have even died. You all have increased (or possibly decreased) work responsibilities and increased family care responsibilities—you might be caring for extra people (young and/or old!) right now, and you are likely facing uncertain job prospects (or have been laid off!).
+
+**I'm fully committed to making sure that you learn everything you were hoping to learn from this class!** I will make whatever accommodations I can to help you finish your exercises, do well on your projects, and learn and understand the class material. Under ordinary conditions, I am flexible and lenient with grading and course expectations when students face difficult challenges. Under pandemic conditions, that flexibility and leniency is intensified.
+
+If you tell me you're having trouble, I will not judge you or think less of you. I hope you'll extend me the same grace.
+
+*Please* sign up for a time to meet with me during student hours at <https://calendly.com/kelseygonzalez/>. I'm also available through e-mail. I want you to learn lots of things from this class, but I primarily want you to stay healthy, balanced, and grounded during this crisis.
+
+
+### Counseling Services
+
+Life at GSU can be complicated and challenging (especially during a pandemic!). You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. [Student Counseling Center](https://www.american.edu/ocl/counseling/) provides *confidential* support for students who are struggling with mental health and emotional challenges. Getting help is a smart and courageous thing to do.
+
+
+
+### Special needs
+
+Students who wish to request accommodation for a disability may do so by registering with the [Provost's office](https://www.american.edu/provost/academic-access/accommodations.cfm). Students with special needs should then make an appointment with me during the first week of class to discuss any accommodations that need to be made. However, this course has been designed to be maximally inclusive and will hopefully accomodate many different abilities.  

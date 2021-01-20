@@ -1,0 +1,24 @@
+---
+title: "Problem set 2"
+linktitle: "Problem set 2"
+date: "2021-01-25"
+due_date: "2021-01-25"
+due_time: "11:59 PM"
+menu:
+  assignment:
+    parent: Readings
+    weight: 2
+type: docs
+toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r save-penguins, include=FALSE}
+readr::write_csv(tidyr::drop_na(palmerpenguins::penguins, body_mass_g),
+                 here::here("static", "projects", "problem-set-2", 
+                            "data", "penguins.csv"))
+```
+
+* Read [R4DS Chapter 1](https://r4ds.had.co.nz/introduction.html) 
+* Read [R4DS Chapter 4](https://r4ds.had.co.nz/workflow-basics.html) 

@@ -8,47 +8,31 @@ main:
   - name: Content
     url: /content/
     weight: 3
-  - name: Examples
-    url: /example/
-    weight: 5
   - name: Assignments
     url: /assignment/
-    weight: 4
+    weight: 6
   - name: Resources
     url: /resource/
-    weight: 6
-  - name: '<i class="fab fa-slack"></i>'
-    url: "https://gsuevalsp2021.slack.com"
     weight: 7
-  - name: RStudio.cloud
-    url: https://rstudio.cloud/
-    weight: 8
 
-content:
+Materials:
   - name: Overview
     weight: 1
-  - name: Course content
+  - name: Lectures
     weight: 2
-example:
-  - name: Overview
-    weight: 1
-  - name: Simulated data
+  - name: Readings
     weight: 2
-  - name: Examples
-    weight: 3
 assignment:
   - name: Assignments
     weight: 1
-  - name: Other projects
+  - name: Final Project
     weight: 2
-  - name: Problem sets
-    weight: 3
-  - name: Evaluation
+  - name: Lab
     weight: 4
+  - name: Homework
+    weight: 5
 resource:
   - name: Resources
     weight: 1
-  - name: Study guides
-    weight: 2
   - name: Guides
-    weight: 3
+    weight: 2

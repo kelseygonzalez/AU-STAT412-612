@@ -23,7 +23,7 @@ font: "barlow"
 
 # Choose a font size.
 # Sizes: XS (extra small), S (small), M (medium), L (large - DEFAULT), XL (extra large)
-font_size: "L"
+font_size: "M"
 
 
 ############################
@@ -38,7 +38,7 @@ font_size: "L"
 site_type: "Course"
 
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
-description: "Use modern statistical and data scientific tools to measure causal effects and evaluate public policy"
+description: "Learn the basics of programming using the open source statistical program R, an interactive programming language for data science."
 
 
 ############################
@@ -96,37 +96,34 @@ show_related:
 ## Additionally, for organizations, these details may be used to enrich search engine results.
 ############################
 
-author: Andrew Heiss
+author: Kelsey Gonzalez
 
 instructor: 
-  name: Dr. Andrew Heiss
-  email: aheiss@gsu.edu
-  url: "https://www.andrewheiss.com"
-  twitter: andrewheiss
-  github: andrewheiss
-  office: "357 Andrew Young School"
+  name: Kelsey Gonzalez
+  email: KelseyGonzalez@American.edu
+  url: "https://kelseygonzalez.github.io"
+  twitter: KelseyEGonzalez
+  github: kelseygonzalez
   contact_policy: >-
-    E-mail and Slack are the best ways to get in contact with me. I will try to respond to all course-related e-mails and Slack messages within 24 hours (*really*), but also remember that life can be busy and chaotic for everyone (including me!), so if I don't respond right away, don't worry!
-  appointment_url: https://calendly.com/andrewheiss/
+    E-mail, message on Canvas, or set up a meeting for my student hours. I want to help you succeed!  
+  appointment_url: https://calendly.com/kelseygonzalez
 
 course:
-  number: "PMAP 8141"
+  number: "STAT 412/612"
   semester: "Spring 2021"
-  days: "Any day"
-  time: "Any time"
-  # location: "Online only (thanks, COVID-19, for ruining everything)"
-  dates: "January 11–April 26, 2021"
-  github: "andrewheiss/evalsp21.classes.andrewheiss.com"
+  days: "M & Th"
+  time: "11:20 - 12:45 EST"
+  dates: "January 19–April 26, 2021"
+  github: "kelseygonzalez/AU-STAT412-612"
   copyrightYear: "2021"
-  slack: "https://gsuevalsp2021.slack.com"
 
 university: 
-  name: Georgia State University
-  url: "https://www.gsu.edu"
+  name: American University
+  url: "https://www.american.edu"
 
 school:
-  name: Andrew Young School of Policy Studies
-  url: "https://aysps.gsu.edu/"
+  name: Department of Math & Statistics
+  url: "https://www.american.edu/cas/mathstat/"
 
 
 ############################
@@ -134,10 +131,10 @@ school:
 ############################
 
 # Default image for social sharing and search engines. Place image in `static/media/` folder and specify image name here.
-sharing_image: "social-image-sp21.png"
+sharing_image: "hex-tidyverse.png"
 
 # Twitter username (without @). Used when a visitor shares your site on Twitter.
-twitter: "andrewheiss"
+twitter: "KelseyEGonzalez"
 
 
 ############################
