@@ -5,8 +5,8 @@ main:
   - name: Schedule
     url: /schedule/
     weight: 2
-  - name: Content
-    url: /content/
+  - name: Material
+    url: /Material/
     weight: 3
   - name: Assignments
     url: /assignment/
@@ -15,7 +15,7 @@ main:
     url: /resource/
     weight: 7
 
-Materials:
+Material:
   - name: Overview
     weight: 1
   - name: Lectures

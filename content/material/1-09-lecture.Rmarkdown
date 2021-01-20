@@ -1,0 +1,17 @@
+---
+title: "Working with strings and `stringr`"		
+linktitle: "Lecture	9: Working with strings and `stringr`"
+date: "2021-03-22"
+start_date: "2021-03-22"
+end_date: "2021-03-25"
+menu:
+  Material:
+    parent: Lectures
+    weight: 9
+type: docs
+toc: true
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+---
+
+Content to be loaded

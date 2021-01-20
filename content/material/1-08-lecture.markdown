@@ -1,0 +1,17 @@
+---
+title: "Relational Data and Joins"		
+linktitle: "Lecture	8: Relational Data and Joins"
+date: "2021-03-15"
+start_date: "2021-03-15"
+end_date: "2021-03-18"
+menu:
+  Material:
+    parent: Lectures
+    weight: 8
+type: docs
+toc: true
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+---
+
+Content to be loaded

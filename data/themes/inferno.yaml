@@ -9,7 +9,7 @@ primary: "#1b3a4b"
 
 # Links
 link: "#1b3a4b"
-link_hover: "#F6D645"
+link_hover: "#3a5a40"
 
 # Menu
 menu_primary: "#fff"
@@ -18,5 +18,5 @@ menu_text_active: "#3e1f47"
 menu_title: "#494949"
 
 # Home sections
-home_section_odd: "#f7f1f9"
-home_section_even: "#dbe5e6"
+home_section_odd: "#3e1f47"
+home_section_even: "#1b3a4b"

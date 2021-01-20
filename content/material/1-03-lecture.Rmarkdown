@@ -1,0 +1,18 @@
+---
+title: "Visualization with `ggplot2`"		
+linktitle: "Lecture	3: Visualization with `ggplot2`"
+date: "2021-02-01"
+start_date: "2021-02-01"
+end_date: "2021-02-04"
+
+menu:
+  Material:
+    parent: Lectures
+    weight: 3
+type: docs
+toc: true
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+slides: "03-slides"
+---
+Content to be loaded

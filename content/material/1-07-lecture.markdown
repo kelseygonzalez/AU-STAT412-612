@@ -1,0 +1,18 @@
+---
+title: "Tidy data and `tidyr`"		
+linktitle: "Lecture	7: Tidy data and `tidyr`"
+date: "2021-03-01"
+start_date: "2021-03-01"
+end_date: "2021-03-04"
+menu:
+  Material:
+    parent: Lectures
+    weight: 7
+type: docs
+toc: true
+bibliography: "../../static/bib/references.bib"
+csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+slides: "04-slides"
+---
+
+Content to be loaded

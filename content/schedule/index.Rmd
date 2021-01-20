@@ -3,70 +3,12 @@ title: "Schedule"
 slug: schedule
 ---
 
-```{r include=FALSE}
-library(tidyverse)
-library(calendar)
-library(lubridate)
-library(glue)
-library(rvest)
-
-strip_html <- function(s) {
-  html_text(read_html(charToRaw(s)))
-}
-
-schedule_raw <- yaml::read_yaml(here::here("data", "schedule.yaml"))$lessons
-
-schedule_df <- enframe(schedule_raw) %>% 
-  mutate(cleaned = map(value, ~as.data.frame(.))) %>% 
-  unnest(cleaned) %>% 
-  filter(is.na(header)) %>% 
-  select(-value, -bg, -bottomborder, -header)
-
-class_year <- "2021"
-base_url <- "https://evalsp21.classes.andrewheiss.com/"
-content_base <- glue("{base_url}content/")
-assignment_base <- glue("{base_url}assignment/")
-schedule_ics_path <- "schedule/schedule.ics"
-ics_url <- glue(base_url, schedule_ics_path)
-
-schedule_clean <- schedule_df %>%
-  mutate(title = map_chr(title, strip_html)) %>%
-  mutate(session_clean = ifelse(is.na(session), "", glue("({session}) "))) %>% 
-  mutate(summary = glue("PMAP 8521: {session_clean}{title}")) %>% 
-  mutate(date_start = ifelse(is.na(date_start), date, date_start),
-         date_end = ifelse(is.na(date_end), date, date_end)) %>% 
-  mutate(date_start = glue("{date_start}, {class_year}"),
-         date_end = glue("{date_end}, {class_year}")) %>% 
-  mutate(date_start_actual = map(date_start, ~as.POSIXct(., format = "%B %d, %Y")),
-         date_end_actual = map(date_end, ~as.POSIXct(., format = "%B %d, %Y"))) %>% 
-  mutate(content = ifelse(!is.na(content), glue("{content_base}{content}/"), NA),
-         assignment = ifelse(!is.na(assignment), glue("{assignment_base}{assignment}/"), NA)) %>% 
-  mutate(url = coalesce(content, assignment),
-         url = ifelse(is.na(url), "", url))
-
-schedule_ics <- schedule_clean %>% 
-  group_by(name) %>% 
-  nest() %>% 
-  mutate(ical = map(data,
-                    ~ic_event(start = .$date_start_actual[[1]],
-                              end = .$date_end_actual[[1]] + 24*60*60,
-                              summary = .$summary[[1]],
-                              more_properties = TRUE,
-                              event_properties = c("DESCRIPTION" = .$url[[1]])))) %>% 
-  ungroup() %>% 
-  select(-name, -data) %>% 
-  unnest(ical) %>% 
-  ical() %>% 
-  rename(`DTSTART;VALUE=DATE` = DTSTART,
-         `DTEND;VALUE=DATE` = DTEND)
-
-ic_write(schedule_ics, here::here("content", "schedule", "schedule.ics"))
-```
-
 Here's your roadmap for the semester!
-- [**Lecture**](/Lecture/) (<i class="fas fa-book-reader"></i>): This page contains the handouts, slides, live-written code, and (maybe) the recorded lectures for the topic.
+
+- [**Lecture**](/Lecture/) (<i class="fas fa-users"></i>): This page contains the handouts, slides, live-written code, and (maybe) the recorded lectures for the topic.
 - [**Reading**](/Assignment/Reading/) (<i class="fas fa-book-reader"></i>): This page contains the readings you are expected to read between Monday's lecture and Thursday's lab
 - [**Lab**](/Assignment/Lab) (<i class="fas fa-laptop-code"></i>): This page contains the group lab assignments that will be started and hopefully finished during the Thursday in-class coding lab. Labs will be worked on in groups of 2-3 and turned in the latest on Friday at 11:59 PM EST. Labwork is pass/fail. 
 - [**Homework**](/assignment/homework) (<i class="fas fa-pencil-ruler"></i>): This page contains the instructions for each of the larger assignments. **Assignments are due by 11:59 PM on the day they're listed.** Assignments are expected to be original work, not conducted in pairs.
+
 
 `r blogdown::shortcode("schedule")`

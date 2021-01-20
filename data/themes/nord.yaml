@@ -5,18 +5,18 @@ name: "Nord"
 light: true
 
 # Primary
-primary: "#5e81ac"
+primary: "#1b3a4b"
 
 # Links
-link: "#5e81ac"
-link_hover: "#d08770"
+link: "#1b3a4b"
+link_hover: "#3a5a40"
 
 # Menu
 menu_primary: "#fff"
-menu_text: "#5e81ac"
-menu_text_active: "#bf616a"
+menu_text: "#1b3a4b"
+menu_text_active: "#3e1f47"
 menu_title: "#494949"
 
 # Home sections
-home_section_odd: "rgb(255, 255, 255)"
-home_section_even: "rgb(247, 247, 247)"
+home_section_odd: "#3e1f47"
+home_section_even: "#1b3a4b"

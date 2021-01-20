@@ -21,7 +21,7 @@
             
             {{- if .lecture }}
             <td align="center" style="width:10%;text-align:center"><a
-                    href="{{ .Site.baseurl }}/material/lectures/{{ .lecture }}/">
+                    href="{{ .Site.baseurl }}/material/{{ .lecture }}/">
                     <i class="fas fa-users fa-lg"></i></a></td>
             {{- else }}
             <td align="center" style="width:10%;text-align:center">
@@ -32,7 +32,7 @@
 
             {{- if .reading }}
             <td align="center" style="width:10%;text-align:center"><a
-                    href="{{ .Site.baseurl }}/material/readings/{{ .reading }}/">
+                    href="{{ .Site.baseurl }}/material/{{ .reading }}/">
                     <i class="fas fa-book-reader fa-lg"></i></a></td>
             {{- else }}
             <td align="center" style="width:10%;text-align:center">
@@ -43,7 +43,7 @@
 
             {{- if .lab }}
             <td align="center" style="width:10%;text-align:center"><a
-                    href="{{ .Site.baseurl }}/assignment/lab/{{ .lab }}/">
+                    href="{{ .Site.baseurl }}/assignment/{{ .lab }}/">
                     <i class="fas fa-laptop-code fa-lg"></i></a></td>
             {{- else }}
             <td align="center" style="width:10%;text-align:center">
@@ -54,7 +54,7 @@
 
             {{- if .homework }}
             <td align="center" style="width:10%;text-align:center"><a
-                    href="{{ .Site.baseurl }}/assignment/hw/{{ .homework }}/">
+                    href="{{ .Site.baseurl }}/assignment/{{ .homework }}/">
                     <i class="fas fa-pencil-ruler fa-lg"></i></a></td>
             {{- else }}
             <td align="center" style="width:10%;text-align:center">
