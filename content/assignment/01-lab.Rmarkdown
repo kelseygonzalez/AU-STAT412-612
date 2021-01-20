@@ -18,16 +18,9 @@ editor_options:
 readr::write_csv(ggplot2::mpg, here::here("static", "data", "cars.csv"))
 ```
 
-## Task 1: Introduce yourself to R, RStudio, and the tidyverse
+## Task 1: Make an RStudio Project
 
-1. Go the the example page for this week, ["Welcome to R, RStudio, and the tidyverse"](/example/rstudio-tidyverse/), and work through the different primers and videos in the four parts of the page.
-
-    It seems like there's a lot on the page, but they're short and go fairly quickly (especially as you get the hang of the syntax). Also, **I have no way of seeing what you do or what you get wrong or right, and that's totally fine!** If you get stuck and want to skip some (or if it gets too easy), go right ahead and skip them!
-
-
-## Task 2: Make an RStudio Project
-
-1. Use either RStudio.cloud or RStudio on your computer (preferably RStudio on your computer! [Follow these instructions to get started!](/resource/install/)) to create a new RStudio Project.
+1. Use RStudio on your computer [Follow these instructions if you never got it downloaded](/resource/install/) to create a new RStudio Project.
 
 2. Create a folder named "data" in the project folder you just made.
 
@@ -37,7 +30,9 @@ readr::write_csv(ggplot2::mpg, here::here("static", "data", "cars.csv"))
 
 4. In RStudio, go to "File" > "New File…" > "R Markdown…" and click "OK" in the dialog without changing anything.
 
-5. Delete all the placeholder text in that new file and replace it with this:
+5. In the YAML heading (the text between `---`), Write a title, your name, and that you want to output to html
+
+6. After the closing YAML (after the second `---`), Create a level-1 header and then in a new section, introduce yourself. Tell me your name, major, favorite food, and something you did or learning in 2020 to stay sane. Be sure to use _italics_, **bold**, and other [tricks](/resource/install/)
 
     ````text
     ---

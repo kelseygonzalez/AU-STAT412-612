@@ -15,6 +15,7 @@ editor_options:
 ---
 
 
-
+* Watch [Learning R with humorous side projects](https://rstudio.com/resources/rstudioconf-2020/learning-r-with-humorous-side-projects/) to get excited about the new semester! 
 * Read [R4DS Chapter 1](https://r4ds.had.co.nz/introduction.html) 
 * Read [R4DS Chapter 4](https://r4ds.had.co.nz/workflow-basics.html) 
+

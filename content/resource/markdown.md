@@ -1,6 +1,5 @@
 ---
 title: Using Markdown
-date: "2020-01-13"
 menu:
   resource:
     parent: Guides
@@ -190,7 +189,7 @@ But now we just use computers to solve for $x$.
 > x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 > $$
 > 
-> But now we just use computers to solve for $x$.
+> But now we just use computers to solve for `\(x\)`.
 
 ---
 
