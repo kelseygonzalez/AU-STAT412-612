@@ -1,5 +1,5 @@
 OUTPUTDIR=public
-SSH_TARGET=cloud:/home/andrew/sites/evalsp21.classes/public_html
+SSH_TARGET=cloud:~/Documents/R/AU-STAT412-612/public
 
 .PHONY : all clean serve build deploy zip_projects pdf_slides
 

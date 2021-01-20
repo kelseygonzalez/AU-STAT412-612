@@ -1,6 +1,6 @@
 ---
-title: "Readings Week 2"
-linktitle: "Readings Week 2"
+title: "Readings Week 7"
+linktitle: "Readings Week 7"
 date: "2021-03-01"
 due_date: "2021-03-04"
 due_time: "11:20 AM"
