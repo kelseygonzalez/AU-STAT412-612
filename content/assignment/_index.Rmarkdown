@@ -5,7 +5,7 @@ menu:
     parent: Assignments
     weight: 1
 type: docs
-toc: true
+toc: false
 weight: 1
 ---
 

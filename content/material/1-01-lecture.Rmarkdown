@@ -42,7 +42,7 @@ Learning Outcomes
 
 ## Components of Data Science
 
-![](../../static/img/ds-venn.jpg){width=50%}
+![](/img/ds-venn.jpg){width=50%}
 
 - Statistics
 - Domain Knowledge
@@ -131,7 +131,7 @@ professions %>%
    + Someone asks a question
 
  - R Time
-![](img/data-science.png){width=75%}
+![](/img/data-science.png){width=75%}
 
 ## Tools
 
@@ -159,20 +159,20 @@ professions %>%
 2. It's widely used with a lot of community support. 
     - If you need some special analysis, someone has often made an R package. 
 
-![](img/code_hero.jpg){width=50%}
+![](/img/code_hero.jpg){width=50%}
 
 
 
 3. It's *relatively* easy (especially graphics and data wrangling).
     - "Evolution" driven by statisticians for local utility more than enterprise software
 
-![](img/r_rollercoaster.png){width=75%}
+![](/img/r_rollercoaster.png){width=75%}
 
 4. It enables reproducible research and analysis 
     - Copying and pasting across spreadsheets can lead to mistakes - see [\textcolor{blue}{excel mistake}](https://www.peri.umass.edu/fileadmin/pdf/working_papers/working_papers_301-350/WP322.pdf) @herndon2014does
     - In R, you can essentially automate your analysis, reducing the chance for mistakes and making your analysis transparent to the wider research community as well as reproducible.
     
-![](img/reproducibility_court.png){width=50%}
+![](/img/reproducibility_court.png){width=50%}
 
 ## What about Python??
 
@@ -191,7 +191,7 @@ professions %>%
 - tidyverse packages are much more convenient for the vast majority of tasks, as long as you drink the Koolaid.
   + They are not always the fastest but for many many uses and data sets they provide a convenient framework
   
-![](img/tidyverse_celestial.png){width=50%}
+![](/img/tidyverse_celestial.png){width=50%}
 
 
 # This Class - See the Syllabus

@@ -33,7 +33,7 @@ Learning Outcomes
 
 ## Components of Data Science
 
-<img src="../../static/img/ds-venn.jpg" style="width:50.0%" />
+<img src="/img/ds-venn.jpg" style="width:50.0%" />
 
 -   Statistics
 -   Domain Knowledge
@@ -91,7 +91,7 @@ Learning Outcomes
     -   Someone collects data
     -   Someone asks a question
 -   R Time
-    <img src="img/data-science.png" style="width:75.0%" />
+    <img src="/img/data-science.png" style="width:75.0%" />
 
 ## Tools
 
@@ -118,18 +118,18 @@ Learning Outcomes
 2.  It’s widely used with a lot of community support.
     -   If you need some special analysis, someone has often made an R package.
 
-<img src="img/code_hero.jpg" style="width:50.0%" />
+<img src="/img/code_hero.jpg" style="width:50.0%" />
 
 1.  It’s *relatively* easy (especially graphics and data wrangling).
     -   “Evolution” driven by statisticians for local utility more than enterprise software
 
-<img src="img/r_rollercoaster.png" style="width:75.0%" />
+<img src="/img/r_rollercoaster.png" style="width:75.0%" />
 
 1.  It enables reproducible research and analysis
     -   Copying and pasting across spreadsheets can lead to mistakes - see [](https://www.peri.umass.edu/fileadmin/pdf/working_papers/working_papers_301-350/WP322.pdf) Thomas Herndon, Michael Ash, and Robert Pollin[^4]
     -   In R, you can essentially automate your analysis, reducing the chance for mistakes and making your analysis transparent to the wider research community as well as reproducible.
 
-<img src="img/reproducibility_court.png" style="width:50.0%" />
+<img src="/img/reproducibility_court.png" style="width:50.0%" />
 
 ## What about Python??
 
@@ -149,7 +149,7 @@ Learning Outcomes
 
     -   They are not always the fastest but for many many uses and data sets they provide a convenient framework
 
-<img src="img/tidyverse_celestial.png" style="width:50.0%" />
+<img src="/img/tidyverse_celestial.png" style="width:50.0%" />
 
 # This Class - See the Syllabus
 

@@ -5,7 +5,7 @@ date: "2021-01-25"
 start_date: "2021-01-25"
 end_date: "2021-01-28"
 menu:
-  Material:
+  material:
     parent: Lectures
     weight: 2
 type: docs

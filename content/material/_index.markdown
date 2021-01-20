@@ -1,10 +1,10 @@
 ---
-title: 
+title: Materials Overview
 menu:
   content:
-    parent: Overview
     weight: 1
 type: docs
+toc: false
 weight: 1
 ---
 

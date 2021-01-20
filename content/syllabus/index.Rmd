@@ -45,6 +45,13 @@ Upon completing this course, students will be able to:
 STAT 412 requires two mathematics or statistics courses at or above the 200-level as a prerequisite. 
 STAT 612 requires successful completion of,  or concurrent enrollment in, STAT 614: Statistical Methods.
 
+## Course Textbook
+
+The textbook for this course is available via a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License, which means we can use it for free online. 
+We'll be reading _R for Data Science: Visualize, Model, Transform, and Import Data_ by Hadley Wickham and Garrett Grolemund
+
+[![R4DS Textbook]("https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png")](https://r4ds.had.co.nz/){width=50%"}
+
 ## Computing Environment
 * Access to a computer with an operating system capable of running R 4.0
 * Access to reliable internet capable of supporting Zoom video sessions
@@ -152,7 +159,7 @@ You can find descriptions for all the assignments on the [assignments page](/ass
 ```{r assignments-grades, include=FALSE}
 assignments <- tribble(
   ~Points,   ~Assignment,
-  (10/12) * 12,    "Labs",
+  (10/11) * 11,    "Labs",
   8 * 5,    "Assignments",
   50,       "Final project"
 ) %>%
