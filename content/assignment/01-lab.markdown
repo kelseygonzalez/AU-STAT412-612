@@ -13,9 +13,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r write-data, include=FALSE}
-readr::write_csv(ggplot2::mpg, here::here("static", "data", "cars.csv"))
-```
+
 
 
 
@@ -34,9 +32,7 @@ You'll be doing all your R work in R Markdown this time (and from now on). You s
 4. In RStudio, go to "File" > "New File…" > "R Markdown…" and click "OK" in the dialog without changing anything.
 
 Your structure should look something like this:
-```{r project-structure, echo=FALSE, out.width="30%", indent="    "}
-knitr::include_graphics("/img/assignments/project-structure.png", error = FALSE)
-```
+    <img src="/img/assignments/project-structure.png" width="30%" />
 
 ## Task 2: Work with R Markdown
 
@@ -53,9 +49,7 @@ knitr::include_graphics("/img/assignments/project-structure.png", error = FALSE)
 
 1. Add a new markdown header named "R code" and create an R code chunk underneath. Either type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS, or use the "Insert Chunk" menu:
 
-```{r insert-chunk-button, echo=FALSE, out.width="19%", indent="    "}
-knitr::include_graphics("/img/assignments/insert-chunk-button.png", error = FALSE)
-```
+    <img src="/img/assignments/insert-chunk-button.png" width="19%" />
 
 2. In the code chunk, load the tidyverse package (remember, `library` or `require`) and load the starwars dataset. 
 
@@ -63,28 +57,22 @@ knitr::include_graphics("/img/assignments/insert-chunk-button.png", error = FALS
 
 3. Knit your document as an HTML file (or PDF if you're brave and [installed LaTeX](/resource/install/#install-tinytex)). Use the "Knit" menu:
 
-```{r knit-button, echo=FALSE, out.width="30%", indent="    "}
-knitr::include_graphics("/img/assignments/knit-button.png", error = FALSE)
-```
+    <img src="/img/assignments/knit-button.png" width="30%" />
 
 4. Upload the knitted document to Canvas. 
 
-5. `r emo::ji("tada")` Party! `r emo::ji("tada")`
+5. 🎉 Party! 🎉
 
 
 {{% div fyi %}}
 
 You'll be doing this same process for all your future labs. Each problem set will involve an R Markdown file. You can either create a new RStudio Project directory for all your work:
 
-```{r single-directory, echo=FALSE, out.width="30%"}
-knitr::include_graphics("/img/reference/rproj-one-folder.png", error = FALSE)
-```
+<img src="/img/reference/rproj-one-folder.png" width="30%" />
 
 Or you can create individual projects for each assignment and project:
 
-```{r multiple-directories, echo=FALSE, out.width="30%",}
-knitr::include_graphics("/img/reference/rproj-multiple-folders.png", error = FALSE)
-```
+<img src="/img/reference/rproj-multiple-folders.png" width="30%" />
 
 On Canvas, you will turn in your .Rmd, .html, and/or .pdf file. 
 

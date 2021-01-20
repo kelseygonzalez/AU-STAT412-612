@@ -1,12 +1,24 @@
-<script src="index_files/header-attrs-2.6.4/header-attrs.js"></script>
+---
+title: Syllabus
+slug: syllabus
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    toc: true
+    fig_caption: false
+---
+
+<script src="{{< relref "syllabus/index.html" >}}index_files/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
 <li><a href="#course-description">Course Description</a></li>
 <li><a href="#course-objectives">Course Objectives</a></li>
 <li><a href="#course-prerequisites">Course Prerequisites</a></li>
-<li><a href="#computing-environment">Computing Environment</a></li>
-<li><a href="#course-textbook">Course Textbook</a>
+<li><a href="#course-textbook">Course Textbook</a></li>
+<li><a href="#computing-environment">Computing Environment</a>
 <ul>
 <li><a href="#online-help">Online help</a></li>
 </ul></li>
@@ -53,6 +65,12 @@
 <p>STAT 412 requires two mathematics or statistics courses at or above the 200-level as a prerequisite.
 STAT 612 requires successful completion of, or concurrent enrollment in, STAT 614: Statistical Methods.</p>
 </div>
+<div id="course-textbook" class="section level2">
+<h2>Course Textbook</h2>
+<p>The textbook for this course is available via a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License, which means we can use it for free online.
+We’ll be reading <em>R for Data Science: Visualize, Model, Transform, and Import Data</em> by Hadley Wickham and Garrett Grolemund</p>
+<p><a href="https://r4ds.had.co.nz/" width="50%&quot;"><img src="%22https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png%22" alt="R4DS Textbook" /></a></p>
+</div>
 <div id="computing-environment" class="section level2">
 <h2>Computing Environment</h2>
 <ul>
@@ -62,12 +80,6 @@ STAT 612 requires successful completion of, or concurrent enrollment in, STAT 61
 <p>You will do all of your analysis with the open source (and free!) programming language <a href="https://cran.r-project.org/">R</a>. You will use <a href="https://www.rstudio.com/">RStudio</a> as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.</p>
 <p>R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free <a href="http://rstudio.cloud/">RStudio.cloud</a> service, which lets you run a full instance of RStudio in your web browser. This means you won’t have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.</p>
 <p>You can <a href="/resource/install/">find instructions for installing R, RStudio, and all the tidyverse packages here.</a></p>
-</div>
-<div id="course-textbook" class="section level2">
-<h2>Course Textbook</h2>
-<p>The textbook for this course is available via a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License, which means we can use it for free online.
-We’ll be reading <em>R for Data Science: Visualize, Model, Transform, and Import Data</em></p>
-<p><a href="https://r4ds.had.co.nz/"><img src="%22https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png%22" alt="R4DS Textbook" /></a></p>
 <div id="online-help" class="section level3">
 <h3>Online help</h3>
 <p>Data science and statistical programming can be difficult. Computers are stupid and little errors in your code can cause hours of headache (even if you’ve been doing this stuff for years!).</p>

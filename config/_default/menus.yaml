@@ -27,7 +27,7 @@ assignment:
     weight: 1
   - name: Final Project
     weight: 2
-  - name: Lab
+  - name: Labs
     weight: 4
   - name: Homework
     weight: 5
