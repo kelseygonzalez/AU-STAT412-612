@@ -5,14 +5,13 @@ date: "2021-01-21"
 start_date: "2021-01-21"
 end_date: "2021-01-25"
 menu:
-  Material:
+  material:
     parent: Lectures
     weight: 1
 type: docs
 toc: true
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-slides: "01-slides"
 ---
 
 ```{r setup, include=FALSE}
@@ -43,7 +42,7 @@ Learning Outcomes
 
 ## Components of Data Science
 
-![](img/ds-venn.jpg){width=50%}
+![](../../static/img/ds-venn.jpg){width=50%}
 
 - Statistics
 - Domain Knowledge

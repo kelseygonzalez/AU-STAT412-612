@@ -5,14 +5,13 @@ date: "2021-01-21"
 start_date: "2021-01-21"
 end_date: "2021-01-25"
 menu:
-  Material:
+  material:
     parent: Lectures
     weight: 1
 type: docs
 toc: true
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-slides: "01-slides"
 ---
 
 # Intro to R & Data Science
@@ -34,7 +33,7 @@ Learning Outcomes
 
 ## Components of Data Science
 
-<img src="img/ds-venn.jpg" style="width:50.0%" />
+<img src="../../static/img/ds-venn.jpg" style="width:50.0%" />
 
 -   Statistics
 -   Domain Knowledge
@@ -75,7 +74,7 @@ Learning Outcomes
 -   Professions often differ by their level of expertise or interest in each skill.
 -   Data Science projects usually a “team activity”
 
-<img src="/kelseygonzalez.github.io/AU-STAT412-612material/1-01-lecture_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="/material/1-01-lecture_files/figure-html/unnamed-chunk-1-1.png" width="672" />
 
 ## Introductions
 
