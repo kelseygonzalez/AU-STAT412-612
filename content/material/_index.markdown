@@ -1,7 +1,8 @@
 ---
 title: Materials Overview
 menu:
-  content:
+  Material:
+    parent: Overview
     weight: 1
 type: docs
 toc: false

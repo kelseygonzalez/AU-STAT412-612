@@ -21,7 +21,7 @@ material:
   - name: Lectures
     weight: 2
   - name: Readings
-    weight: 2
+    weight: 3
 assignment:
   - name: Assignments
     weight: 1

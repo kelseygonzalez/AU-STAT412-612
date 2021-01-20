@@ -8,8 +8,8 @@ menu:
   Material:
     parent: Readings
     weight: 7
+type: docs
 toc: false
-toc: true
 editor_options: 
   chunk_output_type: console
 ---
