@@ -95,6 +95,20 @@ You can also set chunk options by clicking on the little gear icon in the top ri
 knitr::include_graphics("/img/reference/chunk-options.png", error = FALSE)
 ```
 
+
+The following table summarises which types of output each option suppresses:
+
+Option             | Run code | Show code | Output | Plots | Messages | Warnings 
+-------------------|----------|-----------|--------|-------|----------|---------
+`eval = FALSE`     | X        |           | X      | X     | X        | X
+`include = FALSE`  |          | X         | X      | X     | X        | X
+`echo = FALSE`     |          | X         |        |       |          |
+`results = "hide"` |          |           | X      |       |          | 
+`fig.show = "hide"`|          |           |        | X     |          |
+`message = FALSE`  |          |           |        |       | X        |
+`warning = FALSE`  |          |           |        |       |          | X
+
+
 ## Inline chunks
 
 You can also include R output directly in your text, which is really helpful if you want to report numbers from your analysis. To do this, use `` `r "\u0060r r_code_here\u0060"` ``.

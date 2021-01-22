@@ -18,16 +18,15 @@ readr::write_csv(ggplot2::mpg, here::here("static", "data", "cars.csv"))
 ```
 
 
-
-You'll be doing all your R work in R Markdown this time (and from now on). You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.
+You'll be doing all your R work in R Markdown this time (and from now on). You should use an RStudio Project to keep your files well organized. Either create a new project for this exercise only, or make a project for all your work in this class.
 
 ## Task 1: Make an RStudio Project
 
-1. Use RStudio on your computer [Follow these instructions if you never got it downloaded](/resource/install/) to create a new RStudio Project.
+1. Use RStudio on your computer [Follow these instructions if you never got it downloaded](/resource/install/) to create a new RStudio Project named "STAT412-612" if you didn't make one during out class.
 
-2. Create a folder named "data" in the project folder you just made.
+2. Create a folder named "data" in the project folder. Create the following folders as well: "lecture-notes", "labs", "homework", "output".
 
-3. Download this CSV file and place it in that folder:
+3. Download this CSV file and place it in your data folder:
 
     - [<i class="fas fa-file-csv"></i> `cars.csv`](/data/cars.csv)
 
@@ -40,26 +39,33 @@ knitr::include_graphics("/img/assignments/project-structure.png", error = FALSE)
 
 ## Task 2: Work with R Markdown
 
+I suggest you knit after each of these steps to make sure it looks right! 
+
 5. In the YAML heading (the text between `---`), Write a title, your name, and that you want to output to html
 
-6. After the closing YAML (after the second `---`), Create a level-1 header and then in a new section, introduce yourself. Tell me your name, major, favorite food, and something you did or learning in 2020 to stay sane. Be sure to use _italics_, **bold**, and other[tricks](resource/markdown/).
+6. After the closing YAML (after the second `---`), delete all the auto-generated text and create a level-1 header. Under that new header, introduce yourself. Tell me your name, major, favorite late night snack. Be sure to use _italics_, **bold**, and other[tricks](resource/markdown/).
 
-7. Under a new header, write the DC, Maryland, or Virginia minimum wage, making sure to use the dollar sign. 
+7. Add the following questions as level 2 headers and write 1 sentence responding to each. 
+  * What do you need from me to be successful this semester? 
+  * What is something non-academic related you're passionate about? 
+  * What's something you did or learned in 2020 to stay sane?
 
-6. Save the R Markdown file with some sort of name (**without any spaces!**)
+8. Add a picture of your favorite animal. 
+
+10. Save the R Markdown file in your "lab" folder with some sort of name that indicates this is for lab 1 (**without any spaces!**)
 
 
 ## Task 3: Work with R
 
-1. Add a new markdown header named "R code" and create an R code chunk underneath. Either type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS, or use the "Insert Chunk" menu:
+1. Add a new level 1 header named "R code" and create an R code chunk underneath. Either type <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>i</kbd> on Windows, or <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>i</kbd> on macOS, or use the "Insert Chunk" menu:
 
 ```{r insert-chunk-button, echo=FALSE, out.width="19%", indent="    "}
 knitr::include_graphics("/img/assignments/insert-chunk-button.png", error = FALSE)
 ```
 
-2. In the code chunk, load the tidyverse package (remember, `library` or `require`) and load the starwars dataset. 
+2. In the code chunk, load the `trees` dataset. 
 
-3. Practice using some of the data exploration commands that were introduced in class. How many can you remember? 
+3. Practice using some of the data exploration commands that were introduced in class. How many can you remember and use? 
 
 3. Knit your document as an HTML file (or PDF if you're brave and [installed LaTeX](/resource/install/#install-tinytex)). Use the "Knit" menu:
 
@@ -67,10 +73,12 @@ knitr::include_graphics("/img/assignments/insert-chunk-button.png", error = FALS
 knitr::include_graphics("/img/assignments/knit-button.png", error = FALSE)
 ```
 
-4. Upload the knitted document to Canvas. 
+4. Upload the knitted document and the `.Rmd` files to Canvas. 
 
 5. `r emo::ji("tada")` Party! `r emo::ji("tada")`
 
+
+_If you're done early, I want to install the tidyverse._ Run `install.packages("tidyverse")` Some more detailed steps are [in your textbook at 1.4.3](https://r4ds.had.co.nz/introduction.html?q=install.pac#the-tidyverse). This will usually take about 3 minutes and I don't want to use class time to do so. If you've completed your lab, 
 
 {{% div fyi %}}
 
