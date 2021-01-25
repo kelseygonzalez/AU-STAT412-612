@@ -16,3 +16,17 @@ csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 slides: "03-slides"
 ---
 Content to be loaded
+
+A package we will be using extensively in this course is `tidyverse`. You may remember, a package is like an app on your phone which gives you extra features built off the model. To download a package, we use `install.packages("package-name")` to get it onto our computer. Let's do that now.
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+```
+
+Once that's downloaded, we have to open the package up every time we use R. We'll generally use `library()` to bring it into our working session, but there are other ways. 
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+```
+
+Now, we want to install another package. we'll need to download the package called `palmerpenguins` 

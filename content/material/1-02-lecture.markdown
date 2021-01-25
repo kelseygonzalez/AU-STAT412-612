@@ -14,6 +14,8 @@ bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 ---
 
+-   Download the in-class written R Markdown [here](/class-output/class-2.Rmd)
+
 # Projects & RMarkdown
 
 Learning Outcomes:

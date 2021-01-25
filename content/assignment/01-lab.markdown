@@ -20,7 +20,7 @@ You'll be doing all your R work in R Markdown this time (and from now on). You s
 
 ## Task 1: Make an RStudio Project
 
-1. Use RStudio on your computer [Follow these instructions if you never got it downloaded](/resource/install/) to create a new RStudio Project named "STAT412-612" if you didn't make one during out class.
+1. Use RStudio on your computer [Follow these instructions if you never got it downloaded](/resource/install/) to create a new RStudio Project named "STAT412-612" if you didn't make one during our class.
 
 2. Create a folder named "data" in the project folder. Create the following folders as well: "lecture-notes", "labs", "homework", "output".
 
@@ -41,7 +41,7 @@ I suggest you knit after each of these steps to make sure it looks right!
 
 6. After the closing YAML (after the second `---`), delete all the auto-generated text and create a level-1 header. Under that new header, introduce yourself. Tell me your name, major, favorite late night snack. Be sure to use _italics_, **bold**, and other[tricks](resource/markdown/).
 
-7. Add the following questions as level 2 headers and write 1 sentence responding to each. 
+7. Add the following questions as level 2 headers and write a sentence responding to each. 
   * What do you need from me to be successful this semester? 
   * What is something non-academic related you're passionate about? 
   * What's something you did or learned in 2020 to stay sane?
@@ -61,6 +61,8 @@ I suggest you knit after each of these steps to make sure it looks right!
 
 3. Practice using some of the data exploration commands that were introduced in class. How many can you remember and use? 
 
+4. Load the cars.csv dataset you downloaded using `cars <- read.csv("data/cars.csv")`. We'll go over this syntax in more detail in week 4. What are some differences between the two datasets, particularly in the types of data stored in the columns? 
+
 3. Knit your document as an HTML file (or PDF if you're brave and [installed LaTeX](/resource/install/#install-tinytex)). Use the "Knit" menu:
 
     <img src="/img/assignments/knit-button.png" width="30%" />
@@ -70,7 +72,7 @@ I suggest you knit after each of these steps to make sure it looks right!
 5. 🎉 Party! 🎉
 
 
-_If you're done early, I want to install the tidyverse._ Run `install.packages("tidyverse")` Some more detailed steps are [in your textbook at 1.4.3](https://r4ds.had.co.nz/introduction.html?q=install.pac#the-tidyverse). This will usually take about 3 minutes and I don't want to use class time to do so. If you've completed your lab, 
+_If you're done early, I want to install the tidyverse._ Run `install.packages("tidyverse")` Some more detailed steps are [in your textbook at 1.4.3](https://r4ds.had.co.nz/introduction.html?q=install.pac#the-tidyverse). This will usually take about 3 minutes and I don't want to use class time to do so. To verify it installed correctly, run `library(tidyverse)` without receiving any errors. 
 
 {{% div fyi %}}
 

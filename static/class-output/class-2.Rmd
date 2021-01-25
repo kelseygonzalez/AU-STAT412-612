@@ -1,0 +1,109 @@
+---
+title: "Class 2"
+author: "Kelsey Gonzalez & classroom"
+date: "1/25/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+_Hello_ *Hello* 
+
+## Rmarkdown
+### Header level 3 
+
+This is my first knitr document. 
+I want to make a list! 
+
+* List!
+* **List 2!** <- bold! 
+* *List 3!* <- italics  
+* _List3!_ <- italics  
+
+
+Numbered list:
+
+1. one
+2. two
+5. three
+
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+
+I want you to link you to our [website](https://american-stat-412612.netlify.app/)  
+`[link name](link)`  
+backtick = ` 
+` != ' 
+` != " 
+
+Images
+`![caption](filename or url)`
+![Organutan](https://images.immediate.co.uk/production/volatile/sites/23/2018/06/x_MLY3328-d43e353-scaled.jpg?webp=true&quality=90&crop=4px%2C222px%2C1906px%2C1270px&resize=620%2C413)
+
+![Organutan](images/p033d894.jpg)
+
+
+subscripts: log~10~ 
+superscripts: r^2^ 
+
+
+# Chunks 
+ctrl + alt + I on windows
+cmd + I on Mac
+```{r}
+3 + 54
+
+100 * 300 
+```
+
+Other mathematical function
+```{r}
+sin(1)
+log(1)
+log10(10)
+exp(0.5) # e^(1/2)
+# don't evaluate this 
+```
+
+How do I compare things?
+```{r}
+1 == 1
+2 == 1
+1 < 2 
+2 > 1 
+1 <= 1
+1 >= -9
+```
+
+Variable Assignment 
+```{r variables, echo = FALSE, eval = TRUE}
+x1 <- 1/40  # <- is cmd -
+log(x)
+x2 <- 100 
+log(x)
+
+my_variable <- 5.3
+MyVariable <- 5.3
+MyVariable = 5.3 # not recommended 
+
+y <- my_variable * 2 
+
+```
+
+
+
+# Simple Data
+```{r}
+data("mtcars")
+mtcars 
+nrow(mtcars)
+ncol(mtcars)
+dim(mtcars)
+head(mtcars)
+tail(mtcars)
+View(mtcars)
+summary(mtcars)
+```
+
