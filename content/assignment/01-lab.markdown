@@ -61,7 +61,9 @@ I suggest you knit after each of these steps to make sure it looks right!
 
 3. Practice using some of the data exploration commands that were introduced in class. How many can you remember and use? 
 
-4. Load the cars.csv dataset you downloaded using `cars <- read.csv("data/cars.csv")`. We'll go over this syntax in more detail in week 4. What are some differences between the two datasets, particularly in the types of data stored in the columns? 
+4. Load the cars.csv dataset you downloaded using `cars <- read.csv("data/cars.csv")`. We'll go over this syntax in more detail in week 4. What are some differences between the two datasets (trees and cars), particularly in the types of data stored in the columns? 
+
+5. Check your spelling using Edit ->  Check/Spelling of the `ABC🗸` next to the save icon. 
 
 3. Knit your document as an HTML file (or PDF if you're brave and [installed LaTeX](/resource/install/#install-tinytex)). Use the "Knit" menu:
 
