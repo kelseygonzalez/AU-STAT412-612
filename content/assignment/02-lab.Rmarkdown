@@ -21,7 +21,7 @@ readr::write_csv(tidyr::drop_na(palmerpenguins::penguins, body_mass_g),
 
 # My first plots
 
-Insert a chunk below and use it to create a scatterplot (hint: `geom_point()`) with diplacement (`displ`) on the x-axis, city MPG (`cty`) on the y-axis, and with the points colored by drive (`drv`).
+Insert a chunk below and use it to create a scatterplot (hint: `geom_point()`) with displacement (`displ`) on the x-axis, city MPG (`cty`) on the y-axis, and with the points colored by drive (`drv`).
 
 PUT CHUNK HERE
 
@@ -29,11 +29,177 @@ Insert a chunk below and use it to create a histogram (hint: `geom_histogram()`)
 
 PUT CHUNK HERE
 
+1. 
+Using the `iris` dataset, plot petal length vs petal width, coding by sepal length, sepal width, and species. Do you notice anything? Is this a good plot, why or why not? 
 
-# My first data manipulation
+1. Use `data()` to load the `diamonds` dataset from ggplot2. Plot `price` vs `carat`. Account for overplotting if possible.
 
-Insert a chunk below and use it to calculate the average city MPG (`cty`) by class of car (`class`). This won't be a plot---it'll be a table. Hint: use a combination of `group_by()` and `summarize()`.
+1. Create a boxplot for log-price vs. cut.  
+- Note: `cut` is the quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+- Does anything surprise you? 
+- Can you think of another plot that could explain your surprise?
 
-PUT CHUNK HERE
+    ```{r, eval = params$solutions, echo = params$solutions}
+    ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
+      geom_boxplot() +
+      scale_y_log10()
+    
+    ## Ideal diamonds are lower priced?
+    ```
+
+    ```{r, eval = params$solutions, echo = params$solutions}
+    ggplot(data = diamonds, mapping = aes(x = cut, y = carat)) +
+      geom_boxplot() +
+      scale_y_log10()
+    ## But they also tend to be smaller diamonds.
+    ```
+
+# Diamonds
+
+- The goal of the diamonds dataset is to see which characteristics are most influential on price.  
+
+1. Perform an exploratory data analysis and develop some conjectures on what variables impact price. 
+- Consider if transforming the variables or scales might help?
+- Can some associations be explained by other variables? 
+  + For example, can the decrease in price as the cut worsens be explained by the carat of the diamond?
+  
+- Make plots of price vs each of the four other variables. Use the type of plot appropriate to the types of variables.
+
+```{r}
+library(ggplot2)
+data("diamonds")
+```
+
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = carat, y = price)) +
+  geom_point(alpha = 0.05) +
+  scale_y_log10() +
+  scale_x_log10()
+
+
+## Carat marginally increases price
+```
+
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
+  geom_boxplot() +
+  scale_y_log10()
+
+
+# Cut marginally decreases price
+```
+
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = color, y = price)) +
+  geom_boxplot() +
+  scale_y_log10()
+
+
+# Color marginally decreases price
+```
+
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = clarity, y = price)) +
+  geom_boxplot() +
+  scale_y_log10()
+
+# Clarity marginally decreases price
+```
+
+```{block}
+All of these unexpected associations are almost certainly due to the additional
+association with carat.
+```
+
+2. Look at the relationship of carat on cut, then color, and then clarity. What type of plot should you use?
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, y = carat)) +
+  geom_boxplot() +
+  scale_y_log10()
+
+# Carat and cut are negatively associated
+```
+
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = color, y = carat)) +
+  geom_boxplot() +
+  scale_y_log10()
+
+# Carat and color are negatively associated
+```
+
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = clarity, y = carat)) +
+  geom_boxplot() +
+  scale_y_log10()
+
+# Carat and clarity are negatively associated
+```
+
+
+
+3. Use the following to create "bins" for carat and assign to a new variable `carat_bins` in the data frame.
+
+    ```{r, echo = TRUE}
+    ## create the breaks for the bin boundaries
+    carat_breaks <- c(-Inf, quantile(diamonds$carat, seq(0.05, 0.95, by = 0.05)), Inf)
+    
+    ## Determine the bin for each diamond
+    diamonds$carat_bin <- cut(diamonds$carat, breaks = carat_breaks)
+    ```
+
+4. Relook the associations for cut and price, color and price, and clarity and price, and use facets to look at the relationship within each new carat_bin.
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
+  scale_y_log10() +
+  geom_boxplot() +
+  facet_wrap(~carat_bin)
+
+ggplot(data = diamonds, mapping = aes(x = color, y = price)) +
+  scale_y_log10() +
+  geom_boxplot() +
+  facet_wrap(~carat_bin)
+
+ggplot(data = diamonds, mapping = aes(x = clarity, y = price)) +
+  scale_y_log10() +
+  geom_boxplot() +
+  facet_wrap(~carat_bin)
+
+## Within each bin there is mostly an increase
+```
+
+5. Consider the use of the function `prop.table()` to look at numerical summaries of two variables at a time where `margin = 1` looks by row and `margin = 2` looks by column.  
+- Look at cut and color, cut and clarity, and then color and clarity.
+  + Create a table using `table(var1, var2)` 
+  + Use it as the argument to `prop.table(my_table, margin = 1)`. 
+  + If you want to control the number of digits printed out, wrap inside a call to `print( ..., digits = 1)`
+
+```{r}
+## Cut and color seem to be mostly independent
+print(prop.table(table(diamonds$cut, diamonds$color), margin = 1), digits = 1)
+print(prop.table(table(diamonds$cut, diamonds$color), margin = 2), digits = 1)
+```
+
+
+```{r}
+## Cut and clarity seem to be more related, but not so much
+print(prop.table(table(diamonds$cut, diamonds$clarity), margin = 1), digits = 1)
+print(prop.table(table(diamonds$cut, diamonds$clarity), margin = 2), digits = 1)
+```
+
+
+```{r}
+## Cut and clarity seem to be more related, but not too much
+print(prop.table(table(diamonds$color, diamonds$clarity), margin = 1), digits = 1)
+print(prop.table(table(diamonds$color, diamonds$clarity), margin = 2), digits = 1)
+```
+
 
 

@@ -46,8 +46,7 @@ Download the .Rmd template used for this homework [<i class="fas fa-file-code"><
 |6.2|.50|Interpretation|
 |7.1|1.50|Box Plot with correct data and colors|
 |7.2|.50|Correct scales|
-|7.3|.50|Correct outliers|
-|7.4|.50|No legend and correct colors and theme|
+|7.3|.50|No legend and correct colors and theme|
 |8.1|2.00|Plot with correct data and facets|
 |8.2|.50|Correct scales|
 |8.3|.50|Correct line color|
@@ -55,7 +54,7 @@ Download the .Rmd template used for this homework [<i class="fas fa-file-code"><
 |EC.1|.50|Correct Overall OLS line|
 |EC.2|.50|Interpretation|
 |EC.3|.50|Correct Legend Title|
-|**Total**|**17.5**| Plus 1.5 Optional Extra Credit|
+|**Total**|**17**| Plus 1.5 Optional Extra Credit|
 
 
 # Question 1
@@ -93,25 +92,48 @@ Does the effect of body weight on sleep total appear larger for some diets?
 
 # Question 7
 Reproduce the following plot:
-![]("/img/hw-1-q7.png")
+```{r echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+library(tidyverse)    
+library(ggthemes)
+data("msleep")
+    ggplot(data = msleep, mapping = aes(x = vore, y = sleep_total, fill = vore)) +
+      geom_boxplot(show.legend = FALSE) +
+      theme_bw() +
+      scale_y_log10() +
+      labs(x = "Diet", y = "Sleep Total") +
+      scale_fill_colorblind()
+```
+
 
 Note the following elements:
 
   - the scale of the values of the y axis, 
-  - the outlier shapes, 
   - the lack of a legend, 
   - the color scheme and the background.(hint: I used the colorblind safe palette)
 
 # Question 8
 Reproduce the following plot: 
-![]("/img/hw-1-q8.png")
+```{r echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+library(tidyverse)    
+library(ggthemes)
+    ggplot(msleep, aes(x = bodywt, y = sleep_total)) +
+      geom_point() +
+      geom_smooth(method = lm, se = FALSE, color = "dark green") +
+      scale_y_log10() +
+      scale_x_log10() +
+      theme_bw() +
+      facet_wrap(~vore) +
+      labs(title = "Sleep Total vs Body Weight by Diet (Logged Scales)",
+      x = "Body Weight",
+      y = "Sleep Total") 
+```
 
 Note the following elements:
 
   - the scale of the values of the x and y axes, 
   - the facets, 
   - the titles
-  - the color of the line, 
+  - the color of the line (doesn't have to be an exact match), 
   - the overall black and white theme
 
 # Extra Credit

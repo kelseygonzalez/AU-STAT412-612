@@ -41,8 +41,7 @@ Download the .Rmd template used for this homework [<i class="fas fa-file-code"><
 |6.2|.50|Interpretation|
 |7.1|1.50|Box Plot with correct data and colors|
 |7.2|.50|Correct scales|
-|7.3|.50|Correct outliers|
-|7.4|.50|No legend and correct colors and theme|
+|7.3|.50|No legend and correct colors and theme|
 |8.1|2.00|Plot with correct data and facets|
 |8.2|.50|Correct scales|
 |8.3|.50|Correct line color|
@@ -50,7 +49,7 @@ Download the .Rmd template used for this homework [<i class="fas fa-file-code"><
 |EC.1|.50|Correct Overall OLS line|
 |EC.2|.50|Interpretation|
 |EC.3|.50|Correct Legend Title|
-|**Total**|**17.5**| Plus 1.5 Optional Extra Credit|
+|**Total**|**17**| Plus 1.5 Optional Extra Credit|
 
 # Question 1
 Load the tidyverse and ggthemes packages and the `msleep` data set.
@@ -136,7 +135,6 @@ Type you answer in this "block" code chunk.
 # Question 7
 Reproduce the following plot (find on the website!). Note the following elements:
   - the scale of the values of the y axis, 
-  - the outlier shapes, 
   - the lack of a legend, 
   - the color scheme and the background.(hint: I used the colorblind safe palette)
 

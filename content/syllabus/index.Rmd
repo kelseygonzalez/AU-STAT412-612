@@ -50,7 +50,7 @@ STAT 612 requires successful completion of,  or concurrent enrollment in, STAT 6
 The textbook for this course is available via a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License, which means we can use it for free online. 
 We'll be reading _R for Data Science: Visualize, Model, Transform, and Import Data_ by Hadley Wickham and Garrett Grolemund
 
-[![R4DS Textbook]("https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png")](https://r4ds.had.co.nz/){width=50%"}
+[![R4DS Textbook](https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png)](https://r4ds.had.co.nz/){width=50%"}
 
 ## Computing Environment
 * Access to a computer with an operating system capable of running R 4.0
