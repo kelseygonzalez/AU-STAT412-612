@@ -15,5 +15,11 @@ editor_options:
 ---
 
 
-
+* Watch `The Power of Great Datasets - RStudio::Global(2021)`:  link forthcoming 
 * Read [R4DS Chapter 7](https://r4ds.had.co.nz/exploratory-data-analysis.html) 
+* Explore some datasets from [#TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets)
+* Explore some datasets from [Kaggle](https://www.kaggle.com/datasets)
+* Explore some datasets from the [Data is Plural archive](https://dataset-finder.netlify.app/
+)
+
+Come to the lab with some idea of datasets you would enjoy working with for the final project. This is not binding, but to get you started thinking about the direction you would like to go for the project. 

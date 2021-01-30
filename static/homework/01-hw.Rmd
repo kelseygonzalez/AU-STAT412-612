@@ -1,15 +1,10 @@
 ---
 title: "HW 1: Visualization and Markdown"
-date: "`r format(Sys.Date(), '%d %B, %Y')`"
-due_date: "2021-02-01"
-due_time: "11:59 PM"
-menu:
-  assignment:
-    parent: Homework
-    weight: 1
-type: docs
-toc: true
+author: "Your Name"
+date: "`r format(Sys.Date(), '%d %B, %Y')`" # Or, Date this field yourself! 
+output: html_document
 ---
+
 
 For your first homework, you will practice using RMarkdown and `ggplot2` on a dataset talking about animals and their sleep patterns. 
 
@@ -57,66 +52,115 @@ Download the .Rmd template used for this homework [<i class="fas fa-file-code"><
 |EC.3|.50|Correct Legend Title|
 |**Total**|**17.5**| Plus 1.5 Optional Extra Credit|
 
-
 # Question 1
 Load the tidyverse and ggthemes packages and the `msleep` data set.
+```{r question-1}
+
+```
+
 
 # Question 2
 How many mammals are in the `msleep` data frame? How many variables? Use two R functions to get this information.
+```{r question-2}
+
+```
 
 # Question 3
 You want to explore if total sleep time has a relationship with mammal body weight.
 
   - Write out a question about the relationship
+```{block question-3a}
+Type you answer in this "block" code chunk.
+```
   - What is your response variable and what type is it?
+```{block question-3b}
+Type you answer in this "block" code chunk.
+```
   - What is your explanatory variable and what type is it?
+```{block question-3c}
+Type you answer in this "block" code chunk.
+```  
   - What is the appropriate type of plot given the types of variables? 
+```{block question-3d}
+Type you answer in this "block" code chunk.
+```
   - Create the appropriate plot with body weight against the total amount of sleep.
+```{r question-3e}
+#Code your plot here
+```
   - Interpret the plot in one sentence: what does the shape tell you about the relationship?
+```{block question-3f}
+Type you answer in this "block" code chunk.
+```
 
 # Question 4
 When you see a curved or skewed relationship in a plot, you can often get rid of the curve or skew by taking a log transformation of either the explanatory or the response variable or both.
-
   - Create **three** plots: 1) 'log(x)`, 2) `log(y)` and 3) `log(x)` and `log (y)`. 
+```{r question-4a}
+#log(x) plot here
+```
+
+```{r question-4b}
+#log(y) plot here
+```
+
+```{r question-4c}
+#log(x) & log(y) plot here
+```
+
   - Which plot appears best (most linear) to you and why?
+```{block question-4d}
+Type you answer in this "block" code chunk.
+```
 
 # Question 5
 Color code your preferred plot from question 4 by the diet of the animals (`vore`).
-
   - Make the axis labels nice, 
   - Change the theme to your favorite theme_*(), and 
   - Add a meaningful title to the plot.
+```{r question-5}
+
+```
 
 # Question 6
 Copy the plot from part 5 and add an OLS("lm") line (**without** standard errors) for each `vore` category.
+```{r question-6a}
+
+```
+
 Does the effect of body weight on sleep total appear larger for some diets?
+```{block question-6b}
+Type you answer in this "block" code chunk.
+```
 
 # Question 7
-Reproduce the following plot:
-![]("/img/hw-1-q7.png")
-
-Note the following elements:
-
+Reproduce the following plot (find on the website!). Note the following elements:
   - the scale of the values of the y axis, 
   - the outlier shapes, 
   - the lack of a legend, 
   - the color scheme and the background.(hint: I used the colorblind safe palette)
 
+```{r, echo = FALSE, eval = TRUE, message = FALSE}
+
+```
+
 # Question 8
-Reproduce the following plot: 
-![]("/img/hw-1-q8.png")
-
-Note the following elements:
-
+Reproduce the following plot (find on the website!). Note the following elements:
   - the scale of the values of the x and y axes, 
   - the facets, 
   - the titles
   - the color of the line, 
   - the overall black and white theme
 
+```{r}
+
+```
+
 # Extra Credit
 Copy the plot from question 6 and add the overall (across *all* vore types) OLS line (**without** standard errors) to the plot.
-
   - Make sure this new line is dashed, and has width of 0.5.
   - Change the title of the legend to "Diet".
   - In one sentence, how does this line compare to the individual lines?
+```{block ec-1}
+Type you answer in this "block" code chunk.
+```

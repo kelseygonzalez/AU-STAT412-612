@@ -17,3 +17,4 @@ editor_options:
 
 
 * Read [R4DS Chapter 3](https://r4ds.had.co.nz/data-visualisation.html) 
+* Read [Four Big Dataviz Myths, Busted](https://medium.com/nightingale/four-big-dataviz-myths-busted-93f65088303c)

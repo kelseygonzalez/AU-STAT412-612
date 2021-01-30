@@ -15,6 +15,78 @@ bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 slides: "04-slides"
 ---
+OVerview ideas:
+ 
+Lab: interest speed dating 
+EDA on two datasets you're interested in 
 
-skimr
-cool data video homework in prep for data challenge, add data sources 
+```{r explore,  out.width = '100%'}
+knitr::include_graphics(here::here("static", "img", "ggplot2_exploratory.png"))
+```
+
+
+# Lesson Objectives
+
+# Loading data
+## `readr` for
+## `Haven` for 
+## `readxl`
+
+# Finding Data
+https://dataset-finder.netlify.app/
+
+
+# EDA
+
+## Why EDA
+Why do we want to visualize our data? 
+
+- All the graphs are based on data with the same summary statistics!
+
+```{r anscombe, echo=FALSE, fig.cap="Anscombe's Quartet", out.width = '100%'}
+knitr::include_graphics(here::here("static", "img", "Anscombes_quartet.png"))
+
+```
+
+We can see this more explicitly with the "DatasauRus Dozen" Package. We have nearly
+identical summary statistics, but the actual data looks vastly different from
+eachother. 
+
+```{r, fig.height = 3, fig.width  = 5, message = FALSE}
+library(datasauRus)
+datasaurus_dozen %>%
+  group_by(dataset) %>%
+  summarize(
+    mean_x    = mean(x),
+    mean_y    = mean(y),
+    std_dev_x = sd(x),
+    std_dev_y = sd(y),
+    corr_x_y  = cor(x, y)
+  )
+```
+
+```{r, fig.height = 4.5, fig.width  = 6.5, eval = TRUE}
+ggplot(datasaurus_dozen, 
+       aes(x=x, y=y, color=dataset))+
+  geom_point(size = .5)+
+  theme_void()+
+  theme(legend.position = "none")+
+  facet_wrap(~dataset, ncol=3)
+```
+@noauthor_datasaurus_nodate  
+
+## Automated EDA
+
+### `skimr`
+
+### `visdat`: https://twitter.com/pop_gen_JED/status/1354202108346724356?s=19
+
+
+## Visual EDA
+
+## Other EDA
+
+### Contingency Tables 
+### Correlations 
+
+# References

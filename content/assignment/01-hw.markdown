@@ -1,6 +1,6 @@
 ---
 title: "HW 1: Visualization and Markdown"
-date: "`r format(Sys.Date(), '%d %B, %Y')`"
+date: "30 January, 2021"
 due_date: "2021-02-01"
 due_time: "11:59 PM"
 menu:

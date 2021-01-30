@@ -18,3 +18,5 @@ editor_options:
 
 * Read [R4DS Chapter 8](https://r4ds.had.co.nz/workflow-projects.html) 
 * Read [R4DS Chapter 27](https://r4ds.had.co.nz/r-markdown.html) 
+
+<!--In future iterations: https://www.tidyverse.org/blog/2017/12/workflow-vs-script/--> 
