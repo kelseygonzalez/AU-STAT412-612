@@ -54,7 +54,7 @@ data("penguins")
 
 ## The ‘ggplot2’ package
 
-![RStudio layout](/img/ggplot2_masterpiece.png)
+![ggplot2\_masterpiece](/img/ggplot2_masterpiece.png)
 
 ### Foundational Concepts Underlying the ggplot2 Package
 
@@ -91,16 +91,14 @@ data("penguins")
 
 -   The GoG approach works with the elements as individual layers in building or creating a graph.
 
-    ![“Grammar of Graphics Layers”](./images/ggplot_layers.png) Hadley Wickham[^1]
+![“Grammar of Graphics Layers”](/img/ggplot_layers.png) Hadley Wickham[^1]
 
 -   You can get most of your plotting work done by manipulating four elements:
-
     -   data frames - the input data
     -   aesthetic mappings - where things go and what they look like, … created using `aes()`
         -   See help for aesthetic and look at the vignette for ggplot2: ggplot2-specs
     -   geoms - type of plot geometry, e.g., point, bar, column, hex, …, created using `geom_*()`, and
     -   facets - creating multiple graphs using `facet_grid()` or `facet_wrap()` to show an additional dimension of the data
-
 -   We won’t modify the other GoG elements too often.
 
 #### The `ggplot()` function is the Workhorse of ggplot2
