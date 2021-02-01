@@ -1,7 +1,7 @@
 ---
 title: "Lab 2"
-date: "2021-02-05"
-due_date: "2021-02-06"
+date: "2021-02-04"
+due_date: "2021-02-05"
 due_time: "11:59 PM"
 menu:
   assignment:

@@ -1,7 +1,7 @@
 ---
 title: "HW 2: Wrangling"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-due_date: "2021-02-08"
+date: "2021-02-22"
+due_date: "2021-02-28"
 due_time: "11:59 PM"
 menu:
   assignment:
