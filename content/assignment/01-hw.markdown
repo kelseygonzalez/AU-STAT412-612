@@ -1,7 +1,7 @@
 ---
 title: "HW 1: Visualization and Markdown"
-date: "30 January, 2021"
-due_date: "2021-02-01"
+date: "2021-02-01"
+due_date: "2021-02-07"
 due_time: "11:59 PM"
 menu:
   assignment:

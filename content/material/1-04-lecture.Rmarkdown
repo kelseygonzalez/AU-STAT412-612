@@ -83,7 +83,7 @@ ggplot(datasaurus_dozen,
 
 
 ## Visual EDA
-
+![Visual EDA]("/img/ggplot2_exploratory.png")
 ## Other EDA
 
 ### Contingency Tables 

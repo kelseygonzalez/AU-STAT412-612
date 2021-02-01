@@ -1,0 +1,172 @@
+---
+title: "Class 4"
+author: "Kelsey Gonzalez"
+date: "2/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("tidyverse")
+install.packages("palmerpenguins")
+
+install.packages(c("tidyverse", "palmerpenguins"))
+```
+
+# what is ggplot2? 
+gg = grammar of graphics
+
+ - aesthetic mappings
+ - data
+ - geometic transformations 
+ - facet
+
+# basic function
+function() 
+
+```{r}
+library(tidyverse) 
+library(palmerpenguins)
+data(penguins)
+```
+
+
+```{r eval = FALSE }
+ggplot(data = DATA, mapping = aes(x = X, y = Y, color = VARIABLE)) +
+  geom_TYPE()
+
+# add a snippet 
+```
+
+# Two quantitative variables 
+## scatter plot (geom_point)
+```{r}
+# install.packages("ggthemes")
+library(ggthemes)
+
+ggplot(data = penguins, mapping = aes(x = flipper_length_mm,
+                                      y = bill_length_mm,
+                                      group = species,
+                                      color = species)) +
+  geom_point(shape = 15, alpha = 0.5, size = 2) +
+  # geom_smooth() # Loess trend line 
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_fivethirtyeight() +
+  labs(title = "How does flipper length relate to bill length?",
+       subtitle = "A study of penguins",
+       y = "Bill Length (mm)",
+       x = "Flipper Length (mm)",
+       caption = "Data = Palmer Penguins")
+```
+
+### jitter & hex
+```{r}
+ggplot(data = penguins, mapping = aes(x = year, y = bill_length_mm,
+                                      color = species)) +
+  # geom_point()
+  geom_jitter()
+
+ggplot(data = penguins, mapping = aes(x = flipper_length_mm,
+                                      y = bill_length_mm,
+                                      color = species)) +
+  geom_hex()
+
+```
+
+
+# 1 quant, 1 categorical
+## boxplot 
+```{r}
+ggplot(data = penguins, mapping = aes(x = species, y = body_mass_g,
+                                      fill = species)) +
+  geom_boxplot()
+```
+
+## violin plot
+
+```{r}
+ggplot(data = penguins, mapping = aes(x = species, y = body_mass_g,
+                                      fill = species)) +
+  geom_violin()
+```
+
+```{r}
+library(ggbeeswarm)
+ggplot(data = penguins, mapping = aes(x = species, y = body_mass_g,
+                                      color = species)) +
+  geom_quasirandom()
+```
+
+### Facet
+
+```{r}
+ggplot(data = penguins, mapping = aes(x = species, y = body_mass_g,
+                                      fill = species)) +
+  geom_violin() +
+  facet_wrap(~ sex)
+```
+
+```{r}
+ggplot(data = penguins, mapping = aes(x = species, y = body_mass_g,
+                                      fill = species)) +
+  geom_violin() +
+  facet_grid(island ~ sex)
+```
+
+## Bar plots
+```{r}
+ggplot(penguins, aes(x = island,  fill = sex)) +
+  # geom_bar()  #stacked bar plot 
+  geom_bar(position = "dodge")
+```
+geom_col() for when you want to set a y aesthetic 
+
+# one quantitative variable
+## geom_histogram
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+  geom_histogram(alpha = 0.5, binwidth = 5)
+```
+
+## geom_density
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+  geom_density(alpha = 0.5)
+```
+
+## ggridges
+```{r}
+library(ggridges)
+ggplot(penguins, aes(x = flipper_length_mm, y = species, fill = species)) +
+  geom_density_ridges(alpha = 0.5) +
+  # scale_fill_manual(values = c("purple", "deeppink4", "#e9c46a"))
+  # scale_fill_colorblind() 
+  scale_fill_viridis_d()
+```
+
+# Scales 
+
+```{r}
+
+plot_1 <- ggplot(data = penguins, mapping = aes(x = flipper_length_mm,
+                                      y = bill_length_mm,
+                                      color = body_mass_g)) +
+  geom_point(shape = 15, alpha = 0.5, size = 2) +
+  # geom_smooth() # Loess trend line 
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_fivethirtyeight() +
+  labs(title = "How does flipper length relate to bill length?",
+       subtitle = "A study of penguins",
+       y = "Bill Length (mm)",
+       x = "Flipper Length (mm)",
+       caption = "Data = Palmer Penguins") +
+  scale_color_continuous(low = "gold", high = "blue") +
+  theme(legend.position = "none")
+
+ggsave(filename = "images/my_first_plot.png", plot = plot_1, width = 5, height =3 )
+
+```
+

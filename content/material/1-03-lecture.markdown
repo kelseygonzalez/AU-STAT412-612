@@ -17,6 +17,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+-   Download the in-class written R Markdown [here](/class-output/class-4.Rmd).
+
 ## Learning Outcomes
 
 -   Use the capabilities of ggplot2.
@@ -762,6 +764,8 @@ ggsave(filename = "../output/my_first_plot.png",
 ```
 
 ## Multiple plots
+
+![ggplot2\_patchwork](/img/patchwork_1.jpg)
 
 The best way to combine multiple plots into one image outside of faceting is with the patchwork package. We won’t have much time to go into it, but you can [learn more on Patchwork here](https://patchwork.data-imaginist.com/articles/patchwork.html)
 

@@ -12,17 +12,14 @@ toc: true
 editor_options: 
   chunk_output_type: console
 ---
-```{r echo = FALSE, message = FALSE, warning = FALSE}
-library(tidyverse)
-library(gapminder)
-```
+
 
 
 # 1. Gapminder
 ![](https://storage.googleapis.com/kaggle-datasets-images/373567/726490/b870208e6f91c6a6c940f8a4df111c87/dataset-cover.png?t=2019-10-22-19-47-34)
 The goal of the gapminder dataset is to explore the relationship between GDP, population, and life expectancy.
 
-1. Create a barplot (hint: `geom_bar()`) of counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure untily you're able to explain why, fore example, there are `r gapminder %>% filter(continent == "Asia") %>% nrow()` counties in Asia in this dataset.
+1. Create a barplot (hint: `geom_bar()`) of counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure untily you're able to explain why, fore example, there are 396 counties in Asia in this dataset.
 
 2.  Use `data()` to load the `gapminder` dataset from the `gapminder` package (hint: you'll need to install this!).
 
