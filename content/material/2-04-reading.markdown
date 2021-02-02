@@ -15,7 +15,7 @@ editor_options:
 ---
 
 
-* Watch `The Power of Great Datasets - RStudio::Global(2021)`:  link forthcoming 
+* Watch [The Power of Great Datasets - RStudio::Global(2021)](https://rstudio.com/resources/rstudioglobal-2021/the-power-of-great-datasets/)
 * Read [R4DS Chapter 7](https://r4ds.had.co.nz/exploratory-data-analysis.html) 
 * Explore some datasets from [#TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets)
 * Explore some datasets from [Kaggle](https://www.kaggle.com/datasets)
