@@ -17,7 +17,7 @@ Download the .Rmd template used for this homework [<i class="fas fa-file-code"><
 
 
 # Instructions
-- After completing the questions, upload both the .RMD and PDF files to Canvas.
+- After completing the questions in your .Rmd, knit and upload both the .RMD and PDF _or_ HTML files to Canvas.
 - **Learning Outcomes**
   - Choose appropriate graphics for exploratory data analyses.
   - Employ the ggplot2 system of visualization.
