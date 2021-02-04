@@ -12,25 +12,19 @@ toc: true
 editor_options: 
   chunk_output_type: console
 ---
-```{r echo = FALSE, message = FALSE, warning = FALSE}
-library(tidyverse)
-library(gapminder)
-```
-
-
 # 1. Gapminder
 ![](https://storage.googleapis.com/kaggle-datasets-images/373567/726490/b870208e6f91c6a6c940f8a4df111c87/dataset-cover.png?t=2019-10-22-19-47-34)
 The goal of the gapminder dataset is to explore the relationship between GDP, population, and life expectancy.
 
-1. Create a barplot (hint: `geom_bar()`) of counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure untily you're able to explain why, fore example, there are `r gapminder %>% filter(continent == "Asia") %>% nrow()` counties in Asia in this dataset.
+2.  Use `data()` to load the `gapminder` dataset from the `gapminder` package (hint: you'll need to install this!). Also load the `tidyverse` package. 
 
-2.  Use `data()` to load the `gapminder` dataset from the `gapminder` package (hint: you'll need to install this!).
+1. Create a barplot (hint: `geom_bar()`) for total counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure untily you're able to explain why, fore example, there are `r gapminder %>% filter(continent == "Asia") %>% nrow()` counties in Asia in this dataset.
 
-3.  Create a scatterplot (hint: `geom_point()`) with year (`year`) on the x-axis, life expectancy (`lifeExp`) on the y-axis, and with the points colored by continent (`continent`). Make this a longitudinal / time-series plot by adding geom_line. Hint: To fix the incorrect mapping, how will you tell ggplot that the lines should follow the country column?
+3.  Create a scatterplot (hint: `geom_point()`) with year (`year`) on the x-axis, life expectancy (`lifeExp`) on the y-axis, and with the points colored by continent (`continent`). Make this a longitudinal / time-series plot by adding geom_line (this is a new one for us!). Hint: To fix the incorrect mapping, how will you tell ggplot that the lines should follow the country column?
 
-4.  Create a density plot with life expectancy (`lifeExp`) on the x-axis. Do not include anything on the y-axis What ways can we disaggregate this density plot by adding in continent (I can immediately think of 3 we covered in class)? What do you learn about the continents?
+4.  Create a density plot with life expectancy (`lifeExp`) on the x-axis. Do not include anything on the y-axis. What ways can we disaggregate this density plot by adding in continent (I can immediately think of 3 we covered in class)? What do you learn about the continents?
 
-    -   Add a title, axis labels, and a new theme to your chosen plot from the previous question.
+    -   Add a title, axis labels, and a new theme to your preferred plot.
     -   Try to customize the color or fill property with a special scale - either create your own (`scale_fill_manual(values = c())`) or use a predefined scale from `ggplot2` or `ggthemes`.
 
 5.  Finally, create a scatter plot that explores the relationship between x, `gdpPercap` and y, `lifeExp`.
