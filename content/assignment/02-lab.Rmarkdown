@@ -14,11 +14,12 @@ editor_options:
 ---
 # 1. Gapminder
 ![](https://storage.googleapis.com/kaggle-datasets-images/373567/726490/b870208e6f91c6a6c940f8a4df111c87/dataset-cover.png?t=2019-10-22-19-47-34)
+
 The goal of the gapminder dataset is to explore the relationship between GDP, population, and life expectancy.
 
-2.  Use `data()` to load the `gapminder` dataset from the `gapminder` package (hint: you'll need to install this!). Also load the `tidyverse` package. 
+1.  Use `data()` to load the `gapminder` dataset from the `gapminder` package (hint: you'll need to install this!). Also load the `tidyverse` package. 
 
-1. Create a barplot (hint: `geom_bar()`) for total counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure untily you're able to explain why, fore example, there are `r gapminder %>% filter(continent == "Asia") %>% nrow()` counties in Asia in this dataset.
+2. Create a barplot (hint: `geom_bar()`) for total counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure untily you're able to explain why, fore example, there are `r gapminder %>% filter(continent == "Asia") %>% nrow()` counties in Asia in this dataset.
 
 3.  Create a scatterplot (hint: `geom_point()`) with year (`year`) on the x-axis, life expectancy (`lifeExp`) on the y-axis, and with the points colored by continent (`continent`). Make this a longitudinal / time-series plot by adding geom_line (this is a new one for us!). Hint: To fix the incorrect mapping, how will you tell ggplot that the lines should follow the country column?
 
@@ -35,6 +36,11 @@ The goal of the gapminder dataset is to explore the relationship between GDP, po
     -   Try moving the legend for continents into the plot frame, e.g., by adding `+ theme(legend.position = c(0.8, 0.2))`. What do those numbers seem to do?
     -   Try changing the theme for this plot to one that you like from either base `ggplot2` or from the `ggthemes` package. Why do you like this theme?
     -   Try making a "bubble" plot by mapping the size of each point to the point's population (`pop`)
+
+
+As announced in class, the Diamonds part is optional for your turned in version of the lab.
+
+
 
 # 2. Diamonds
 ![](https://datasciencereview.com/wp-content/uploads/2018/08/Diamond-Carat-Relationship.png)
