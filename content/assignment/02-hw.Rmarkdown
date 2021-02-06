@@ -11,3 +11,428 @@ type: docs
 toc: true
 
 ---
+
+
+# Instructions {-}
+
+- After completing the questions, upload both the .RMD and PDF files to Canvas.
+- Use dplyr functions wherever possible. 
+
+# Grading Rubric {-}
+|Question.Part:|Points|Topic|
+|---|--:|-------------|
+|1.1a|1.00|Loads packages and data|
+|1.1b|.50|Variables|
+|1.1c|.50|Observations|
+|1.1d|.50|first three rows|
+|1.2a|1.00|worst three planes|
+|1.2b|.50|num flights|
+|1.2c|1.50|worst three with more than 12|
+|1.3a|1.50|Correct data|
+|1.3b|1.50|Correct Plot|
+|1.3c|.50|Correct Interpretation|
+|1.4a|2.00|Correct worst flights for each destination|
+|1.5|1.50|Correct Results for |
+|1.6.1a|2.00|Correct data|
+|1.6.1b|2.00|correct correlation|
+|1.6.2 (EC)|1.00|Correct sample and plot|
+|2.1|.50|Loads packages and data|
+|2.2a|1.00|Missing gender|
+|2.3|1.00|Update Droids|
+|2.4|1.00|Correct BMI Update is saved to data frame|
+|2.5|1.00|Correct medians and mean height|
+|2.6|1.00|Correct Box Plots|
+|2.7|1.00|Correct Scatter Plot with facets|
+|2.8|2.00|Correct Plot|
+|**Total**|25| Plus extra Credit|
+# The `flights` data frame from the nycflights13 package.
+1. Load and review the data
+- Load the tidyverse nycflights 13 packages 
+- Load the flights data frame 
+- What are the variables
+- How many observations (rows) are there?
+- Look at the first three rows
+
+    ```{r, message = FALSE, warning = FALSE}
+    library(tidyverse)
+    library(nycflights13)
+    data("flights")
+    names(flights)
+    nrow(flights)
+    head(flights,3)
+    ```
+
+2. Worst Plane to Fly
+- Which planes (`tailnum`) have the three worst (highest) average departure delay record?
+  1. How many flights did each make?
+  2. Now only look tailnums where each flew more than 12 flights and find the three tailnums with the highest average departure delay and show the tailnums with their average departure delay and number of flights.
+
+    ```{r}
+    flights %>%
+      group_by(tailnum) %>%
+      summarize(mean_dep_delay = mean(dep_delay, na.rm = TRUE), n()) %>%
+      arrange(desc(mean_dep_delay)) %>%
+      slice(1:3)
+    
+    flights %>% 
+      group_by(tailnum) %>% 
+      filter(n()>12) %>% 
+      summarize(mean_dep_delay = mean(dep_delay, na.rm = TRUE), n()) %>%
+      arrange(desc(mean_dep_delay)) %>%
+      slice(1:3)
+    ```
+
+3. Best Time of Day to Fly
+- Use a plot to see what hour of the day you should fly to minimize your expected (average) delay time?  
+    ```{r}
+    flights %>%
+      group_by(hour) %>%
+      summarize(mean_dep_delay = mean(dep_delay, na.rm = TRUE)) %>%
+      ggplot(mapping = aes(x = hour, y = mean_dep_delay)) +
+      geom_line() + # or geom_point()
+      xlab("Hour") +
+      ylab("Departure Delay (min)") +
+      theme_bw()
+    ```
+
+    ```{block}
+    You should leave at 5 AM.
+    ```
+
+4. Worst Flight Numbers for each Destination
+- In a single series of steps, with no intermediate variables, complete the following steps in one set of piped code to produce *a single output*:
+  1. For each destination, compute the total minutes of arrival delay, then use that result to:
+  2. Compute for each trip to a destination its proportion of the total arrival delay for the destination; then use that result to
+  3. Sort by destination, alphabetically, and from the highest to lowest proportion of total delay for each destination; then use that result to
+  4. Choose for each trip, the destination, total arrival delay, flight number, proportion of the delay, number of trips, and the year, month, and day of departure; then use that result to
+  5. Show the worst trip for each destination with total delay >= 0.
+  
+- Extra Credit (1 pt), Repeat but instead of the worst trip for a destination, 
+- Replace step 2 with Compute for each *flight number* to a destination. step 4, choose for each flight number, and step 5 Show the worst flight number ...
+    ```{r}
+    #worst individual flight
+    flights %>%
+      group_by(dest) %>%
+      mutate(dest_delay = sum(arr_delay, na.rm = TRUE),
+             prop_delay = arr_delay / dest_delay,
+             n=n()) %>%
+      arrange(dest, desc(prop_delay)) %>% 
+      select(dest, dest_delay, flight, prop_delay,n, year, month, day, dep_time) %>% 
+      filter(dest_delay >=0, prop_delay == max(prop_delay, na.rm = TRUE))
+      
+    # or
+    flights %>%
+      group_by(dest) %>%
+      mutate(dest_delay = sum(arr_delay, na.rm = TRUE),
+             prop_delay = arr_delay / dest_delay,
+             n=n()) %>%
+      arrange(dest, desc(prop_delay)) %>% 
+      select(dest, dest_delay, flight, prop_delay,n, year, month, day, dep_time) %>%  
+      filter(dest_delay >=0) %>% 
+        slice_max(prop_delay, with_ties = TRUE)  
+    
+    
+    #Worst flight number
+    flights %>%
+      group_by(dest) %>%
+      mutate(dest_delay = sum(arr_delay, na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      group_by(dest, flight) %>% 
+      summarize(fprop_delay = sum(arr_delay, na.rm = TRUE) / dest_delay, dest_delay = dest_delay,
+             n=n()) %>% 
+      select(dest, dest_delay, flight, fprop_delay,n) %>% 
+      distinct() %>% 
+      arrange(dest, desc(fprop_delay)) %>% 
+      filter(dest_delay >=0) %>% 
+      ungroup() %>% 
+      group_by(dest) %>% 
+      slice_max(fprop_delay, with_ties = TRUE)
+    ```
+  
+5. Destinations with Multiple Carriers from NYC Area  
+- Find all destinations that are flown by at least two carriers and show the destination airports ranked 25-30 for the most carriers out of the NYC airports. (hint: use `n_distinct()`)
+  
+    ```{r}
+    flights %>%
+      group_by(dest) %>%
+      summarize(ncarr = n_distinct(carrier)) %>%
+      filter(ncarr >= 2) %>% 
+      arrange(desc(ncarr)) %>% 
+      slice(25:30)
+    ```
+
+
+6. Effect of the Delay in the Flight before Yours
+
+- Delays are typically temporally correlated: even once the problem causing the initial delay has been resolved, later flights are delayed to allow earlier flights to leave.  
+
+6.1. Using `lag()` and `cor()`, explore how the departure delay of a flight is related to the delay of the immediately preceding flight.
+- Hint. Think through how the data needs to be grouped, filtered, and organized so the lag makes sense from both physical/temporal perspectives.
+- Calculate the lag and save to a new data frame
+- Use the new data frame to calculate the daily correlation for each airport - Hint- there should be 1095 rows in the answer.
+- Hint. Look at the help for `cor()` to select the correct arguments to handle the `NAs` created by `lag()`
+- Calculate the mean and median of the daily correlation for each airport along with the number of days considered and arrange in decreasing order by mean
+- Use an appropriate plot to show the distribution of the daily correlation for each airport
+- Interpret the numerical summary and plot to answer the question which airport appears to have the highest average daily correlation between subsequent flight delays.
+   
+    ```{r}
+flights %>%
+      group_by(origin) %>%
+      arrange(origin, year, month, day, dep_time) %>% 
+      group_by(origin, year, month, day) %>% 
+      filter(!is.na(dep_delay)) %>% 
+      mutate(prev_dep_del = lag(dep_delay)) %>%
+      ungroup() ->
+      sumdat
+    
+    ## Two options to deal with NAs from lag()
+    sumdat %>%
+      group_by(origin, year, month, day) %>%
+      summarize(cor = cor(dep_delay, prev_dep_del, 
+                          use = "pairwise.complete.obs")) -> 
+      corr_by_day
+    # if "use" has the value "pairwise.complete.obs" 
+    # the correlation between each pair of variables is computed
+    #  using all complete pairs of observations on those variables. 
+    
+    # Method 2 - filter out the NAs
+    sumdat %>%
+      filter(!is.na(dep_delay), !is.na(prev_dep_del)) %>% 
+      group_by(origin, year, month, day) %>%
+      summarize(cor = cor(dep_delay, prev_dep_del)) -> 
+      corr_by_day2
+    
+    corr_by_day %>% 
+      group_by(origin) %>% 
+      summarize(mean = mean(cor, na.rm = TRUE),
+                median = median(cor, na.rm = TRUE), n()) %>% 
+      arrange(desc(mean))
+    corr_by_day %>% 
+      ggplot(aes(x = origin, y = cor))+
+      geom_boxplot()
+```
+
+6.2. **EXTRA CREDIT** Select a sample of 50,000 rows at random from the new data frame and plot the current flights departure delay (y) against the previous flight's delay by origin(x). 
+  - Filter out any previous delays greater than 600
+  - Use an abline and a loess smoother 
+  - Interpret the plot to answer the question Do flights generally have higher or lower delays than the previous flight.
+
+    ```{r}
+set.seed(1) 
+    sumdat %>%
+      filter(!is.na(prev_dep_del), prev_dep_del<=500) %>% 
+     sample_n(size = 50000) %>%
+      ggplot(mapping = aes(x = prev_dep_del, 
+                           y = dep_delay, color = origin)) +
+      geom_point(alpha = 0.3) +
+      theme_bw() +
+      xlab("Prev Departure Delay") +
+      ylab(" Departure Delay") +
+      geom_smooth(se = FALSE) +
+      geom_abline()
+    
+    ```
+ 
+
+# Star Wars Characters
+
+The `starwars` data frame in the dplyr package contains demographic characteristics of various characters from the hit franchise Star Wars.
+
+1. Load the data into R and load any necessary packages
+
+    ```{r, eval = TRUE, message = FALSE}
+    library(tidyverse)
+    data("starwars")
+    ```
+
+
+2.  Use appropriate R code to determine which individuals have missing gender. Make sure to only print out their names and heights, arranged in ascending order of height.
+
+    ```{r}
+    starwars %>%
+      filter(is.na(gender)) %>%
+      arrange(height) %>%
+      select(name, height)
+    ```
+
+
+3. Change their gender to `"droid"` (even if they are not droids) and save to the dataframe.
+
+    ```{r}
+    starwars %>%
+      mutate(gender = if_else(is.na(gender), "droid", gender)) ->
+      starwars
+    
+    starwars %>%
+      mutate(gender = case_when(
+        is.na(gender) ~ "droid",
+        !is.na(gender) ~ gender)) ->
+      starwars
+    
+    starwars %>%
+      mutate(gender = replace_na(gender, "droid")) ->
+      starwars
+    
+    # Base R version
+    # starwars %>%
+    #   mutate(gender = replace(gender, is.na(gender), "droid")) ->
+    #   starwars
+    ```
+
+
+4. The body mass index (BMI) is defined as
+    $$
+    \frac{\text{mass}_{\text{kg}}}{\text{height}_{m}^2}.
+    $$
+    
+- That is, the BMI is the weight of the individual (in kg) divided by the height of the individual (in m) squared. There are 100 cm in each m.
+- Calculate the BMI for each individual in the `starwars` data frame and add it to the `starwars` data frame.
+- Sanity check: The median BMI should be in the 20-30 range.
+    
+    ```{r}
+    starwars %>%
+      mutate(bmi = mass / (height / 100) ^ 2) ->
+      starwars
+    ```
+    
+    
+5. Use a single block of code to create a data frame with the median and mean height for each gender as well as the number of individuals and show the results.
+
+    ```{r}
+    starwars %>%
+      group_by(gender) %>%
+      summarise(mean = mean(height, na.rm = TRUE),
+                median = median(height, na.rm = TRUE), number = n())
+    ```
+
+    
+6. Make boxplots of gender vs BMI. Include only masculine, feminine, and droids. Use the black and white theme.
+
+    ```{r}
+    starwars %>%
+      filter(gender == "feminine" | gender == "masculine" | gender == "droid") %>% 
+      ggplot(mapping = aes(x = gender, y = bmi)) +
+      geom_boxplot() +
+      theme_bw()
+    ```
+
+7. Make scatterplots of height vs mass, faceting by gender.
+
+    ```{r}
+    ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
+      geom_point() +
+      facet_wrap(. ~ gender) +
+      theme_bw()
+    ```
+
+
+8.  Reproduce the following plot (hint: filter based on birth year):
+
+    ```{r, eval = TRUE, message=FALSE}
+    starwars %>%
+      filter(birth_year < 200) %>%
+      ggplot(mapping = aes(x = birth_year, y = height )) +
+      geom_point(aes(color = gender)) +
+      ylab("Height") +
+      xlab("Birth Year") +
+      geom_smooth(se = FALSE, color = "black", linetype = "dashed") +
+      theme_bw()
+    ```
+
+
+
+
+# Instructions {-}
+
+- Add this question to your .Rmd file for part 1 and after completing the questions, upload both the .RMD and PDF files to Canvas.
+- Use dplyr functions wherever possible. 
+
+# Grading Rubric {-}
+|Question.Part:|Points|Topic|
+|---|--:|-------------|
+|1.1a|.50|Correct data|
+|1.1b|.50|Correct number of rows based on code|
+|1.2a|1.00|correct calculations|
+|2.2b|.50|updated data frame|
+|2.3|1.50|correct results|
+|2.4a|1.00|Correct data|
+|2.4b|2.00|Correct plot|
+|2.4c|.50|Interpretation|
+|2.5|1.00|Correct results|
+|2.6|1.50|Correct Results|
+|**Total**|10| |
+
+
+# 3. The Palmer Penguins Package.
+1. Install the palmerpenguins package in the console, load the package and the `penguins` data set, and look at the first 6 rows
+    ```{r, message = FALSE, warning = FALSE}
+    library(tidyverse)
+    library(palmerpenguins)
+    data(penguins)
+    head(penguins,6)
+    nrow(penguins)
+    ```
+
+2. Bill Ratio. For each penguin calculate the ratio of the flipper length to the maximum of the bill length or the bill depth  
+
+- Save to the data frame as the variable `fb_ratio`.
+
+```{r}
+penguins %>% 
+  rowwise() %>% 
+  mutate(fb_ratio = flipper_length_mm/max(bill_length_mm, bill_depth_mm)) ->
+  penguins
+
+# # or
+# penguins %>%
+#   mutate(fb_ratio = ifelse(bill_length_mm > bill_depth_mm,
+#                        flipper_length_mm / bill_length_mm,
+#                        flipper_length_mm / bill_depth_mm)) -> penguins
+# 
+# #  or                      
+#  penguins %>% 
+#   group_by(flipper_length_mm) %>% # group by penguin length is now a quality of penguins
+#   mutate(penguin_max = pmax(bill_length_mm, bill_depth_mm)) %>%
+#   mutate(fb_ratio = flipper_length_mm / penguin_max) ->
+#     penguins
+```
+
+3. Using the data frame from 2., eliminate the penguins with an fb_ration of `NA` and show the highest four penguins of each sex with only the character variables and fb_ratio. 
+
+- Your code should not include any variables names other than `sex` and `fb_ratio`.
+
+```{r}
+penguins %>% 
+  filter(!is.na(fb_ratio)) %>% 
+  group_by(sex) %>% 
+  slice_max(fb_ratio, n=4) %>% 
+  select(!where(is.numeric), fb_ratio)
+```
+
+4. For each species and sex, calculate the median of the numeric variables
+- Then use an appropriate plot to show median bill length vs median bill depth by species and sex
+- Interpret the plot in one sentence
+
+```{r}
+penguins %>% 
+  group_by(species, sex) %>% 
+  summarize(across(where(is.numeric), median, na.rm = TRUE), n() ) %>% 
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, color = species)) +
+  geom_point() +
+  facet_grid(~sex)
+# males have noticeably larger bill_lengths and bill depths than females in all species
+```
+
+5. How many rows have no missing values?
+```{r}
+penguins %>% 
+   filter(across(everything(), ~ !is.na(.x)))
+#333
+```
+6. How many unique values are there for each of the columns that end in "_mm" for each sex
+```{r}
+penguins %>% 
+  group_by(sex) %>% 
+  summarize(across(ends_with("_mm"), ~length(unique(.x))))
+```
+

@@ -15,3 +15,9 @@ csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 ---
 
 Content to be loaded
+
+
+
+# More Resources
+* [R Strings Cheathsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf)
+* [R Regex Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/regex.pdf)

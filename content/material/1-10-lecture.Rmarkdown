@@ -16,3 +16,7 @@ csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 ---
 
 Content to be loaded
+
+# Resources
+* [](https://github.com/rstudio/cheatsheets/blob/master/factors.pdf)
+* [](https://github.com/rstudio/cheatsheets/blob/master/lubridate.pdf)

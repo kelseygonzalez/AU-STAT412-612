@@ -50,7 +50,10 @@ lessons:
     bg: 1
     bottomborder: True
 
-  - title: '<span class="content-title">Week 4: Exploratory Data Analysis</span>'
+  - title: 'Data Wrangling'
+    header: True    
+
+  - title: '<span class="content-title">Week 4: Data Wrangling I</span>'
     session: "Monday"
     date: "February 8-14"
     date_start: "February 8"	
@@ -65,11 +68,8 @@ lessons:
     reading: "2-04-reading"
     bg: 2
     bottomborder: True
-
-  - title: 'Data Wrangling'
-    header: True    
-
-  - title: '<span class="content-title">Week 5: Data Wrangling I</span>'
+    
+  - title: '<span class="content-title">Week 5: Exploratory Data Analysis</span>'
     session: "Monday"
     date: "February 15-21"
     date_start: "February 15"	
@@ -81,9 +81,10 @@ lessons:
     session: "Thursday"
     date: "February 19"
     lab: "04-lab"
-    reading: "2-05-reading"
+    reading: "2-04-reading"
     bg: 1
     bottomborder: True
+
 
   - title: '<span class="content-title">Week 6: Data Wrangling II</span>'
     session: "Monday"
@@ -106,7 +107,7 @@ lessons:
     homework: "02-hw"
     bg: 2
 
-  - title: "Final Project Group & Data"
+  - title: "Final Project Group Members & Data"
     date: "February 28"
     homework: "01-final-project.Rmarkdown"
     bg: 2

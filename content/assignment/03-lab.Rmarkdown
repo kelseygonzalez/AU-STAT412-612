@@ -11,9 +11,368 @@ type: docs
 editor_options: 
   chunk_output_type: console
 ---
+- Install the `nycflights13` package (using the console)
+- Then load the tidyverse package and nycflights13 package and the `flights` data that comes with the package:
+    ```{r}
+# install.packages("nycflights13") # only in the console!!
+library(tidyverse)
+library(nycflights13)
+data("flights")
+class(flights)
+help(flights)
+head(flights)
+nrow(flights)
+    ```
+    
+### Exercise
+1. Select the origin and destination columns two different ways
+    ```{r, echo = params$solutions, eval = params$solutions}
+select(flights, origin:dest)
+select(flights, 13:14)
+select(flights, c(13, 14))
+    ```
 
-Dataset speed dating
+2. Select the columns for carrier and tail number. How many combinations are there? How many different tail numbers are there?
+    ```{r, echo = params$solutions, eval = params$solutions}
+select(flights, c("carrier", "tailnum")) %>%
+  unique() %>%
+  nrow()
+length(unique(flights$tailnum))
+    ```
+    
+    ### Exercise: 
 
-My data is from:
-You can access my data:
-My data has X rows and Y columns
+1. Select all variables that have anything to do with the arrival. Also keep the `year`, `month`, and `day`. Use as few characters as possible in your `select()` call.
+  
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  select(year:day, contains("arr_")) # What happens with just "arr"
+    ```
+
+2. Select all variables that do not contain the string "arr_".
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  select(!contains("arr_"))
+
+flights %>%
+  select(-contains("arr_"))
+    ```
+2. Select all variables that contain the string "arr_" or "dep.
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  select(contains("arr_"), contains("dep"))
+    ```
+
+### Exercises 
+
+1. Extract all flights occurring in odd months, or, on even days of even months.
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  filter((month %% 2 == 1) | (month %% 2 == 0 & day %% 2 == 0))
+    ```
+    
+2. (RDS 5.2.4.1) Find all the flights that satisfy all of the following conditions:
+
+  1. Flew to Houston (IAH or HOU)
+  2. Were operated by United, American, or Delta (UA, AA, or DL)
+  3. Departed in summer (July, August, and September)
+  4. Arrived more than fifteen minutes late, but didn't leave late
+- Remember to break lines after commas    
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  filter(
+    dest == "IAH" | dest == "HOU",
+    carrier == "AA" | carrier == "DL" | carrier == "UA",
+    month %in% 7:9,
+    arr_delay > 15,
+    dep_delay <= 0
+  )
+# Note the starting a new line of the arguments after the commas
+    ```
+    
+ ### Exercises
+1. Find rows 10, 100, 1000, 10,000, and 100,000
+
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  slice(10, 100, 1000, 10, 000, 100000)
+
+flights %>%
+  slice(c(10, 100, 1000, 10, 000, 100000))
+
+flights %>%
+  slice(10^seq(1:5))
+    ```
+
+2. Find the last 10 rows out of the first 30 rows of departures from Newark Airport
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  filter(origin == "EWR") %>%
+  slice_head(n = 30) %>%
+  slice_tail(n = 10)
+
+# DIfferent interpretation of the question
+# Find the flights from EWR out of the last 10 rows from the first thirty departures
+flights %>%
+  slice_head(n = 30) %>%
+  slice_tail(n = 10) %>%
+  filter(origin == "EWR")
+
+
+flights %>%
+  filter(origin == "EWR") %>%
+  slice(21:30)
+    ```
+    
+Exercises
+
+1. Arrange the flights data so the top row has the longest distance and break ties using air_time
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  arrange(desc(distance), air_time)
+
+flights %>%
+  arrange(-distance, air_time)
+    ```
+
+2. Arrange the flights data by air time and then carrier and then in reverse order for each
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  arrange(distance, carrier)
+
+flights %>%
+  arrange(-distance, desc(carrier))
+    ```
+    
+### Exercise
+
+1. What is the standard deviation of the departure delay time?
+
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  summarize(sd_del = sd(dep_delay, na.rm = TRUE))
+    ```
+
+2. What is the maximum of the departure delay time for flights from JFK? from Newark? from LaGuardia
+
+    ```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  filter(origin == "JFK") %>%
+  summarize(max_del = max(dep_delay, na.rm = TRUE))
+
+flights %>%
+  filter(origin == "EWR") %>%
+  summarize(max_del = max(dep_delay, na.rm = TRUE))
+
+flights %>%
+  filter(origin == "LGA") %>%
+  summarize(max_del = max(dep_delay, na.rm = TRUE))
+    ```
+        
+    
+### Exercises
+
+1. Arrange the flights data so the top row has the longest distance and break ties using air_time
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>% 
+  arrange(desc(distance), air_time)
+
+ flights %>% 
+  arrange(-distance, air_time)
+```
+
+2. Arrange the flights data by air time and then carrier and then in reverse order for each
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>% 
+  arrange(distance, carrier)
+
+ flights %>% 
+  arrange(-distance, desc(carrier))
+```
+
+### Exercise
+1. Select the origin and destination columns two different ways
+```{r, echo = params$solutions, eval = params$solutions}
+select(flights, origin:dest)
+select(flights, 13:14)
+select(flights, c(13,14))
+```
+
+2. Select the columns for carrier and tail number. How many combinations are there? How many different tail numbers are there?
+```{r, echo = params$solutions, eval = params$solutions}
+select(flights, c("carrier", "tailnum")) %>% 
+  unique() %>% 
+  nrow()
+length(unique(flights$tailnum))
+```
+
+### Exercise: 
+
+1. Select all variables that have anything to do with the arrival. Also keep the `year`, `month`, and `day`. Use as few characters as possible in your `select()` call.
+
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  select(year:day, contains("arr_")) #What happens with just "arr"
+```
+
+2. Select all variables that do not contain the string "arr_".
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  select(!contains("arr_")) 
+
+flights %>%
+  select(-contains("arr_")) 
+```
+2. Select all variables that contain the string "arr_" or "dep.
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  select(contains("arr_"), contains("dep")) 
+```
+
+### Exercise: (RDS 3.5.2.1) 
+
+1. Currently `dep_time` and `sched_dep_time` are convenient to look at, but hard to work with because they're not really continuous numbers. 
+- Convert them to a more convenient representation of number of minutes since midnight. 
+- Hint: `%/%` is integer division and `%%` is remainder from division.
+- Save back to flights
+
+```{r, echo = params$solutions, eval = params$solutions}
+head(flights$dep_time)
+head(flights$sched_dep_time)
+flights %>%
+  mutate(dep_h = dep_time %/% 100,
+         dep_m = dep_time %% 100,
+         dep_elapsed_min = dep_h * 60 + dep_m,
+         sched_dep_h = sched_dep_time %/% 100,
+         sched_dep_m = sched_dep_time %% 100,
+         sched_dep_elapsed_min = sched_dep_h * 60 + sched_dep_m) ->
+  flights
+
+head(flights$sched_dep_time)
+head(flights$sched_dep_elapsed_min)
+```
+
+### Exercise
+1.  Move the columns that end with the word "time" to be before `flight` and put the ones with "sched" before the actual times
+```{r, echo = params$solutions,eval = params$solutions}
+flights %>% 
+  relocate(ends_with("time"), .before = flight) %>% 
+  relocate(starts_with("sched"), .before = dep_time)  
+```
+
+2. Relocate all the character variables to the left side of the data frame
+```{r, echo = params$solutions, eval = params$solutions}
+relocate(flights, is.character)
+```
+
+### Exercise
+
+1. What is the standard deviation of the departure delay time?
+
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  summarize(sd_del = sd(dep_delay, na.rm = TRUE))
+```
+
+2. What is the maximum of the departure delay time for flights from JFK? from Newark? from LaGuardia
+
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  filter(origin == "JFK") %>% 
+  summarize(max_del = max(dep_delay, na.rm = TRUE))
+
+flights %>%
+  filter(origin == "EWR") %>% 
+  summarize(max_del = max(dep_delay, na.rm = TRUE))
+
+flights %>%
+  filter(origin == "LGA") %>% 
+  summarize(max_del = max(dep_delay, na.rm = TRUE))
+```
+
+## Exercise
+
+1. Plot the number and proportion of canceled flights per day.
+- Is there a pattern?
+- Is the proportion of canceled flights related to the average delay?
+- Define a flight as canceled by `is.na(dep_delay) | is.na(arr_delay)`.
+
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>%
+  mutate(is_cancelled = is.na(dep_delay) | is.na(arr_delay)) %>% # add an indicator variable for delayed 
+  group_by(day) %>% 
+  summarize(prop_canc = mean(is_cancelled),
+            tot_canc = sum(is_cancelled),
+            n = n(),
+            ave_delay = mean(dep_delay, na.rm = TRUE))  ->
+   sumdat
+
+str(sumdat)
+
+ggplot(sumdat, mapping = aes(x = day, y = prop_canc)) +
+  geom_point() +
+  theme_bw() +
+  xlab("Day Number") +
+  ylab("Proportion Cancelled") +
+  geom_smooth(se = FALSE, method = loess, method.args = list(span = 0.3))
+
+# The proportion of delayed flights seems to peak on certain days of the month
+```
+
+
+```{r, echo = params$solutions, eval = params$solutions}
+ggplot(sumdat, mapping = aes(x = day, y = tot_canc)) +
+  geom_point() +
+  theme_bw() +
+  xlab("Day Number") +
+  ylab("Total Cancelled") +
+  geom_smooth(se = FALSE, method = loess, method.args = list(span = 0.3))
+
+## The total also seems to peak on certain days
+
+
+ggplot(data = sumdat, mapping = aes(x = ave_delay, y = prop_canc)) +
+  geom_point() +
+  theme_bw() +
+  xlab("Average Departure Delay") +
+  ylab("Proportion of Flights Cancelled") +
+  geom_smooth(se = FALSE, method = loess, )
+
+sumdat %>%
+  mutate(logit_prop_canc = log(prop_canc / (1 - prop_canc))) %>%
+  ggplot(mapping = aes(x = ave_delay, y = logit_prop_canc)) +
+  geom_point() +
+  theme_bw() +
+  xlab("Average Departure Delay") +
+  ylab("Logit Proportion of Flights Cancelled") +
+  geom_smooth(se = FALSE, method = loess)
+
+## It seems as we increase the average delay, there is a higher
+## proportion of canceled flights. This relationship appears linear on the
+## logit scale.
+```
+
+2. We saw earlier there were more carrier-tail number combinations than unique tail numbers. There are two reasons for this: The presence of flights with no tail numbers and planes changing carriers.
+- Remove the rows with missing tail numbers 
+- For each tail number find the names of all of its carriers 
+- Create a new variable with the number of carriers for each tail number
+- Show the list of tail numbers and their carriers for those tail numbers with more than one carrier in descending order of the number of carriers.
+```{r, echo = params$solutions, eval = params$solutions}
+flights %>% 
+  filter(!is.na(tailnum)) %>% 
+  group_by(tailnum) %>% 
+  summarize(owners = unique(carrier)) %>% 
+  mutate(num_owners = length(unique(owners))) %>% 
+  filter(num_owners>1) %>% 
+  arrange(desc(num_owners))
+
+# 9E is Endeavor Air Inc and EV is ExpressJet Airlines Inc
+# https://en.wikipedia.org/wiki/ExpressJet
+#In August 2017, as United Airlines purchase talks gained momentum Delta Air Lines terminated its contract with ExpressJet, which took effect in late 2018. The fleet of CRJ-900 aircraft, which were owned by Delta and leased, were transferred to Endeavor Air.[19]
+
+#American Airlines terminated their contract with ExpressJet in May 2018. As a result, ExpressJet ceased to operate American Eagle flights as of 2019.[20]
+
+#On July 30, 2020, it was announced that United Airlines has decided to end its contract with ExpressJet and transfer these operations to fellow United Express affiliate CommutAir. CommutAir will become the sole operator of the United Express Embraer ERJ-145 fleet. [21]
+
+#On August 24, 2020, it was announced, that ExpressJet will end operations on 30 September 2020.[22]
+```

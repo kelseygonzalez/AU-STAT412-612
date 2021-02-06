@@ -1,92 +1,681 @@
 ---
-title: "Exploratory Data Analysis"		
-linktitle: "Lecture	4: Exploratory Data Analysis"
+title: "Data Wrangling with `dplyr`"		
+linktitle: "Lecture	4: Data Wrangling with `dplyr`"
 date: "2021-02-08"
 start_date: "2021-02-08"
 end_date: "2021-02-11"
-
 menu:
-  Material:
-    parent: Lectures
-    weight: 4
+Material:
+parent: Lectures
+weight: 5
 type: docs
 toc: true
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 slides: "04-slides"
+editor_options: 
+markdown: 
+wrap: 72
 ---
-OVerview ideas:
- 
-Lab: interest speed dating 
-EDA on two datasets you're interested in 
 
-```{r explore,  out.width = '100%'}
-knitr::include_graphics(here::here("static", "img", "ggplot2_exploratory.png"))
+![](/img/dplyr_wrangling.png){width=50%}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 3,
+  fig.width = 6,
+  fig.align = "center", 
+  cache = TRUE
+)
 ```
 
 
-# Lesson Objectives
+# Introduction
 
-# Loading data
-## `readr` for
-## `Haven` for 
-## `readxl`
+- Real world data is always messy to start
+  + Variables may be missing
+  + Values may be missing 
+  + There can be duplicate rows
+  + Variables may have different names in different tables for the same attribute
+  + Numbers can be stored as characters
+  + The data may be structured for ease of human input rather than analysis
+  + Unsorted or sorted in a different order than we want  
+  
+- The tidyverse `dplyr` package provides tools to *speed up the manipulation of data*
+  + Uses data frames to create consistent structure
+  + Uses the forward pipe operator, `%>%`, to facilitate transparency/readability
+  + Compared to the predecessor `plyr` library, `dplyr` is 20X - 100X faster
+  + Enables faster Exploratory Data Analysis (EDA) with `ggplot2`
+  
+## Learning Outcomes
 
-# Finding Data
-https://dataset-finder.netlify.app/
+- Describe data frames in R and tidyverse tibbles
+- Use basic functions of dplyr to manipulate single data frames/tibbles by rows, by columns (variables), and by groups
+  + Choose rows by column (variable) values `filter()`
+  + Choose rows by position: `slice()`
+  + Arrange (sort) rows by column (variable) values: `arrange()`
+  + Choose columns (variables) by names `select()`
+  + Rename columns (variables): `rename()`
+  + Add/modify new/existing columns (variables): `mutate()` or `transmute()`
+  + Group rows by columns (variables): `group_by()`
+  + Calculate summary statistics of Columns with or without grouping. `summarize()`, `group_by()`
 
 
-# EDA
+# Introduction to the `dplyr`package
 
-## Why EDA
-Why do we want to visualize our data? 
+## Background on Data Frames and Tibbles
 
-- All the graphs are based on data with the same summary statistics!
+- The R language uses two kinds of vectors to manage data: **Atomic Vectors** and **Lists** 
+  - **Atomic vectors** are sequences of elements of the same data *type*.
+  - **Lists** are data structures where the elements do Not have to be the same type
+- Vectors have two main attributes: *Length* and data *Type*
+  
+- R has six data types:  
+    1. logical, 
+    2. integer, 
+    3. double, 
+    4. character, 
+    5. complex, and 
+    6. raw(byte-level data). 
+- Integer and double vectors are collectively known as *numeric vectors*
 
-```{r anscombe, echo=FALSE, fig.cap="Anscombe's Quartet", out.width = '100%'}
-knitr::include_graphics(here::here("static", "img", "Anscombes_quartet.png"))
+### Data Frames
+- A **data frame** in R is a special kind of list: a data.frame object 
+- Every element in a data.frame is an atomic vector with the same length
+  + This means data frames are rectangular matrices of columns and rows. 
+  + The columns can be of different types 
+  + The elements within each column must be the same type 
+  + Each column has the same number of rows 
+  + Some rows may be missing the value for a given column. They should have `NA` in the row for that column.
 
+- Consider a set of data about a number of *observational or experimental units*
+  + In `mpg` the cars were the observational units - the things on which someone collected data.
+- The data set includes information on different attributes or characteristics of the units. 
+- These attributes are called the *variables* as their values can change from unit to unit.
+- These **variables are the columns** of the data frame.
+  + In `mpg` these are:
+  + `r names(ggplot2::mpg)`
+- The **observed values for each of the attributes are the rows**.
+  + for `mpg` the first row of observations are:
+  + `r head(ggplot2::mpg,1)`
+- For example, in the `msleep` data frame, the observations are animals and the the variables are properties of those animals (body weight, total sleep time, etc).
+- You can create data frames using the `data.frame()` or `as.data.frame()`
+
+### Tibbles
+- **Tibbles** are a tidyverse version of an R data.frame class of object. 
+- They have all the same features as a regular R data frame with a few nicer attributes, e.g., for printing.
+- You can create tibbles with the functions `tibble::tibble()` or `as.tibble()` 
+- You can create small tibbles with `tibble::tribble()`
+- Since we were are focused on the tidyverse, we will use the terms data frame and tibble as synonyms for each other in general usage.
+  
+- **Data frames/tibbles are the fundamental data type in most analyses.**
+- Many people work with data in table-like structures such as data frames
+  + A data frame is similar to a "Named Range" on an Excel worksheet where the first row contains the variable names 
+  + A data frame is similar to a database table
+
+## The dplyr Package
+- The dplyr package is a tidyverse package
+- It is installed and loaded with the tidyverse package and can be installed/loaded on its own as well.
+- The dplyr package is designed to enable users to manipulate or transform data in data frames/tibbles.
+- To goal is to support users by using a consistent "grammar of data", leading to faster and more reliable results.
+- dplyr's functions have names similar to those in other data manipulation tools or languages, e.g., SQL (Structured QUery Language), so it is easier to learn and apply.
+
+dplyr Functions Support Common Manipulations/Transformations/Operations on Data and Data Frames
+
+- Common operations on a data frame during an analysis include:
+  - Select specific variables: `select()`
+  - Choose specific observational units based on the values of their attributes: `filter()`
+  - Create new variables or modify existing variables: `mutate()`
+  - Reorder the observational units: `arrange()`
+  - Create summary statistics from many observational units: `summarize()`
+  - Group the observational units by the values of some variables: `group_by()`
+  
+- Think of the dplyr functions (like other functions) as "verbs" that do things with the data.
+- We can characterize them base on the component of the data set they work with: (**bold** are the most commonly used)
+- **Rows**:
+  + **`filter()`** chooses rows based on column values.
+  + `slice()` chooses rows based on location.
+  + **`arrange()`** changes the order of the rows.
+- **Columns**:    
+  + **`select()`** changes whether or not a column is included.
+  + `rename()` changes the name of columns.
+  + **`mutate()`** changes the values of columns and creates new columns.
+  + `relocate()` changes the order of the columns.
+- **Groups of rows**:
+  + **`summarize()`** collapses a group into a single row.
+
+- These are all "Single Table" verbs meaning they operate on a single data frame.
+- There are more dplyr functions (verbs) as well
+- Next week in dplyr Part 2 we will address additional functions (verbs) for working across rows and columns
+- Later on in the course we will address dplyr verbs for reshaping data frames and working with two data frames at once.
+# Getting started with penguins 
+Let's explore our data first. We'll be using the penguins dataset again, this time specifically to see how we can wrangle this data into new forms. 
+```{r}
+# install.packages("palmerpenguins")
+library(tidyverse)
+library(palmerpenguins)
+data("penguins")
 ```
 
-We can see this more explicitly with the "DatasauRus Dozen" Package. We have nearly
-identical summary statistics, but the actual data looks vastly different from
-eachother. 
+![](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png){width=300px}
 
-```{r, fig.height = 3, fig.width  = 5, message = FALSE}
-library(datasauRus)
-datasaurus_dozen %>%
-  group_by(dataset) %>%
-  summarize(
-    mean_x    = mean(x),
-    mean_y    = mean(y),
-    std_dev_x = sd(x),
-    std_dev_y = sd(y),
-    corr_x_y  = cor(x, y)
+What I imagine it looked like when the penguins were weighed:
+<blockquote class="reddit-card" data-card-created="1612578852"><a href="https://www.reddit.com/r/aww/comments/ldgnva/never_get_bored_of_penguins_getting_weighed/">Never get bored of penguins getting weighed..</a> from <a href="http://www.reddit.com/r/aww">r/aww</a></blockquote>
+<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
+
+We have a few options to preview our dataframe that we've discussed before. However, now that we have the tidyverse loaded, we can rely on my favorite, `glimpse()`
+```{r glimpse-data, results = "hide"}
+glimpse(penguins)
+```
+
+It looks like there are 7 variables or columns that we have to work with. 
+- `species`: penguin species (Chinstrap, Adélie, or Gentoo)
+- `bill_length_mm`: bill length (mm)
+- `bill_depth_mm`: bill depth (mm)
+- `flipper_length_mm`: flipper length (mm)
+- `body_mass_g`: body mass (g)
+- `island`: island name (Dream, Torgersen, or Biscoe) in the Palmer Archipelago (Antarctica)
+- `sex`: penguin sex
+
+# Selecting columns
+
+To select columns of a data frame, use `select()`. The `select()` function extracts (subsets) variables (columns) and place them into a new smaller (temporary) data frame. The first argument to this function is the data frame (`penguins`), and the subsequent arguments are the columns to keep.
+
+```{r select, results = 'hide'}
+select(penguins, species, body_mass_g, sex)
+```
+  
+
+```{r, eval = FALSE}
+# Select specific variables by their names
+select(penguins, species, body_mass_g)
+
+# Select a range of contiguous (adjacent or sequential) variables with `:`
+select(penguins, species:bill_length_mm)
+
+# Select all variables **except certain ones** with `-`, the minus sign
+select(penguins, -year, -island)
+
+# Select all variables **except within a contiguous range of columns**.
+
+select(penguins, -(species:island))
+```
+    
+## Helper Functions for `select()` 
+- THere are several "helper functions" you can use as arguments inside `select()`
+  + These helper functions are actually part of the tidyselect package that is always installed and loaded with dplyr
+  + See help for "language" from tidyselect or help on "starts_with" from tidyselect
+- These helper functions reduce the need to specify each and every variable you want or don't want. 
+  + Some data frames may have 1000s of variables in them
+- Variables names in a data frame are always character strings so the helper functions compare the variable names to the character patterns you provide.
+
+- `starts_with("abc")`: matches names that begin with `"abc"`.
+```{r}
+select(penguins, starts_with("bill"))
+```
+- `ends_with("xyz")`: matches names that end with `"xyz"`.
+```{r}
+select(penguins, ends_with("mm"))
+```
+- `contains("ijk")`: matches names that contain `"ijk"`.
+```{r}
+select(penguins, contains("length"), species)
+```
+- `matches("(.)\\1")`: selects variables that match a *regular expression* (REGEX). 
+  + This one matches any variables with two repeated characters, e.g., "YY". 
+  + You'll learn more about regular expressions in the class on strings and stringr.
+
+- `num_range("x", 1:3)`: matches `x1`, `x2`, and `x3` for whatever numerical sequence you provide
+  + This can be useful for data sets with variables such as month1, month2, month3 ..., or FY18, FY19, FY20, ....
+
+# Filtering rows
+![](/img/dplyr_filter.jpg){width=50%}
+
+Choose Rows Based on Values of Certain Variables
+
+- The dplyr `filter()` function allows us to choose (subset/extract) only certain rows (observations) based on the values of the variables in those rows.
+  
+- We create conditions and `filter()` selects the rows satisfying these conditions (return `TRUE`).
+  + We can use logical comparisons, and use AND (`&`) or OR (`|`) as well 
+- Let's extract all the penguins from New York that occurred in January or the 1st month of the year.
+
+```{r filter, results = 'hide'}
+filter(penguins, island == "Biscoe")
+filter(penguins, year <= "2008")
+```
+
+The filter function works with most boolean operators, namely:
+
+|Operator|Description|  
+|:-----:|:-----------:|  
+|`<`|less than|    
+|`<=`|less than or equal to|  
+|`>`|greater than|  
+|`>=`|greater than or equal to|  
+|`==`|exactly equal to|  
+|`!=`|not equal to|  
+|`!x`|Not x|  
+|`x | y`|x OR y|  
+|`x & y`|x AND y|  
+|`isTRUE(x)`|test if X is TRUE|  
+
+
+## Multiple Conditions
+- Graphical depiction of logical operations:
+- Blue is TRUE (to be included) and White is FALSE (not included)
+- `!` means Not (!TRUE means FALSE)
+```{r, echo = FALSE, fig.height=4.5, fig.width=6}
+suppressPackageStartupMessages(library(gridExtra))
+plot_venn <- function(col1, col2, col3, col4, title, alpha = 0.5) {
+  x1 <- seq(-1, 1, length = 300)
+  y1 <- sqrt(1 - x1^2)
+  y2 <- -sqrt(1 - x1^2)
+  x2 <- x1 + 0.5
+  x1 <- x1 - 0.5
+
+  circdf1 <- data.frame(y = c(y1, y2[length(y2):1]), x = c(x1, x1[length(x1):1]))
+  circdf2 <- data.frame(y = c(y1[length(y1):1], y2), x = c(x2[length(x2):1], x2))
+
+  poly1 <- data.frame(
+    x = c(
+      x1[x1 < 0],
+      x2[x2 < 0][sum(x2 < 0):1],
+      x2[x2 < 0],
+      x1[x1 < 0][sum(x1 < 0):1]
+    ),
+    y = c(
+      y1[x1 < 0],
+      y1[length(y1):1][x2 < 0][sum(x2 < 0):1],
+      y2[length(y2):1][x2 < 0],
+      y2[x1 < 0][sum(x1 < 0):1]
+    )
   )
+  poly2 <- poly1
+  poly2$x <- poly1$x * -1
+
+  poly3 <- data.frame(
+    x = c(
+      x2[x2 < 0][sum(x2 < 0):1],
+      x2[x2 < 0]
+    ),
+    y = c(
+      y1[length(y1):1][x2 < 0][sum(x2 < 0):1],
+      y2[length(y2):1][x2 < 0]
+    )
+  )
+  tempdf <- poly3[nrow(poly3):1, ]
+  tempdf$x <- tempdf$x * -1
+  poly3 <- rbind(poly3, tempdf)
+  ggplot() +
+    geom_polygon(
+      data = poly1,
+      mapping = aes(x = x, y = y),
+      fill = col1,
+      color = "black",
+      alpha = alpha
+    ) +
+    geom_polygon(
+      data = poly2,
+      mapping = aes(x = x, y = y),
+      fill = col3,
+      color = "black",
+      alpha = alpha
+    ) +
+    geom_polygon(
+      data = poly3,
+      mapping = aes(x = x, y = y),
+      fill = col2,
+      color = "black",
+      alpha = alpha
+    ) +
+    theme_void() +
+    ggtitle(title) +
+    theme(
+      plot.title = element_text(hjust = 0.5),
+      plot.background = element_rect(color = col4)
+    ) +
+    annotate(geom = "text", x = -0.8, y = 0, label = "x") +
+    annotate(geom = "text", x = 0.8, y = 0, label = "y") ->
+  pl
+  return(pl)
+}
+
+aval <- 1
+col <- "#b1d9ef"
+grid.arrange(
+  plot_venn(col, "white", "white", "white", "x & !y", alpha = aval),
+  plot_venn("white", col, "white", "white", "x & y", alpha = aval),
+  plot_venn("white", "white", col, "white", "!x & y", alpha = aval),
+  plot_venn(col, col, "white", "white", "x", alpha = aval),
+  plot_venn("white", col, col, "white", "y", alpha = aval),
+  plot_venn(col, col, col, "white", "x | y", alpha = aval)
+)
 ```
 
-```{r, fig.height = 4.5, fig.width  = 6.5, eval = TRUE}
-ggplot(datasaurus_dozen, 
-       aes(x=x, y=y, color=dataset))+
-  geom_point(size = .5)+
-  theme_void()+
-  theme(legend.position = "none")+
-  facet_wrap(~dataset, ncol=3)
+### and
+- Example: Let's get all penguins from Biscoe island **and** Gentoo species.
+
+```{r, eval = FALSE, echo = FALSE}
+filter(penguins, island == "Biscoe" & origin == "Gentoo")
 ```
-@noauthor_datasaurus_nodate  
+    
+- The *And* operator is the most commonly used. So, if you just separate the logical conditions by a comma, `filter()` will **perform the *And* operation by default** .
+  
+```{r, eval = FALSE}
+filter(penguins, island == "Biscoe", origin == "Gentoo")
+```
 
-## Automated EDA
+- If you don't know the possible values of a categorical variable, you have two options:
+    
+  1. If the variable is a factor, use `levels()` 
+  2. Otherwise, use `unique()` 
+    
+```{r}
+levels(penguins$species) 
 
-### `skimr`
+count(penguins, species)
+```
 
-### `visdat`: https://twitter.com/pop_gen_JED/status/1354202108346724356?s=19
+### or 
+```{r}
+# using the or | operator
+
+filter(penguins, species == "Chinstrap" | species == "Gentoo")
+
+# Second way: using the %in% operator
+filter(penguins, species %in% c("Chinstrap", "Gentoo"))
+
+```
+
+- You should still know the logical operators in case the filtering gets complicated.
+
+- Let's extract the Biscoe Gentoo penguins and the Dream Adelie penguins.
+
+```{r, eval = FALSE}
+filter(penguins, 
+       (island == "Biscoe" & species == "Gentoo") | 
+         (island == "Dream" & species == "Adelie"))
+```
+
+## Missing Values
+
+- if you explicitly want to extract missing values, we have to use `is.na(x)` instead of `x == NA`. 
+
+```{r}
+filter(penguins, is.na(sex))
+filter(penguins, !is.na(sex))
+```
+
+# Pipes
+
+What if you want to select and filter at the same time? There are three ways to do this: use intermediate steps, nested functions, or pipes.
+
+With intermediate steps, you create a temporary data frame and use that as input to the next function, like this:
+
+```{r intermediatesteps }
+penguins_biscoe <- filter(penguins, island == "Biscoe")
+penguins_biscoe <- select(penguins_biscoe, species, body_mass_g, sex)
+```
+
+This is readable, but can clutter up your workspace with lots of objects that you have to name individually. With multiple steps, that can be hard to keep track of.
+
+You can also nest functions (i.e. one function inside of another), like this:
+
+```{r nest}
+penguins_Biscoe <- 
+  select(
+    filter(penguins, island == "Biscoe"),  
+    species, body_mass_g, sex)
+```
+
+This is handy, but can be difficult to read if too many functions are nested, as R evaluates the expression from the inside out (in this case, filtering, then selecting).
+
+The last option, *pipes*, are a powerful addition to R. Pipes let you take the output of one function and send it directly to the next, which is useful when you need to do many things to the same dataset. Pipes in R look like `%>%` and are made available via the **`magrittr`** package, installed automatically with **`dplyr`**. If you use RStudio, you can type the pipe with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a PC or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a Mac.
+
+```{r pipe}
+penguins %>%
+    filter(island == "Biscoe") %>%
+    select(species, body_mass_g, sex)
+```
+
+In the above code, we use the pipe to send the `penguins` dataset first through `filter()` to keep rows where `island` is "Biscoe", then through `select()` to keep only the `species`, `body_mass_g`,and `sex` columns. Since `%>%` takes the object on its left and passes it as the first argument to the function on its right, we don't need to explicitly include the data frame as an argument to the `filter()` and `select()` functions any more.
+
+Some may find it helpful to read the pipe like the word "then". For instance, in the above example, we take the data frame `penguins`, *then* we `filter` for rows with `island == "Biscoe"`, *then* we `select` columns `species`, `body_mass_g`,and `sex`. The **`dplyr`** functions by themselves are somewhat simple, but by combining them into linear workflows with the pipe, we can accomplish more complex manipulations of data frames.
+
+If we want to create a new object with this smaller version of the data, we can assign it a new name:
+
+```{r pipe_save }
+penguins_biscoe <- penguins %>%
+    filter(island == "Biscoe") %>%
+    select(species, body_mass_g, sex)
+
+penguins_biscoe
+```
+
+Note that the final data frame (`penguins_biscoe`) is the leftmost part of this expression becuase it is receiving an assignment.
+
+> ## Exercise
+>
+>  Using pipes, subset the `penguins` data to include all species _EXCEPT_ _Adelie_ and retain the species column in addition to those relating to their bill.
+> 
+> ## Solution
+> 
+
+```{r exercise1, eval = FALSE}
+penguins %>%
+    filter(species != "Adelie") %>%
+    select(species, bill_length_mm, bill_depth_mm)
+```
+
+# Arrange
+Rearrange the Order of the Rows
+- Use `arrange()` to order rows by the value of one or more variables.
+- The sort order for character vectors will depend on the collating sequence of the locale in use: see help for `locales()`.
+
+```{r, eval = FALSE}
+penguins %>%
+  arrange(body_mass_g)
+```
+
+- The **default is to arrange in ascending order** from top to bottom so the lowest number is on top. 
+- **Use the `desc()` function on the variable inside `arrange()` to arrange in descending order**
+- For numerics you can use `-` instead
+```{r, eval = FALSE}
+# body_mass_g is numeric
+penguins %>%
+  arrange(desc(body_mass_g))
+penguins %>%
+  arrange(-body_mass_g)
+
+# island is categorical
+penguins %>%
+  arrange(desc(island))
+```
+    
+- If there are ties with one variable, you can **break the ties by arranging by another variable**.
+
+```{r}
+penguins %>%
+  arrange(island, body_mass_g)
+
+penguins %>%
+  arrange(island, desc(body_mass_g))
+```
+    
+- Observations with missing values are *always placed at the end* (even when using the `desc()` function)
 
 
-## Visual EDA
-![Visual EDA]("/img/ggplot2_exploratory.png")
-## Other EDA
+# Mutate
+![](/img/dplyr_mutate.png){width=50%}
 
-### Contingency Tables 
-### Correlations 
+- The variables we have are usually not enough for all the questions we want to look at in an analysis.
+  + We often use a `log()` function to transform positive data to reduce skew or try to make associations more linear.
+  + We also like to combine variables to create new attributes based on existing attributes.
+  
+Therefore, we may want to create new columns based on the values in existing columns, for example to do unit conversions, or to find the ratio of values in two columns. For this we'll use `mutate()`.
 
-# References
+- We use `mutate()` to **create new variables from old** - adds one or more columns to our temporary data frame.
+- We will do this *a lot*!
+
+We might be interested in the flipper length of penguins in cm instead of milimeters:
+
+```{r mutate}
+penguins %>%
+    mutate(flipper_length_cm = flipper_length_mm / 10)
+```
+
+let's add inches as well! 
+```{r mutate2}
+penguins %>%
+    mutate(flipper_length_cm = flipper_length_mm / 10,
+           flipper_length_in = flipper_length_mm * 0.0393701) %>% 
+  select(starts_with("flipper_length"))
+```
+
+We can even mutate based on multiple variables.
+```{r}
+penguins %>% 
+  mutate(bill_ratio = bill_length_mm / bill_depth_mm) %>% 
+  select(starts_with("bill"))
+
+```
+
+
+
+> ## Exercise
+>
+>  Create a new data frame from the `penguins` data that meets the following criteria: contains only the `species` column and a new column called `body_mass_kg` containing a transformed body_mass_g. Only the rows where `body_mass_kg` is greater than 4 should be shown in the final data frame. _How many rows do you have? _
+>
+>  **Hint**: think about how the commands should be ordered to produce this data frame!
+>
+> ## Solution
+> 
+
+``` {r exercise2, eval = FALSE}
+penguins_large <- penguins %>%
+    mutate(body_mass_kg = body_mass_g / 1000) %>%
+    filter(body_mass_kg > 4) %>%
+    select(species, body_mass_kg)
+```
+
+
+# aggregation with `summarize`
+- We create summary statistics for variables by using the `summarize()` function.
+- **Once you summarize, the data *not* being summarized is not included in the new data frame**  
+  + You are creating a temporary, summarized version of the data frame with usually fewer rows
+
+- The following calculates the mean body mass across all penguins.
+
+```{r}
+penguins %>%
+  summarize(body_mass_g_mean = mean(body_mass_g))
+```
+
+
+You may also have noticed that the output has a lot of `NA`! When `R` does calculations with missing data, it (correctly) doesn't know how to evaluate them and forces the result to `NA`. to solve this, we need to add in a special option to tell R that we want to ignore the missing values. 
+
+Use the `?` function on `mean()` to figure out what this option is. 
+```{r}
+penguins %>%
+  summarize(body_mass_g_mean = mean(body_mass_g, na.rm = TRUE),
+            n = n())
+```
+
+- It's often useful to **calculate the number of items in a summary using `n()`**.
+
+What if I want to see a different mean for each species?
+```{r}
+penguins %>%
+  filter(species == "Adelie") %>% 
+  summarize(body_mass_g_mean = mean(body_mass_g, na.rm=TRUE))
+
+penguins %>%
+  filter(species == "Chinstrap") %>% 
+  summarize(body_mass_g_mean = mean(body_mass_g, na.rm=TRUE))
+
+penguins %>%
+  filter(species == "Gentoo") %>% 
+  summarize(body_mass_g_mean = mean(body_mass_g, na.rm=TRUE))
+
+```
+
+
+# Split-apply-combine data analysis  with  `group_by`
+
+
+Many data analysis tasks can be approached using the *split-apply-combine* paradigm: split the data into groups, apply some analysis to each group, and then combine the results. **`dplyr`** makes this very easy through the use of the `group_by()` function.
+
+`group_by()` is often used together with `summarize()`, which collapses each group into a single-row summary of that group.  `group_by()` takes as arguments the column names that contain the **categorical** variables for which you want to calculate the summary statistics. Groups are *virtual* in the sense *you are not changing the structure of the original data frame, just how R perceives in subsequent operations* until an `ungroup()` is used.
+We will do this a lot!
+
+The previous exercise required us to run three different sets of code to get summaries for the three penguin species
+`group_by` allows us to do that all at once by grouping the rows where the values in one of the columns, creates the groups e.g., `species` creates three rows, one for each species.
+
+  
+
+```{r summ1}
+penguins %>%
+  group_by(species) %>% 
+  summarize(body_mass_g_mean = mean(body_mass_g, na.rm=TRUE))
+```
+
+You can also group by multiple columns:
+
+```{r summ3 }
+penguins %>%
+    group_by(island, species) %>%
+    summarize(mean_flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE))
+```
+
+> I expected to get 9 rows because we have 3 islands and 3 species of penguin. What do you think is going on here?
+
+Once the data are grouped, you can also summarize multiple variables at the same time (and not necessarily on the same variable). For instance, we could add a column indicating the minimum and maximum flipper length for each island for each species:
+
+```{r summ4 }
+penguins %>%
+    group_by(island, species) %>%
+    summarize(flipper_length_mm_mean = mean(flipper_length_mm, na.rm = TRUE),
+              flipper_length_mm_min = min(flipper_length_mm, na.rm = TRUE),
+              flipper_length_mm_max = max(flipper_length_mm, na.rm = TRUE),
+              flipper_length_mm_sd = sd(flipper_length_mm, na.rm = TRUE))
+```
+
+# Count
+The dplyr::count() function wraps a bunch of things into one beautiful friendly line of code to help you find counts of observations by group. To demonstrate what it does, let’s find the counts of penguins in the penguins dataset by species in two different ways:
+
+1. Using group_by() %>% summarize() with n() to count observations
+```{r}
+penguins %>%
+  group_by(species) %>%
+  summarize(n = n())
+```
+
+2. Using count() to do the exact same thing
+```{r}
+penguins %>%
+  count(species)
+```
+
+We can also add more than one variable to dissagregate even further.
+```{r}
+penguins %>%
+  count(species, island, sex)
+```
+
+# Part 1 Learning Outcomes Recap
+- Describe data frames in R and tidyverse tibbles
+- Use basic functions of dplyr to manipulate single data frames by rows, by columns (variables), and by groups
+  + Choose rows by column (variable) values `filter()`
+  + Choose rows by position: `slice()`
+  + Arrange (sort) rows by column (variable) values: `arrange()`
+  + Choose columns (variables) by names `select()`
+  + Add/modify new/existing columns (variables): `mutate()`
+  + Group rows by columns (variables): `group_by()`
+  + Calculate summary statistics of Columns with or without grouping. `summarize()`, `group_by()`
+
+## References
+- Chapter 5 of [RDS](https://r4ds.had.co.nz/)
+- [Data Transformation Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf)
+- [dplyr Overview](https://dplyr.tidyverse.org/)

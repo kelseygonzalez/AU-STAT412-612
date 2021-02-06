@@ -14,6 +14,15 @@ bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 ---
 
+<script src="/rmarkdown-libs/clipboard/clipboard.min.js"></script>
+<link href="/rmarkdown-libs/primer-tooltips/build.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/klippy/css/klippy.min.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/klippy/js/klippy.min.js"></script>
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+
 # Intro to R & Data Science
 
 Learning Outcomes
