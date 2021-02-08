@@ -13,33 +13,17 @@ editor_options:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      eval = FALSE, 
-                      include = FALSE, 
-                      message = FALSE, 
-                      warning = FALSE,
-                      results = "hide")
-```
+
 
 # Part 1: Practice
 1. Install the `nycflights13` package (using the console). It's likely you already have this from the textbook reading. Load the tidyverse package and nycflights13 package and the `flights` data that comes with the package.
-```{r, eval = TRUE}
-library(tidyverse)
-library(nycflights13)
-data("flights")
-```
+
 
 2. Get a quick look at what your variables consist of and how many observations you have. Use `help(flights)` to get a qualitative of what each of these variables represents.
-```{r}
-glimpse(flights)
-```
+
 
 3. Select all variables that include information about arrival or departure. Also keep the `year`, `month`, and `day`. Use as few characters as possible in your `select()` call. Double check your work - did you grab something you didn't actually want?
-```{r}
-flights %>%
-  select(year:day, contains("arr_"), contains("dep")) 
-```
+
 
 4. Find all the flights that satisfy all of the following conditions:
 
@@ -49,39 +33,16 @@ flights %>%
     - Arrived more than fifteen minutes late, but didn't leave late
       + Remember you can break lines after commas for easier readability
     - sort by the tail number in ascending order
-```{r}
-flights %>%
-  filter(dest == "IAH" | dest == "HOU",
-         carrier == "AA" | carrier == "DL" | carrier == "UA",
-         month %in% 7:9,
-         arr_delay > 15,
-         dep_delay <= 0) %>% 
-  arrange(tailnum)
-```
+
     How many rows did you end up with? 
 
 5. What is the minimum and maximum overall air_time?
-```{r}
-flights %>%
-  summarize(min = min(air_time , na.rm = TRUE),
-            max = max(air_time , na.rm = TRUE))
-```
+
 
 5. What airline has the highest and lowest average delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
     * hint: `slice_*()` is likely very useful here - explore the documentation! 
     * if you want to just grab the airline of the highest, `pull()` can also come in handy here. 
-```{r}
-flights %>%
-  group_by(carrier) %>% 
-  summarize(avg_del = mean(dep_delay, na.rm = TRUE)) %>% 
-  slice_min(1) 
 
-flights %>%
-  group_by(carrier) %>% 
-  summarize(avg_del = mean(dep_delay, na.rm = TRUE)) %>% 
-  arrange(-avg_del) %>% 
-  head(1)
-```
 
 # Part 2: Flight Cancellations Case Study
 You work for the hypothetical "New York City department of airplanes". They provide you with this dataset and you are asked to see if certain days of the month are more likely to have flight cancellations and perhaps why. 
@@ -90,77 +51,29 @@ You work for the hypothetical "New York City department of airplanes". They prov
     - You can tell a flight is canceled because the departure or arrival information is missing (hint: `is.na()`). 
     - If you create a "dummy" or "indicator" variable to indicate something is canceled, you can take the mean to calculate a proportion. (`mutate(is_cancelled = is.na(dep_delay) | is.na(arr_delay))`)
     - See the following plot to help guide you if you get stuck.
-```{r results = 'markup', eval= TRUE, include = TRUE, fig.width=4,fig.height=3}
-flights %>%
-  mutate(is_cancelled = is.na(dep_delay) | is.na(arr_delay)) %>% 
-  group_by(day) %>% 
-  summarize(prop_canc = mean(is_cancelled)) %>% 
-  ggplot(aes(x = day, y = prop_canc)) +
-  geom_point() +
-  theme_bw() +
-  geom_smooth(se = FALSE, method = loess) 
-```
+<img src="/assignment/03-lab_files/figure-html/unnamed-chunk-7-1.png" width="384" />
   
   
 2. Does there seem to be a pattern?
 3. Is the proportion of canceled flights related to the average daily delay?
 
-```{r}
-flights %>%
-  mutate(is_cancelled = is.na(dep_delay) | is.na(arr_delay)) %>% 
-  group_by(day) %>% 
-  summarize(prop_canc = mean(is_cancelled),
-            ave_delay = mean(dep_delay, na.rm = TRUE)) %>% 
-  ggplot(aes(x = ave_delay, y = prop_canc)) +
-  geom_point() +
-  theme_bw() +
-  geom_smooth(se = FALSE, method = loess)
-```
+
 
 
 # Part 3: Tail Numbers Case Study
 You are offered a contract to do some analysis for the Regional Airline Association. They want you to tell them which tail numbers have changed airlines. Can you accept this contract?    
 
 1. In two separate steps / functions, find the number or unique tail numbers and the combinations of airlines and tail numbers. Does the unique number or tail numbers match the unique combinations of airline and tailnumber? 
-```{r}
-flights %>% 
-  count(tailnum) %>% 
-  nrow()
-flights %>% 
-  count(tailnum, carrier) %>% 
-  nrow()
 
-flights %>% 
-  count(tailnum, carrier) %>% 
-  arrange(tailnum)
-```
 
 2. As shown about, there are more carrier-tail number combinations than unique tail numbers. There are two reasons for this: The presence of flights with no tail numbers and planes changing carriers. Find out which tail numbers belong to more than one carrier. Can you figure out how many tail numbers switched airlines but were _not_ flights with missing tail numbers? 
-```{r}
-flights %>% 
-  count(tailnum, carrier) %>% 
-  count(tailnum) %>% 
-  arrange(desc(n))
 
-flights %>% 
-  count(tailnum, carrier) %>% 
-  count(tailnum) %>% 
-  filter(n > 1)
-```
 
 
 # Part 4: Delay Outliers Case Study
 Your new position as data science intern for the Committee of Disgruntler Airline Passengers has been quite rewarding. The Director of the committee has focused their attention on how flight delays create a major headache for passengers and has asked you to do some investigation on how often flights are "_ridiculously_ delayed". 
 
-1. There is a rule of thumb for outliers that is often used: Anything 1.5 interquartile ranges (IQR) above or below Q1/Q3 is an outlier. (i.e. $outlier < Q_1 - 1.5IQR$  or $outlier > Q_3 + 1.5IQR$) Can you use this rule to only select the flights that are outliers based on the dep_delay variable? How many flights are considered to be outliers according to this rule? 
+1. There is a rule of thumb for outliers that is often used: Anything 1.5 interquartile ranges (IQR) above or below Q1/Q3 is an outlier. (i.e. `\(outlier < Q_1 - 1.5IQR\)`  or `\(outlier > Q_3 + 1.5IQR\)`) Can you use this rule to only select the flights that are outliers based on the dep_delay variable? How many flights are considered to be outliers according to this rule? 
     * remember that mutate adds a new column to all rows while summarize collapses the data into one row. 
     * to get the first and third quartile, use `quantile(x, 1/4)` and `quantile(x, 3/4)` respectively.
-```{r}
-flights %>% 
-  mutate(delay_q1 = quantile(dep_delay, 1/4, na.rm = TRUE),
-         delay_q3 = quantile(dep_delay, 3/4, na.rm = TRUE),
-         delay_IQR = IQR(dep_delay, na.rm = TRUE),
-         delay_q1_iqr = delay_q1 - (1.5*delay_IQR),
-         delay_q3_iqr = delay_q3 + (1.5*delay_IQR)) %>%
-  filter((dep_delay > delay_q3_iqr) | (dep_delay < delay_q1_iqr))
-```
+

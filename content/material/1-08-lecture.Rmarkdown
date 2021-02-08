@@ -17,3 +17,5 @@ csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 Content to be loaded
 
 https://github.com/gadenbuie/tidyexplain
+
+can use flights data to practice joins
