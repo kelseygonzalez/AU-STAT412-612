@@ -5,9 +5,9 @@ date: "2021-02-08"
 start_date: "2021-02-08"
 end_date: "2021-02-11"
 menu:
-Material:
-parent: Lectures
-weight: 5
+  Material:
+    parent: Lectures
+    weight: 5
 type: docs
 toc: true
 bibliography: "../../static/bib/references.bib"
@@ -54,7 +54,6 @@ knitr::opts_chunk$set(
 - Describe data frames in R and tidyverse tibbles
 - Use basic functions of dplyr to manipulate single data frames/tibbles by rows, by columns (variables), and by groups
   + Choose rows by column (variable) values `filter()`
-  + Choose rows by position: `slice()`
   + Arrange (sort) rows by column (variable) values: `arrange()`
   + Choose columns (variables) by names `select()`
   + Rename columns (variables): `rename()`
@@ -136,7 +135,6 @@ dplyr Functions Support Common Manipulations/Transformations/Operations on Data 
 - We can characterize them base on the component of the data set they work with: (**bold** are the most commonly used)
 - **Rows**:
   + **`filter()`** chooses rows based on column values.
-  + `slice()` chooses rows based on location.
   + **`arrange()`** changes the order of the rows.
 - **Columns**:    
   + **`select()`** changes whether or not a column is included.
@@ -148,7 +146,7 @@ dplyr Functions Support Common Manipulations/Transformations/Operations on Data 
 
 - These are all "Single Table" verbs meaning they operate on a single data frame.
 - There are more dplyr functions (verbs) as well
-- Next week in dplyr Part 2 we will address additional functions (verbs) for working across rows and columns
+- Next week in dplyr Part 2 we will address additional functions (verbs) for working across rows and columns 
 - Later on in the course we will address dplyr verbs for reshaping data frames and working with two data frames at once.
 # Getting started with penguins 
 Let's explore our data first. We'll be using the penguins dataset again, this time specifically to see how we can wrangle this data into new forms. 
@@ -166,7 +164,7 @@ What I imagine it looked like when the penguins were weighed:
 <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
 
 We have a few options to preview our dataframe that we've discussed before. However, now that we have the tidyverse loaded, we can rely on my favorite, `glimpse()`
-```{r glimpse-data, results = "hide"}
+```{r glimpse-datas}
 glimpse(penguins)
 ```
 
@@ -668,7 +666,6 @@ penguins %>%
 - Describe data frames in R and tidyverse tibbles
 - Use basic functions of dplyr to manipulate single data frames by rows, by columns (variables), and by groups
   + Choose rows by column (variable) values `filter()`
-  + Choose rows by position: `slice()`
   + Arrange (sort) rows by column (variable) values: `arrange()`
   + Choose columns (variables) by names `select()`
   + Add/modify new/existing columns (variables): `mutate()`
@@ -679,3 +676,4 @@ penguins %>%
 - Chapter 5 of [RDS](https://r4ds.had.co.nz/)
 - [Data Transformation Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf)
 - [dplyr Overview](https://dplyr.tidyverse.org/)
+- [Interactive Penguins Dplyr Tutorial](https://allisonhorst.shinyapps.io/dplyr-learnr/#section-welcome)

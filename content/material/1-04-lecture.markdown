@@ -5,9 +5,9 @@ date: "2021-02-08"
 start_date: "2021-02-08"
 end_date: "2021-02-11"
 menu:
-Material:
-parent: Lectures
-weight: 5
+  Material:
+    parent: Lectures
+    weight: 5
 type: docs
 toc: true
 bibliography: "../../static/bib/references.bib"
@@ -41,7 +41,6 @@ wrap: 72
 -   Describe data frames in R and tidyverse tibbles
 -   Use basic functions of dplyr to manipulate single data frames/tibbles by rows, by columns (variables), and by groups
     -   Choose rows by column (variable) values `filter()`
-    -   Choose rows by position: `slice()`
     -   Arrange (sort) rows by column (variable) values: `arrange()`
     -   Choose columns (variables) by names `select()`
     -   Rename columns (variables): `rename()`
@@ -133,7 +132,6 @@ dplyr Functions Support Common Manipulations/Transformations/Operations on Data 
 -   We can characterize them base on the component of the data set they work with: (**bold** are the most commonly used)
 -   **Rows**:
     -   **`filter()`** chooses rows based on column values.
-    -   `slice()` chooses rows based on location.
     -   **`arrange()`** changes the order of the rows.
 -   **Columns**:
     -   **`select()`** changes whether or not a column is included.
@@ -169,6 +167,17 @@ We have a few options to preview our dataframe that we’ve discussed before. Ho
 ``` r
 glimpse(penguins)
 ```
+
+    ## Rows: 344
+    ## Columns: 8
+    ## $ species           [3m[90m<fct>[39m[23m Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, A...
+    ## $ island            [3m[90m<fct>[39m[23m Torgersen, Torgersen, Torgersen, Torgersen, Torge...
+    ## $ bill_length_mm    [3m[90m<dbl>[39m[23m 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34....
+    ## $ bill_depth_mm     [3m[90m<dbl>[39m[23m 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18....
+    ## $ flipper_length_mm [3m[90m<int>[39m[23m 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, ...
+    ## $ body_mass_g       [3m[90m<int>[39m[23m 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 347...
+    ## $ sex               [3m[90m<fct>[39m[23m male, female, female, NA, female, male, female, m...
+    ## $ year              [3m[90m<int>[39m[23m 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2...
 
 It looks like there are 7 variables or columns that we have to work with.
 - `species`: penguin species (Chinstrap, Adélie, or Gentoo)
@@ -908,7 +917,6 @@ penguins %>%
 -   Describe data frames in R and tidyverse tibbles
 -   Use basic functions of dplyr to manipulate single data frames by rows, by columns (variables), and by groups
     -   Choose rows by column (variable) values `filter()`
-    -   Choose rows by position: `slice()`
     -   Arrange (sort) rows by column (variable) values: `arrange()`
     -   Choose columns (variables) by names `select()`
     -   Add/modify new/existing columns (variables): `mutate()`
@@ -920,3 +928,4 @@ penguins %>%
 -   Chapter 5 of [RDS](https://r4ds.had.co.nz/)
 -   [Data Transformation Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf)
 -   [dplyr Overview](https://dplyr.tidyverse.org/)
+-   [Interactive Penguins Dplyr Tutorial](https://allisonhorst.shinyapps.io/dplyr-learnr/#section-welcome)
