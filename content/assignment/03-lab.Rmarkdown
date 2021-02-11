@@ -12,7 +12,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,
                       eval = FALSE, 
@@ -22,6 +21,10 @@ knitr::opts_chunk$set(echo = FALSE,
                       results = "hide")
 ```
 
+For this lab, complete part 1 and a at least one of the three following case studies. These are challenging but provide a real life example of what data wrangling looks like and I think each of you is capable of completing them! 
+
+Note: Each of these steps is separate from each other, you should start with the raw `flights` data each time. 
+
 # Part 1: Practice
 1. Install the `nycflights13` package (using the console). It's likely you already have this from the textbook reading. Load the tidyverse package and nycflights13 package and the `flights` data that comes with the package.
 ```{r, eval = TRUE}
@@ -30,7 +33,7 @@ library(nycflights13)
 data("flights")
 ```
 
-2. Get a quick look at what your variables consist of and how many observations you have. Use `help(flights)` to get a qualitative of what each of these variables represents.
+2. Get a quick look at what your variables consist of and how many observations you have. Use `help(flights)` to get a qualitative understanding of what each of these variables represents.
 ```{r}
 glimpse(flights)
 ```
@@ -56,31 +59,46 @@ flights %>%
          month %in% 7:9,
          arr_delay > 15,
          dep_delay <= 0) %>% 
-  arrange(tailnum)
+  arrange(tailnum) %>% nrow()
+
+
+filter(flights, (dest=='IAH'|dest=='HOU')&
+         (carrier=='UA'|carrier=='AA'|carrier=='DL')&
+         (month=='7'|month=='8'|month=='9'),)
+
+
 ```
     How many rows did you end up with? 
 
 5. What is the minimum and maximum overall air_time?
 ```{r}
 flights %>%
-  summarize(min = min(air_time , na.rm = TRUE),
-            max = max(air_time , na.rm = TRUE))
+  summarize(min = min(air_time, na.rm = TRUE),
+            max = max(air_time, na.rm = TRUE))
+
+
+flights %>% 
+  group_by(carrier) %>% 
+  summarise(air_time_min = min(air_time, na.rm = TRUE), 
+            air_time_max = max(air_time, na.rm =TRUE))
+
 ```
 
-5. What airline has the highest and lowest average delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
+5. What airline has the highest and lowest average *departure* delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
     * hint: `slice_*()` is likely very useful here - explore the documentation! 
     * if you want to just grab the airline of the highest, `pull()` can also come in handy here. 
 ```{r}
 flights %>%
   group_by(carrier) %>% 
   summarize(avg_del = mean(dep_delay, na.rm = TRUE)) %>% 
-  slice_min(1) 
+  slice_max(order_by = avg_del, n = 1) 
 
 flights %>%
   group_by(carrier) %>% 
   summarize(avg_del = mean(dep_delay, na.rm = TRUE)) %>% 
   arrange(-avg_del) %>% 
   head(1)
+
 ```
 
 # Part 2: Flight Cancellations Case Study

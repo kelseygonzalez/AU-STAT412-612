@@ -12,6 +12,12 @@ toc: true
 editor_options: 
   chunk_output_type: console
 ---
+
+```{r, eval = TRUE, echo = FALSE, message = FALSE, warning = FALSE }
+library(tidyverse)
+library(gapminder)
+```
+
 # 1. Gapminder
 ![](https://storage.googleapis.com/kaggle-datasets-images/373567/726490/b870208e6f91c6a6c940f8a4df111c87/dataset-cover.png?t=2019-10-22-19-47-34)
 
@@ -38,7 +44,7 @@ The goal of the gapminder dataset is to explore the relationship between GDP, po
     -   Try making a "bubble" plot by mapping the size of each point to the point's population (`pop`)
 
 
-As announced in class, the Diamonds part is optional for your turned in version of the lab.
+**As announced in class, the Diamonds part is optional for your turned in version of the lab.**
 
 
 

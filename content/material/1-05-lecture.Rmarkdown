@@ -24,6 +24,9 @@ EDA on two datasets you're interested in
 knitr::include_graphics(here::here("static", "img", "ggplot2_exploratory.png"))
 ```
 
+# Lab 3 Case Study reviews
+REVIEW LAB 3
+
 
 Lesson Objectives
 

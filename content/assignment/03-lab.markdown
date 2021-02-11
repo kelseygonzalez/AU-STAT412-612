@@ -14,12 +14,15 @@ editor_options:
 
 
 
+For this lab, complete part 1 and a at least one of the three following case studies. These are challenging but provide a real life example of what data wrangling looks like and I think each of you is capable of completing them! 
+
+Note: Each of these steps is separate from each other, you should start with the raw `flights` data each time. 
 
 # Part 1: Practice
 1. Install the `nycflights13` package (using the console). It's likely you already have this from the textbook reading. Load the tidyverse package and nycflights13 package and the `flights` data that comes with the package.
 
 
-2. Get a quick look at what your variables consist of and how many observations you have. Use `help(flights)` to get a qualitative of what each of these variables represents.
+2. Get a quick look at what your variables consist of and how many observations you have. Use `help(flights)` to get a qualitative understanding of what each of these variables represents.
 
 
 3. Select all variables that include information about arrival or departure. Also keep the `year`, `month`, and `day`. Use as few characters as possible in your `select()` call. Double check your work - did you grab something you didn't actually want?
@@ -39,7 +42,7 @@ editor_options:
 5. What is the minimum and maximum overall air_time?
 
 
-5. What airline has the highest and lowest average delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
+5. What airline has the highest and lowest average *departure* delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
     * hint: `slice_*()` is likely very useful here - explore the documentation! 
     * if you want to just grab the airline of the highest, `pull()` can also come in handy here. 
 
