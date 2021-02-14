@@ -28,7 +28,7 @@ Note: Each of these steps is separate from each other, you should start with the
 3. Select all variables that include information about arrival or departure. Also keep the `year`, `month`, and `day`. Use as few characters as possible in your `select()` call. Double check your work - did you grab something you didn't actually want?
 
 
-4. Find all the flights that satisfy all of the following conditions:
+4. Find the flights that satisfy **all** of the following conditions:
 
     - Flew to Houston (IAH or HOU)
     - Were operated by United, American, or Delta (UA, AA, or DL)
@@ -39,10 +39,10 @@ Note: Each of these steps is separate from each other, you should start with the
 
     How many rows did you end up with? 
 
-5. What is the minimum and maximum overall air_time?
+5. What is the minimum and maximum overall air_time? Your answer should be a dataframe with one row with two columns. 
 
 
-5. What airline has the highest and lowest average *departure* delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
+5. What airline has the highest and lowest average departure delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
     * hint: `slice_*()` is likely very useful here - explore the documentation! 
     * if you want to just grab the airline of the highest, `pull()` can also come in handy here. 
 
@@ -69,7 +69,7 @@ You are offered a contract to do some analysis for the Regional Airline Associat
 1. In two separate steps / functions, find the number or unique tail numbers and the combinations of airlines and tail numbers. Does the unique number or tail numbers match the unique combinations of airline and tailnumber? 
 
 
-2. As shown about, there are more carrier-tail number combinations than unique tail numbers. There are two reasons for this: The presence of flights with no tail numbers and planes changing carriers. Find out which tail numbers belong to more than one carrier. Can you figure out how many tail numbers switched airlines but were _not_ flights with missing tail numbers? 
+2. As shown above, there are more carrier-tail number combinations than unique tail numbers. There are two reasons for this: The presence of flights with no tail numbers and planes changing carriers. Find out which tail numbers belong to more than one carrier. Can you figure out how many tail numbers switched airlines but were _not_ flights with missing tail numbers? 
 
 
 

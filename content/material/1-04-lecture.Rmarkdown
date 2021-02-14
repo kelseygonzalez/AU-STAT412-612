@@ -31,6 +31,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+- Download the in-class written R Markdown [here](/class-output/class-6.Rmd).
 
 # Introduction
 
@@ -662,7 +663,7 @@ penguins %>%
   count(species, island, sex)
 ```
 
-# Part 1 Learning Outcomes Recap
+Learning Outcomes Recap
 - Describe data frames in R and tidyverse tibbles
 - Use basic functions of dplyr to manipulate single data frames by rows, by columns (variables), and by groups
   + Choose rows by column (variable) values `filter()`
@@ -672,7 +673,7 @@ penguins %>%
   + Group rows by columns (variables): `group_by()`
   + Calculate summary statistics of Columns with or without grouping. `summarize()`, `group_by()`
 
-## References
+# References
 - Chapter 5 of [RDS](https://r4ds.had.co.nz/)
 - [Data Transformation Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf)
 - [dplyr Overview](https://dplyr.tidyverse.org/)

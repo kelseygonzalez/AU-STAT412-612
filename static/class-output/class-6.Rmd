@@ -1,0 +1,178 @@
+---
+title: "class-6"
+author: "Kelsey Gonzalez"
+date: "2/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# start with dplyr
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+data("penguins")
+```
+
+# explore our penguins
+```{r}
+head(penguins)
+tail(penguins)
+str(penguins)
+summary(penguins)
+
+glimpse(penguins)
+```
+
+# selecting columns
+```{r}
+select(penguins, species, body_mass_g)
+select(penguins, species, bill_length_mm:sex)
+select(penguins, -year, -island)
+select(penguins, -(species:island))
+```
+
+## more advanced selecting functions with  `tidyselection`
+```{r}
+select(penguins, ends_with("mm"))
+select(penguins, starts_with("bill"))
+select(penguins, contains("length"), species)
+```
+
+# filtering rows
+```{r}
+filter(penguins, island == "Dream")
+# = assignment, == evaluation 
+filter(penguins, year <= 2008)
+filter(penguins, year != 2009) # is not
+# penguins[penguins$year == 2008,]
+
+#missing data
+filter(penguins, is.na(sex))
+filter(penguins, !is.na(sex))
+
+#multiple conditions
+filter(penguins, (island == "Biscoe") & (species == "Gentoo"))
+filter(penguins, island == "Biscoe", species == "Gentoo")
+
+filter(penguins, island == "Biscoe" | species == "Gentoo")
+
+filter(penguins, species == "Adelie" | species == "Gentoo")
+filter(penguins, species %in% c("Adelie", "Gentoo"))
+
+penguins_i_like <- c("Adelie", "Gentoo")
+filter(penguins, species %in% penguins_i_like)
+
+
+filter(penguins, 
+       (island == "Biscoe" & species == "Gentoo") |
+        (island == "Dream" & species == "Adelie"))
+```
+
+# pipes
+```{r}
+filter(
+  select(penguins, species, sex, year, island), 
+  island == "Biscoe")
+
+biscoe_penguins <- select(penguins, species, sex, year, island)
+biscoe_penguins <- filter(biscoe_penguins, island == "Biscoe")
+
+#Ctrl + Shift + M if you have a PC or Cmd + Shift + M on mac
+
+biscoe_penguins <- penguins %>% 
+  select(species, sex, year, island) %>% 
+  filter(island == "Biscoe")
+
+```
+
+
+Using pipes, subset the penguins data to include all species EXCEPT Adelie and retain the species column in addition to those relating to their bill.
+```{r}
+penguins %>% 
+  select(species,starts_with("bill") ) %>% 
+  filter(species != "Adelie")
+
+penguins %>%
+  select(species, contains("bill")) %>%
+  filter(!species == "Adelie")
+```
+
+# arranging 
+```{r}
+penguins %>%
+  select(species, contains("bill")) %>%
+  filter(!species == "Adelie") %>% 
+  arrange(bill_length_mm)
+
+penguins %>%
+  select(species, contains("bill")) %>%
+  filter(!species == "Adelie") %>% 
+  arrange(-bill_length_mm)
+
+penguins %>%
+  select(species, contains("bill")) %>%
+  filter(!species == "Adelie") %>% 
+  arrange(desc(species), bill_length_mm)
+```
+
+# mutate
+```{r}
+# penguins %>% 
+#   mutate(new_name = old_name)
+
+penguins %>% 
+  mutate(flipper_length_cm = flipper_length_mm / 10,
+         flipper_length_in = flipper_length_mm * 0.0393701) %>% 
+  select(contains("flipper_length"))
+# = assignment, == evaluation 
+
+penguins %>% 
+  mutate(bill_ratio = bill_length_mm / bill_depth_mm)
+```
+
+# aggregation with summarize 
+
+```{r}
+penguins %>% 
+  summarize(body_mass_mean = mean(body_mass_g, na.rm = TRUE),
+            body_mass_sd = sd(body_mass_g, na.rm = TRUE),
+            n = n())
+
+penguins %>% 
+  filter(species == "Gentoo") %>% 
+  summarize(body_mass_mean = mean(body_mass_g, na.rm = TRUE),
+            body_mass_sd = sd(body_mass_g, na.rm = TRUE),
+            n = n())
+```
+
+# group_by
+```{r}
+body_mass_stats <- penguins %>% 
+  group_by(species) %>% 
+  summarize(body_mass_mean = mean(body_mass_g, na.rm = TRUE),
+            body_mass_sd = sd(body_mass_g, na.rm = TRUE),
+            n = n())
+
+penguins %>% 
+  group_by(island, sex) %>% 
+  summarize(body_mass_mean = mean(body_mass_g, na.rm = TRUE))
+```
+
+# count
+```{r}
+penguins %>% 
+  group_by(sex) %>% 
+  summarize(n = n())
+
+penguins %>% 
+  count(sex)
+
+penguins %>% 
+  count(species,island) %>% 
+  ggplot(aes(x = island, y = n, fill = species)) +
+  geom_col()
+```
+

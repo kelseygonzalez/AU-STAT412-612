@@ -8,25 +8,18 @@ end_date: "2021-02-18"
 menu:
   Material:
     parent: Lectures
-    weight: 4
+    weight: 5
 type: docs
 toc: true
 bibliography: "../../static/bib/references.bib"
 csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
 slides: "04-slides"
 ---
-OVerview ideas:
- 
-Lab: interest speed dating 
-EDA on two datasets you're interested in 
-
-```{r explore,  out.width = '100%'}
-knitr::include_graphics(here::here("static", "img", "ggplot2_exploratory.png"))
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
 ```
-
-# Lab 3 Case Study reviews
-REVIEW LAB 3
-
 
 Lesson Objectives
 
@@ -40,61 +33,95 @@ Lesson Objectives
 # Loading data
 So far, we've been using packages and `data()` to load in new data to our working session. But what if I want to load in some other data that I have? 
 Go ahead and download the following files and let's work on how to load them into R. 
-> .csv
-> .dta
-> .xlxs
+> [<i class="fas fa-file-csv"></i>`avengers.csv`](/data/avengers.csv)   ([source](https://github.com/fivethirtyeight/data/blob/master/avengers/avengers.csv))  
+> [<i class="fas fa-file-code"></i> `crf33.dta`](/data/crf33.dta)  ([source](https://stats.idre.ucla.edu/stata/examples/kirk/experimental-design-procedures-for-the-behavioral-sciences-third-edition-by-roger-e-kirk/))  
+> [<i class="fas fa-file-excel"></i> `steak-risk-survey.xlsx`](/data/steak-risk-survey.xlsx) ([source](https://github.com/fivethirtyeight/data/tree/master/steak-survey))
 
 ## Creating tibbles
-As you have learned, a tibble and a dataframe are almost the same thing, except that tibbles have much nicer output and are easier to work with. From now on know that anytime I say data frame or tibble, I really mean a type of data that has rows and columns that is usually saved as a tibble. 
+As you have learned, a tibble and a dataframe are almost the same thing, except
+that tibbles have much nicer output and are easier to work with. From now on
+know that anytime I say data frame or tibble, I really mean a type of data that
+has rows and columns that is usually saved as a tibble.
 
-How can I create a tibble from scratch? There are two main ways, using 
+How can I create a tibble from scratch? There are two main ways, using tibble
+and tribble.
+
+`Tibble` creates dataframes in column formats while `tribble` creates them in
+rows. Many new learners say `tribble` is more intuitive.
 ```{r}
 library(tidyverse)
 
+cats_tibble <- tibble(coat = c("calico", "black", "tabby"),
+                      weight = c(2.1, 5.0, 3.2),
+                      likes_string = c(1, 0, 1))
+cats_tibble
+
+cats_tribble <- tribble(
+  ~coat, ~weight, ~likes_string,
+  "calico", 2.1, 1,
+  "black", 5.0, 0,
+  "tabby", 3.2, 1
+)
+cats_tribble
+
+#these are equivalent
+cats_tibble == cats_tribble
+
 ```
+However, in normal practice creating data from scratch is rare. More often than
+not, we will load in out data from a premade source.
+
 
 ## Loading .csv and .tsv
 
 - A lot of datasets are available as flat files, in comma-separated or tab-separated formats, with the column or variable names in the first row of data. 
 - The different file types are usually identifiable by their extension.
 - The extension ".csv" stands for "comma-separated values" where **each column is separated by a comma**. Each row is separated as a new line.
-- For example, these are the first 10 rows of a file called hate_crimes2.csv
-  
-    ```{r, echo = FALSE, comment=""}
-# library(readr) #already comes loaded with tidyverse
-    writeLines(readLines(con = "../data/hate_crimes2.csv", n = 10))
-    ```
-- The extension ".tsv" stands for "tab-separated values" where **each column is separated by a tab character** and each row is separated as a new line.
 
 - readr is a tidyverse package to **import data from a variety of file formats into tibbles** faster (10x) and more accurately than base R's `read.csv()`
   + readr converts flat files into data frames (tibbles)
   + readr does NOT convert character vectors to factors automatically (like R version 3.0 `read.csv()`)
   + readr functions usually give more informative error messages than base R functions like `read.csv()`
+
+Use `read_csv()` to read a CSV (**comma-separated** values) file into R  
 ```{r}
-
+avengers <- read_csv(file = here::here("static","data","avengers.csv"))
 ```
+If the **.CSV is online and you know the URL**, you can use the URL for the `file` argument.  
+```{r}
+avengers <- 
+      read_csv(file ="https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv")
 
-- Use `read_csv()` to read a CSV (**comma-separated** values) file into R
+glimpse(avengers)
+```
+readr tells you how it converted the columns - also known as *parsing* the data.
+you can uncover the exact ways it was read in with `spec`
+```{r}
+spec(avengers)
+```
+Readr automatically previews about 1000 rows of each column to guess the column
+type. If the parsing is incorrect, you can use the optional `coltypes = `
+argument within `read_csv()` to correct the column type.
 
-    ```{r}
-    hate_crimes <- read_csv(file = "../data/hate_crimes2.csv")
-    ```
-- readr tells you how it converted the columns - also known as *parsing* the data    
-- If the **.CSV is online and you know the URL**, you can use the URL for the `file` argument.
-  
-    ```{r}
-    hate_crimes <- 
-      read_csv(file ="https://dcgerard.github.io/stat_412_612/data/hate_crimes2.csv")
-    ```
 
 
 ## Loading other data types
 
+### `Haven` for STATA
+Sometimes you'll come across data from SPSS, STATA, or SAS and need to import it
+into r. The package `Haven` comes installed with the tidyverse and enables clean
+import of these sorts of proprietary statistical file structures. Although you
+have it installed, you must load the package when you want to use it.
 
-
-### `Haven` for 
 ```{r}
+library(haven)
+crf33 <- read_dta(file = here::here("static","data","crf33.dta"))
 
+#While glimpse doesn't look any different
+glimpse(crf33)
+
+#but str() will uncover these special attribute labels
+str(crf33)
 ```
 
 ### `readxl` for loading excel data
@@ -106,13 +133,26 @@ Often Not a Good Idea to Import Directly from Excel
   + People tend to color code information in Excel or be inconsistent in their formatting
 - Instead, export the data from the Excel worksheet as a .CSV. Then read the .CSV file into R.
   + Edit the data so the information is encoded by a new variable.
-  
-  
-# Finding Data
-https://dataset-finder.netlify.app/
 
+```{r}
+library(readxl)
+steak <- read_excel(path = here::here("static","data","steak-risk-survey.xlsx"))
+glimpse(steak)
+```
+Again, be very careful when importing excel data. So often, there's a random
+value in cell DM1334 that will throw off how it is read in or two rows for
+column names.
+  
+# HW & Lab Preview
+For your homework this week, you'll take a deep dive into what is available for
+a dataset for your final project. I'm having you browse multiple different
+repositories that I think contain fun and useful data so you may become inspired
+for you final project. You will be sharing these datasets with your classmates
+in a 'data speed-dating' activity in the lab on Thursday, so do find a few you
+like.
 
 # EDA
+![](/img/ggplot2_exploratory.png){width=50%}
 
 ## Introduction
 - Once you have loaded and checked your data for completeness and consistency you want to begin to look at it.
@@ -129,7 +169,7 @@ https://dataset-finder.netlify.app/
 - Again, look for patterns and relationships, skewness, curvature, modality, gaps, discontinuities, , etc..
 - Color-code by variables to see if relationships appear more clearly.
 - Calculate lots of numerical summary statistics.
-- Look at "missingness". *"The dog that did not bark"*
+- Look at "missingness". 
 - Look at extreme values for potential "outliers" and patterns
 
 - EDA is about **curiosity**. 
@@ -137,20 +177,61 @@ https://dataset-finder.netlify.app/
 - This will let you hone in on the few *interesting* questions you want to pursue deeper.
 - Keep track of what you are doing with your .Rmd file text chunks and code chunks so you can protext yourself from becoming a victim of data snooping - only cherry picking the "good results"
 
+## Automated EDA
+
+### `skimr`
+![](https://docs.ropensci.org/skimr/reference/figures/logo.png){width=50%, height=50%}
+
+skimr provides a frictionless approach to summary statistics which conforms to
+the principle of least surprise, displaying summary statistics the user can skim
+quickly to understand their data. It handles different data types and returns a
+skim_df object which can be included in a pipeline or displayed nicely for the
+human reader.
+
+```{r}
+# install.packages("skimr")
+library(skimr)
+skimr::skim(avengers)
+
+diamonds %>% 
+  group_by(cut) %>% 
+  skimr::skim()
+```
+
+### `visdat`: 
+![](https://github.com/ropensci/visdat/raw/master/man/figures/visdat-logo.png){width=50%, height=50%}
+
+helps you visualise a dataframe and “get a look at the data” by displaying the
+variable classes in a dataframe as a plot with vis_dat, and getting a brief
+look into missing data patterns using vis_miss.
+
+```{r}
+# install.packages("visdat")
+library(visdat)
+
+#overall viz
+vis_dat(steak)
+vis_dat(avengers)
+
+#missing viz
+vis_miss(avengers, 
+         cluster = TRUE)
+
+#comparison viz
+vis_compare(cats_tibble, cats_tribble)
+```
+
 
 ## Why EDA
 Why do we want to visualize our data? 
 
 - All the graphs are based on data with the same summary statistics!
 
-```{r anscombe, echo=FALSE, fig.cap="Anscombe's Quartet", out.width = '100%'}
-knitr::include_graphics(here::here("static", "img", "Anscombes_quartet.png"))
+![](/img/Anscombes_quartet.png){width=50%}
 
-```
-
-We can see this more explicitly with the "DatasauRus Dozen" Package. We have nearly
-identical summary statistics, but the actual data looks vastly different from
-eachother. 
+We can see this more explicitly with the "DatasauRus Dozen" Package. We have
+nearly identical summary statistics, but the actual data looks vastly different
+from eachother.
 
 ```{r, fig.height = 3, fig.width  = 5, message = FALSE}
 library(datasauRus)
@@ -175,58 +256,40 @@ ggplot(datasaurus_dozen,
 ```
 @noauthor_datasaurus_nodate  
 
-## Automated EDA
-
-### `skimr`
-```{r}
-# install.packages("skimr")
-skimr::skim(diamonds)
-```
-
-
-### `visdat`: https://twitter.com/pop_gen_JED/status/1354202108346724356?s=19
-
-
-## Visual EDA
-![Visual EDA]("/img/ggplot2_exploratory.png")
-## Other EDA
-
-### Contingency Tables 
-### Correlations 
-
-
-
 # Data Export 
 ## `write_csv()`,  `write_csv2()`, and `write_tsv()`
 
 - You can write comma-separated and tab-separated files using `write_csv()`, `write_csv2()`, and `write_tsv()`.
-    ```{r}
-    hate_crimes %>% 
-      filter(state %in% c("New York", "New Jersey", "Connecticut")) %>% 
-      write_csv("../output/nyc_region_data.csv")
-    ```
+```{r eval = F}
+steak %>% 
+  filter(hypothetical_scenario == "Lottery B") %>% 
+  write_csv("../output/nyc_region_data.csv")
+```
 
 - The defaults are usually fine.
 
 # Reading/Writing R Objects with `readRDS()` and `saveRDS()`.
 
-- You can save and reload **arbitrary R objects** (data frames, matrices, lists, vectors) using `readRDS()` and `saveRDS()`.
-- .Rds files are compressed data files so enable much faster loading and more compact storage.
-- These are what usually go into the /data folder as opposed to the /data_raw folder
+- You can save and reload **arbitrary R objects** (data frames, matrices, lists,
+vectors) using `readRDS()` and `saveRDS()`. - .Rds files are compressed data
+files so enable much faster loading and more compact storage. - These are what
+usually go into the /data folder as opposed to the /data_raw folder
 
-    ```{r}
-    hate_crimes %>% 
-      filter(state %in% c("New York", "New Jersey", "Connecticut")) %>% 
-      saveRDS("../output/nyc_region_data.rds")
-    ```
+```{r eval = F}
+steak %>% 
+  filter(hypothetical_scenario == "Lottery B") %>% 
+  saveRDS("../output/nyc_region_data.rds")
+```
 
 
 # References
   - Chapter 11 of [RDS](https://r4ds.had.co.nz/)
-  - Chapter 7 of [RDS](https://r4ds.had.co.nz/)
-  - [Readr Overview](https://readr.tidyverse.org/).
-  
-  
-  # More resources 
+  - Chapter 7 of [RDS](https://r4ds.had.co.nz/exploratory-data-analysis.html)
+  - [Data Import Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf)
+  - [Readr Overview](https://readr.tidyverse.org/)
+  - [Haven Documentation](https://haven.tidyverse.org/)
+  - [readxl Documentation](https://readxl.tidyverse.org/)
 
-* [Data Import Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf)
+
+
+

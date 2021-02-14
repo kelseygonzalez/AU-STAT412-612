@@ -20,6 +20,8 @@ wrap: 72
 
 <img src="/img/dplyr_wrangling.png" style="width:50.0%" />
 
+-   Download the in-class written R Markdown [here](/class-output/class-6.Rmd).
+
 # Introduction
 
 -   Real world data is always messy to start
@@ -912,18 +914,17 @@ penguins %>%
     ## 12 Gentoo    Biscoe    male      61
     ## 13 Gentoo    Biscoe    <NA>       5
 
-# Part 1 Learning Outcomes Recap
+Learning Outcomes Recap
+- Describe data frames in R and tidyverse tibbles
+- Use basic functions of dplyr to manipulate single data frames by rows, by columns (variables), and by groups
++ Choose rows by column (variable) values `filter()`
++ Arrange (sort) rows by column (variable) values: `arrange()`
++ Choose columns (variables) by names `select()`
++ Add/modify new/existing columns (variables): `mutate()`
++ Group rows by columns (variables): `group_by()`
++ Calculate summary statistics of Columns with or without grouping. `summarize()`, `group_by()`
 
--   Describe data frames in R and tidyverse tibbles
--   Use basic functions of dplyr to manipulate single data frames by rows, by columns (variables), and by groups
-    -   Choose rows by column (variable) values `filter()`
-    -   Arrange (sort) rows by column (variable) values: `arrange()`
-    -   Choose columns (variables) by names `select()`
-    -   Add/modify new/existing columns (variables): `mutate()`
-    -   Group rows by columns (variables): `group_by()`
-    -   Calculate summary statistics of Columns with or without grouping. `summarize()`, `group_by()`
-
-## References
+# References
 
 -   Chapter 5 of [RDS](https://r4ds.had.co.nz/)
 -   [Data Transformation Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf)

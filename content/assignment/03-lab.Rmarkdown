@@ -44,7 +44,7 @@ flights %>%
   select(year:day, contains("arr_"), contains("dep")) 
 ```
 
-4. Find all the flights that satisfy all of the following conditions:
+4. Find the flights that satisfy **all** of the following conditions:
 
     - Flew to Houston (IAH or HOU)
     - Were operated by United, American, or Delta (UA, AA, or DL)
@@ -61,30 +61,18 @@ flights %>%
          dep_delay <= 0) %>% 
   arrange(tailnum) %>% nrow()
 
-
-filter(flights, (dest=='IAH'|dest=='HOU')&
-         (carrier=='UA'|carrier=='AA'|carrier=='DL')&
-         (month=='7'|month=='8'|month=='9'),)
-
-
 ```
     How many rows did you end up with? 
 
-5. What is the minimum and maximum overall air_time?
+5. What is the minimum and maximum overall air_time? Your answer should be a dataframe with one row with two columns. 
 ```{r}
 flights %>%
   summarize(min = min(air_time, na.rm = TRUE),
             max = max(air_time, na.rm = TRUE))
 
-
-flights %>% 
-  group_by(carrier) %>% 
-  summarise(air_time_min = min(air_time, na.rm = TRUE), 
-            air_time_max = max(air_time, na.rm =TRUE))
-
 ```
 
-5. What airline has the highest and lowest average *departure* delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
+5. What airline has the highest and lowest average departure delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
     * hint: `slice_*()` is likely very useful here - explore the documentation! 
     * if you want to just grab the airline of the highest, `pull()` can also come in handy here. 
 ```{r}
@@ -153,7 +141,7 @@ flights %>%
   arrange(tailnum)
 ```
 
-2. As shown about, there are more carrier-tail number combinations than unique tail numbers. There are two reasons for this: The presence of flights with no tail numbers and planes changing carriers. Find out which tail numbers belong to more than one carrier. Can you figure out how many tail numbers switched airlines but were _not_ flights with missing tail numbers? 
+2. As shown above, there are more carrier-tail number combinations than unique tail numbers. There are two reasons for this: The presence of flights with no tail numbers and planes changing carriers. Find out which tail numbers belong to more than one carrier. Can you figure out how many tail numbers switched airlines but were _not_ flights with missing tail numbers? 
 ```{r}
 flights %>% 
   count(tailnum, carrier) %>% 
@@ -174,6 +162,7 @@ Your new position as data science intern for the Committee of Disgruntler Airlin
     * remember that mutate adds a new column to all rows while summarize collapses the data into one row. 
     * to get the first and third quartile, use `quantile(x, 1/4)` and `quantile(x, 3/4)` respectively.
 ```{r}
+# I purposefully do this step by step so it's easier to understand 
 flights %>% 
   mutate(delay_q1 = quantile(dep_delay, 1/4, na.rm = TRUE),
          delay_q3 = quantile(dep_delay, 3/4, na.rm = TRUE),
@@ -181,4 +170,12 @@ flights %>%
          delay_q1_iqr = delay_q1 - (1.5*delay_IQR),
          delay_q3_iqr = delay_q3 + (1.5*delay_IQR)) %>%
   filter((dep_delay > delay_q3_iqr) | (dep_delay < delay_q1_iqr))
+
+# but this can also be condensed like this for efficiency... 
+flights %>% 
+  mutate(delay_q1_iqr = quantile(dep_delay, 1/4, na.rm = TRUE) - (1.5* IQR(dep_delay, na.rm = TRUE)),
+         delay_q3_iqr = quantile(dep_delay, 3/4, na.rm = TRUE) + (1.5* IQR(dep_delay, na.rm = TRUE))) %>%
+  filter((dep_delay > delay_q3_iqr) | (dep_delay < delay_q1_iqr))
+
+
 ```

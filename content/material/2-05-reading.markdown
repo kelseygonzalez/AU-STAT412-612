@@ -18,7 +18,6 @@ editor_options:
 * Read [R4DS Chapter 7](https://r4ds.had.co.nz/exploratory-data-analysis.html) 
 * Explore some datasets from [#TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets)
 * Explore some datasets from [Kaggle](https://www.kaggle.com/datasets)
-* Explore some datasets from the [Data is Plural archive](https://dataset-finder.netlify.app/
-)
+* Explore some datasets from the [Data is Plural archive](https://dataset-finder.netlify.app/)
 
-Come to the lab with some idea of datasets you would enjoy working with for the final project. This is not binding, but an activity to get you started thinking about the direction you would like to go for the project. 
+Come to the lab with at least 2 potential datasets (from the links above or elsewhere) that you would enjoy working with for the [final project](https://american-stat-412612.netlify.app/assignment/01-final-project/). This is **not** binding, but serves as an activity to get you brainstorming the directions you would like to go for the project. You will be sharing these datasets with your classmates. 

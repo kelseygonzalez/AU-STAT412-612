@@ -19,7 +19,7 @@ editor_options:
 
 -   Download the in-class written R Markdown [here](/class-output/class-4.Rmd).
 
-## Learning Outcomes
+Learning Outcomes
 
 -   Use the capabilities of ggplot2.
     -   `ggplot()` and `aes()` for mapping data to aesthetics
@@ -35,7 +35,7 @@ editor_options:
     -   Coding by a categorical variable
     -   Smoothing (loess and OLS)
 
-## Lesson prep
+# Lesson prep
 
 A package we will be using extensively in this course is `tidyverse`. You may remember, a package is like an app on your phone which gives you extra features built off the model. To download a package, we use `install.packages("package-name")` to get it onto our computer. We also will need a special package called “palmerpenguins,” so Let’s download those now.
 
@@ -54,18 +54,18 @@ library("tidyverse")
 data("penguins")
 ```
 
-## The ‘ggplot2’ package
+# The ‘ggplot2’ package
 
 ![ggplot2\_masterpiece](/img/ggplot2_masterpiece.png)
 
-### Foundational Concepts Underlying the ggplot2 Package
+## Foundational Concepts Underlying the ggplot2 Package
 
 -   The ggplot2 package is based on a set of concepts called the “Grammar of Graphics” (GoG)
 -   The grammar of graphics is an architectural approach to creating graphs
 -   The GoG emphasizes *modularity through layers* so users can create better graphics more easily
 -   The GoG is structured to enable transparency, maintainability, and reproducibility.
 
-### Benefits
+## Benefits
 
 -   The ‘ggplot2’ package is relatively easy to use for most tasks since it works well with other tidyverse packages
     -   The default plots are better looking
@@ -77,7 +77,7 @@ data("penguins")
     -   Minimize redundant information that can confuse the viewer
     -   Do not put two different `Y` axes on the same plot. It’s difficult to do for a good reason.
 
-#### Elements of the Grammar of Graphics
+### Elements of the Grammar of Graphics
 
 -   The ‘ggplot2’ package uses functions to work with the following GoG elements:
 
@@ -103,7 +103,7 @@ data("penguins")
     -   facets - creating multiple graphs using `facet_grid()` or `facet_wrap()` to show an additional dimension of the data
 -   We won’t modify the other GoG elements too often.
 
-#### The `ggplot()` function is the Workhorse of ggplot2
+### The `ggplot()` function is the Workhorse of ggplot2
 
 -   The `ggplot()` function creates the blank `gg` object - the canvas.
 -   It has two main arguments:
@@ -112,7 +112,7 @@ data("penguins")
         -   Aesthetics may include: data to go on the x axis, data to go on the y axis, color, shape, fill, transparency, …
         -   You almost always use the `aes()` function to perform this mapping.
 
-## Basic function
+# Basic function
 
 ``` r
 ggplot(DATA, mapping = aes(x = X, y = X)) +
@@ -125,9 +125,9 @@ ggplot(DATA, mapping = aes(x = X, y = X)) +
 -   The `*` in the `geom_*()` function is replaced by a name which specifies which geometric objects receive the aesthetic mapping and should be shown.
     -   The help for `geom_` shows many possible `geom_*()` functions
 
-## Comparing Two Quantitative Variables
+# Comparing Two Quantitative Variables
 
-### Scatterplots: `geom_point()`
+## Scatterplots: `geom_point()`
 
 -   Scatterplots (or point plots) explore the relationship between two **quantitative** variables.
 -   “Quantitative” variables are numeric variables where at least one arithmetic operation ($+/-/\times/\div$) makes sense.
@@ -158,7 +158,7 @@ ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm)) +
 
 -   Changing the mapping does not change the nature of the relationship but can change how most people will interpret your plot as to which variable might be explaining or affecting or associated with the other variables values.
 
-#### Adding a Third Dimension by Coding (or Annotating) by a Categorical Variable
+### Adding a Third Dimension by Coding (or Annotating) by a Categorical Variable
 
 -   We might be interested in looking at the association of two quantitative variables based on *different values of a categorical variable*.
 
@@ -195,13 +195,13 @@ ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-4-1.png" width="384" />
 
-#### Adding a Third Dimension by Coding (or Annotating) by a Quantitative Variable
+### Adding a Third Dimension by Coding (or Annotating) by a Quantitative Variable
 
 -   If we want to look at the association between two quantitative variables at different levels of a third quantitative variable, we can map that third quantitative variable to an aesthetic as well.
 -   There are three main choices: `color` (good), or size (worse unless points have minimal overlap).
 
 ``` r
-# Coding by color - gives a smear or spectrum of colors,
+ # Coding by color - gives a smear or spectrum of colors,
 
 ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
                                color = bill_length_mm)) +
@@ -219,7 +219,7 @@ ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-5-2.png" width="384" />
 
 ``` r
-# Coding by size, often called a "bubble chart"
+ # Coding by size, often called a "bubble chart"
 
 ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
                                size = body_mass_g)) +
@@ -235,7 +235,7 @@ We can map multiple variables to multiple aesthetics at the same time, but the r
 In the plot above, there’s too much noise and the point of the plot is not effectively communicated. Keep it simple.
 {{% /div %}}
 
-### Overplotting
+## Overplotting
 
 -   Overplotting is when there is so much data with similar values the plotted points overlap or cover each other up to so it is hard to interpret the results.  
 -   When variables are rounded or occur around common values, you will likely experience overplotting.
@@ -254,7 +254,7 @@ ggplot(penguins, mapping = aes(x = year, y = bill_length_mm,
     2.  If you have a small data set, use `geom_jitter()` to have R change the values slightly in the x and y directions
     3.  If you have a really large dataset, randomly sub-sample the observational units (chapter 5).
 
-#### alpha transparency
+### alpha transparency
 
 ``` r
 ggplot(penguins, mapping = aes(x = year, y = bill_length_mm,
@@ -265,7 +265,7 @@ ggplot(penguins, mapping = aes(x = year, y = bill_length_mm,
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-8-1.png" width="384" />
 
-#### geom\_jitter
+### geom\_jitter
 
 ``` r
 ggplot(penguins, mapping = aes(x = year, y = bill_length_mm,
@@ -276,7 +276,7 @@ ggplot(penguins, mapping = aes(x = year, y = bill_length_mm,
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-9-1.png" width="384" />
 
-#### geom\_hex()
+### geom\_hex()
 
 ``` r
 ggplot(penguins, mapping = aes(x = bill_depth_mm, y = bill_length_mm,
@@ -287,7 +287,7 @@ ggplot(penguins, mapping = aes(x = bill_depth_mm, y = bill_length_mm,
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-10-1.png" width="384" />
 
-#### Adding a regression line with smoothing: `geom_smooth()`
+### Adding a regression line with smoothing: `geom_smooth()`
 
 -   Using a smoothing lines is often helpful to see if there is a potential relationship between variables
 -   `geom_smooth()` will create trend lines (either linear or locally curved) and plot these.
@@ -332,7 +332,7 @@ ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-12-3.png" width="384" />
 
-## Labels
+# Labels
 
 How do I make our final plot look nicer? A great place to start is with themes and labels to express our intentions better.
 
@@ -359,7 +359,7 @@ ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-13-1.png" width="384" />
 
-## Themes
+# Themes
 
 Themes can be equally important to making our plot attractive. I personally can’t stand the grey background of the plot. `ggplot2` has a lot of themes you can use to reset multiple elements of the plot at once. `theme_bw()` black and white, changes to a white background and is popular. My favorite is `theme_minimal()`. Try out a few different `theme_*()`s to find your favorite.
 
@@ -397,7 +397,7 @@ ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-15-1.png" width="576" />
 
-## Layering Geoms:
+# Layering Geoms:
 
 -   You can add multiple layers of geoms that use the same data and aesthetic map as defined in the `ggplot()` call.
     -   *`ggplot()` passes all the mappings in the `ggplot(aes(...))` to later functions as the default mappings*
@@ -415,7 +415,7 @@ ggplot(penguins) +
 -   Example of what happens when there is no default mapping and you forget to to specify every mapping.
 
 ``` r
-## Should produce an error
+# Should produce an error
 ggplot(penguins) +
   geom_point(mapping = aes(x = flipper_length_mm, 
                            y = bill_length_mm,
@@ -427,7 +427,7 @@ ggplot(penguins) +
     -   Place the aesthetic mappings you want as the default (to be shared) in the `ggplot(aes())` call.
     -   Place geom-specific aesthetic mappings within the `geom_*(aes())` call
 
-## One Categorical Variable and One Quantitative Variable.
+# One Categorical Variable and One Quantitative Variable.
 
 -   The Box Plot (or box and whiskers plot) is often the best way to visually assess the association between a categorical and a quantitative variable.
 -   A box plot is a compact representation of five summary statistics:
@@ -436,7 +436,7 @@ ggplot(penguins) +
     -   Lower and Upper “whiskers” (up to 1.5\* IQR above and below the median), and
     -   All the “outlying” points - those points more than 1.5\* IQR above/below the median.
 -   Use `geom_boxplot()` to create a boxplot.
-    \#\#\# Box Plots - `geom_boxplot()`
+    \#\# Box Plots - `geom_boxplot()`
 
 ``` r
 ggplot(penguins, aes(x = island, y = body_mass_g)) +
@@ -469,7 +469,7 @@ ggplot(penguins, aes(x = island, y = body_mass_g)) +
 
 <img src="/material/1-03-lecture_files/figure-html/beeswarm-1.png" width="384" />
 
-### Bar Plots - `geom_col()`
+## Bar Plots - `geom_col()`
 
 Sometimes you just want to show a total counts across categorical variables.
 
@@ -499,7 +499,7 @@ penguins %>%
 <img src="/material/1-03-lecture_files/figure-html/geom_col-1.png" width="384" />
 
 ``` r
-#Or, you can use geom_col() to avoid that! 
+# Or, you can use geom_col() to avoid that! 
 
 penguins %>% 
   count(island, sex) %>% 
@@ -509,13 +509,13 @@ penguins %>%
 
 <img src="/material/1-03-lecture_files/figure-html/geom_col-2.png" width="384" />
 
-## One Quantitative Variable
+# One Quantitative Variable
 
 -   We are often interested in understanding the shape of the distribution of a variable
 -   By distribution we mean what values does it takes and how often does it take each value.
 -   As an example, we want to see if the distribution is uniform, symmetric, or skewed (left or right), or, is it uni-modal (one hump) or bi-modal (two humps) or something interesting or unusual.
 
-### Histograms: `geom_histogram()`
+## Histograms: `geom_histogram()`
 
 -   A histogram is useful for exploring the distribution of a quantitative variable.
 -   `geom_histogram()` breaks up the range of the variables values into bins of equal width and then counts how many observations fall into each bin
@@ -545,7 +545,7 @@ ggplot(penguins, aes(x = flipper_length_mm)) +
 
 <img src="/material/1-03-lecture_files/figure-html/geom_histogram_bins-2.png" width="384" />
 
-#### Adding a Second Dimension by Coding (Annotating) by a Categorical Variable
+### Adding a Second Dimension by Coding (Annotating) by a Categorical Variable
 
 -   You can adjust color with two options: `fill` (best) or `color` (worst).
     -   `fill` adjusts the *interior color* of a shape and \`color’ adjusts the lines defining the shape
@@ -558,7 +558,7 @@ ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
 
 <img src="/material/1-03-lecture_files/figure-html/geom_histogram-1.png" width="384" />
 
-### Density Plots: `geom_density()`
+## Density Plots: `geom_density()`
 
 -   A density is a “smoothed” histogram. It can be created with `geom_density()`
 -   Densities and histograms generally give us identical information.
@@ -588,7 +588,7 @@ ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
 
 <img src="/material/1-03-lecture_files/figure-html/geom_density_alpha-1.png" width="384" />
 
-### facets
+## facets
 
 Facets are Another Way to Add Another Dimension with a Categorical Variable
 
@@ -614,7 +614,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
 
 <img src="/material/1-03-lecture_files/figure-html/facet_grid-1.png" width="384" />
 
-#### Bonus: `ggridges`
+### Bonus: `ggridges`
 
 Another way to see density plots is using one of my favorite [ggplot extensions](https://exts.ggplot2.tidyverse.org/gallery/), ggridges. This allows you to make overlapping density plots like we did above, but I find them much more readible and visually appealing.
 
@@ -626,7 +626,7 @@ ggplot(penguins, aes(x = flipper_length_mm, y = species,
 
 <img src="/material/1-03-lecture_files/figure-html/ggridges-1.png" width="384" />
 
-## scales
+# scales
 
 Control the Scales for Different Elements of the Graph
 
@@ -656,7 +656,7 @@ ggplot(data = diamonds, mapping = aes(x = carat, y = price)) +
 
 <img src="/material/1-03-lecture_files/figure-html/scale_x_log10-1.png" width="384" />
 
-## Color Palettes
+# Color Palettes
 
 Colorblind safe palettes
 
@@ -722,11 +722,11 @@ ggplot(penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm,
 <img src="/material/1-03-lecture_files/figure-html/scale_color_manual-1.png" width="384" />
 (colors selected from a coolors palette [here](https://coolors.co/palettes))
 
-## Theme elements
+# Theme elements
 
 There is a lot about customization I don’t have time to get into right now. There’s a great cheat sheet [here](https://isabella-b.com/blog/ggplot2-theme-elements-reference/) to help identify what part of the theme you want to change and how to accomplish it.
 
-## Saving Plots: `ggsave()`
+# Saving Plots: `ggsave()`
 
 -   A plots is an R object so you can save it to a variable name just like anything else.
 
@@ -763,7 +763,7 @@ ggsave(filename = "../output/my_first_plot.png",
        height = 4)
 ```
 
-## Multiple plots
+# Multiple plots
 
 ![ggplot2\_patchwork](/img/patchwork_1.jpg)
 
@@ -788,7 +788,7 @@ p1 / p2  +
 
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-19-2.png" width="576" />
 
-## Annotations
+# Annotations
 
 Another thing we don’t have time to discuss is how to add extra annotations, like this
 <img src="/material/1-03-lecture_files/figure-html/unnamed-chunk-20-1.png" width="576" />
@@ -800,14 +800,14 @@ labels based on values in your dataset. You can also as custom lines and rectang
 to add a lot of specific arrows and lines between labels and highlighting different areas,
 sometimes an interfacing package liked `ggannotate` is your best friend!
 
-## References
+# References
 
 -   Chapter 3 [RDS](https://r4ds.had.co.nz/).
 -   [Data Visualization Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf).
 -   [Ggplot2 Overview](https://ggplot2.tidyverse.org/).
 -   Materials from [Professor Richard Ressler](https://www.american.edu/cas/faculty/rressler.cfm)
 
-## Learn more
+# Learn more
 
 -   [The ggplot2 Book](https://ggplot2-book.org/index.html)
 -   [More on Patchwork](https://patchwork.data-imaginist.com/articles/patchwork.html)
