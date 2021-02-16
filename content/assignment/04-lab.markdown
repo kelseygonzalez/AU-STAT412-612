@@ -39,63 +39,7 @@ For the lab you will turn in, complete the following questions for **both** data
     3. Create _at least_ 2 nice looking plots that explore some relationships in your data. Nice means you have formatted your labels, picked a non-default theme, and perhaps customized your colors. Is there a variable that seems like you could use as an "outcome"? 
 
 
-```{r include = FALSE, eval = FALSE}
-library(tidyverse)
-rounds <- tibble::tribble(
-  ~round, ~group,     ~par1,     ~par2,     ~par3,
-      1L,     1L,     "Ash",   "Ethan", "Cassidy",
-      1L,     2L,  "Hanwei", "Malachy",   "Jinru",
-      1L,     3L,    "Mary",  "Rafael",  "Pragya",
-      1L,     4L,  "Semyon",   "Henry",  "Sidney",
-      2L,     1L,     "Ash",  "Rafael",  "Sidney",
-      2L,     2L,  "Hanwei",   "Henry", "Cassidy",
-      2L,     3L,    "Mary",   "Ethan",   "Jinru",
-      2L,     4L,  "Semyon", "Malachy",  "Pragya",
-      3L,     1L,     "Ash",   "Henry",   "Jinru",
-      3L,     2L,  "Hanwei",   "Ethan",  "Pragya",
-      3L,     3L,    "Mary", "Malachy",  "Sidney",
-      3L,     4L,  "Semyon",  "Rafael", "Cassidy",
-      4L,     1L,     "Ash", "Malachy", "Cassidy",
-      4L,     2L,  "Hanwei",  "Rafael",   "Jinru",
-      4L,     3L,    "Mary",   "Henry",  "Pragya",
-      4L,     4L,  "Semyon",   "Ethan",  "Sidney",
-      5L,     1L,     "Ash",  "Hanwei",    "Mary",
-      5L,     2L, "Malachy",  "Semyon",   "Henry",
-      5L,     3L, "Cassidy",   "Ethan",  "Pragya",
-      5L,     4L,  "Sidney",   "Jinru",  "Rafael"
-  ) %>% 
-  pivot_longer(cols = starts_with("par")) %>% 
-  mutate(round_group = paste0(round,"-",group)) %>% 
-  select(round_group, value)
-
-```
-
-```{r include = FALSE, eval = FALSE}
-
-classmate_pairs <- rounds %>% 
-  left_join(
-    rounds %>% rename(classmate_id = value), 
-    by = 'round_group') %>% 
-  filter(value != classmate_id) %>% 
-  mutate(pairing_id = map2(value,classmate_id,~paste(min(.x,.y),max(.x,.y)))) %>% 
-  distinct(pairing_id,round_group)
-
-classmate_pairs %>% 
-  unnest(cols = c(pairing_id))
-
-all_pairs <- crossing(member_1 = unique(rounds$value),
-                      member_2 = unique(rounds$value)) %>% 
-  filter(member_1 != member_2) %>% 
-  mutate(pairing_id = map2(member_1,member_2,~paste(min(.x,.y),max(.x,.y)))) %>% 
-  distinct(pairing_id) %>% 
-  left_join(classmate_pairs, by ='pairing_id') %>% 
-  group_by(pairing_id) %>% 
-  summarise(courses = paste(round_group, collapse = ", "),
-            n = n()) %>% 
-  ungroup() %>% 
-  unnest(cols = c(pairing_id))
 
 
-all_pairs
-```
+
 

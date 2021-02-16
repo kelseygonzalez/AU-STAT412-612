@@ -19,5 +19,6 @@ editor_options:
 * Explore some datasets from [#TidyTuesday](https://github.com/rfordatascience/tidytuesday#datasets)
 * Explore some datasets from [Kaggle](https://www.kaggle.com/datasets)
 * Explore some datasets from the [Data is Plural archive](https://dataset-finder.netlify.app/)
+* Explore some datasets from the Appendix 3 of the [Final Project Overview](https://american-stat-412612.netlify.app/assignment/01-final-project/)
 
 Come to the lab with at least 2 potential datasets (from the links above or elsewhere) that you would enjoy working with for the [final project](https://american-stat-412612.netlify.app/assignment/01-final-project/). This is **not** binding, but serves as an activity to get you brainstorming the directions you would like to go for the project. You will be sharing these datasets with your classmates. 

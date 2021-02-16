@@ -117,13 +117,26 @@ Your Name______________________
 
 ### Presentation Group 1: Subject __________________________________
 
-1. Was the Presentation professional?  Major Gaps\hspace{.25in}Minor Gaps\hspace{.25in}Very Nice\hspace{.25in}Great!
+1. Was the Presentation professional? 
+Major Gaps
+\hspace{.25in}
+Minor Gaps
+\hspace{.25in}
+Very Nice
+\hspace{.25in}
+Great!
 
     - Clean Slide layout
     - Slide content easy to understand
     - Presenters told a story (not just read the slides)
     
-2. Was the Presentation Convincing?  Major Gaps\hspace{.25in}Minor Gaps\hspace{.25in}Very Nice\hspace{.25in}Great!
+2. Was the Presentation Convincing?  Major Gaps
+\hspace{.25in}
+Minor Gaps
+\hspace{.25in}
+Very Nice
+\hspace{.25in}
+Great!
     - Situation Clear
     - Analysis Approach was appropriate
     - Findings supportable
