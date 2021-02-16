@@ -2,7 +2,7 @@
 title: "Readings Week 5"
 linktitle: "Readings Week 5"
 date: "2021-02-15"
-due_date: "2021-01-28"
+due_date: "2021-02-18"
 due_time: "11:20 AM"
 menu:
   Material:
