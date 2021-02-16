@@ -66,7 +66,7 @@ You work for the hypothetical "New York City department of airplanes". They prov
 # Part 3: Tail Numbers Case Study
 You are offered a contract to do some analysis for the Regional Airline Association. They want you to tell them which tail numbers have changed airlines. Can you accept this contract?    
 
-1. In two separate steps / functions, find the number or unique tail numbers and the combinations of airlines and tail numbers. Does the unique number or tail numbers match the unique combinations of airline and tailnumber? 
+1. Find the number of unique tail numbers and the unique combinations of airlines *and* tail numbers. Does the unique number or tail numbers match the unique combinations of airline and tailnumber? 
 
 
 2. As shown above, there are more carrier-tail number combinations than unique tail numbers. There are two reasons for this: The presence of flights with no tail numbers and planes changing carriers. Find out which tail numbers belong to more than one carrier. Can you figure out how many tail numbers switched airlines but were _not_ flights with missing tail numbers? 
@@ -74,7 +74,7 @@ You are offered a contract to do some analysis for the Regional Airline Associat
 
 
 # Part 4: Delay Outliers Case Study
-Your new position as data science intern for the Committee of Disgruntler Airline Passengers has been quite rewarding. The Director of the committee has focused their attention on how flight delays create a major headache for passengers and has asked you to do some investigation on how often flights are "_ridiculously_ delayed". 
+Your new position as data science intern for the Committee of Disgruntled Airline Passengers has been quite rewarding. The Director of the committee has focused their attention on how flight delays create a major headache for passengers and has asked you to do some investigation on how often flights are "_ridiculously_ delayed". 
 
 1. There is a rule of thumb for outliers that is often used: Anything 1.5 interquartile ranges (IQR) above or below Q1/Q3 is an outlier. (i.e. `\(outlier < Q_1 - 1.5IQR\)`  or `\(outlier > Q_3 + 1.5IQR\)`) Can you use this rule to only select the flights that are outliers based on the dep_delay variable? How many flights are considered to be outliers according to this rule? 
     * remember that mutate adds a new column to all rows while summarize collapses the data into one row. 

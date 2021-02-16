@@ -22,7 +22,7 @@ The goal of the gapminder dataset is to explore the relationship between GDP, po
 
 1.  Use `data()` to load the `gapminder` dataset from the `gapminder` package (hint: you'll need to install this!). Also load the `tidyverse` package. 
 
-2. Create a barplot (hint: `geom_bar()`) for total counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure untily you're able to explain why, fore example, there are 396 counties in Asia in this dataset.
+2. Create a barplot (hint: `geom_bar()`) for total counts for the different continents. Why do you think there are so many countries in each continent? Do some digging through the data's structure until you're able to explain why, for example, there are 396 countries in Asia in this dataset.
 
 3.  Create a scatterplot (hint: `geom_point()`) with year (`year`) on the x-axis, life expectancy (`lifeExp`) on the y-axis, and with the points colored by continent (`continent`). Make this a longitudinal / time-series plot by adding geom_line (this is a new one for us!). Hint: To fix the incorrect mapping, how will you tell ggplot that the lines should follow the country column?
 
