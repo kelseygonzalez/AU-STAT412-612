@@ -15,5 +15,6 @@ editor_options:
 ---
 
 
-
-Nothing, *yet*
+Practice using all of the examples in... 
+* [Examples of col-wise operations](https://dplyr.tidyverse.org/articles/colwise.html)
+* [Examples of row-wise operations](https://dplyr.tidyverse.org/articles/rowwise.html)
