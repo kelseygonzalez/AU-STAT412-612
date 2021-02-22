@@ -45,12 +45,7 @@ toc: true
 |**Total**|21| Plus extra Credit|
 
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      include = FALSE,
-                      message = FALSE,
-                      warning = FALSE)
-```
+
 
 # The `flights` data frame from the nycflights13 package.
 1. Load and review the data
@@ -59,50 +54,20 @@ knitr::opts_chunk$set(echo = FALSE,
     - What are the variables
     - How many observations (rows) are there?
 
-```{r, message = FALSE, warning = FALSE}
-library(tidyverse)
-library(nycflights13)
-data("flights")
-names(flights)
-nrow(flights)
-head(flights,3)
-```
+
 
 2. Worst Plane to Fly
   - Which planes (`tailnum`) have the three worst (highest) average departure delay record?
       + How many flights did each make?
       + Now only look at the tailnums where each flew more than 12 flights and find the three tailnums with the highest average departure delay and show the tailnums with their average departure delay and number of flights.
 
-```{r}
-flights %>%
-  group_by(tailnum) %>%
-  summarize(mean_dep_delay = mean(dep_delay, na.rm = TRUE), n()) %>%
-  slice_min(n = 3, order_by = -mean_dep_delay)
 
-
-flights %>% 
-  group_by(tailnum) %>% 
-  filter(n() > 12) %>% 
-  summarize(mean_dep_delay = mean(dep_delay, na.rm = TRUE), n()) %>%
-  slice_min(n = 3, order_by = -mean_dep_delay)
-```
 
 3. Best Time of Day to Fly
     - Use a plot to see what _hour_ of the day you should fly to minimize your expected (average) delay time?  
-```{r}
-flights %>%
-  group_by(hour) %>%
-  summarize(mean_dep_delay = mean(dep_delay, na.rm = TRUE)) %>%
-  ggplot(mapping = aes(x = hour, y = mean_dep_delay)) +
-  geom_line() + # or geom_point()
-  xlab("Hour") +
-  ylab("Departure Delay (min)") +
-  theme_bw()
-```
 
-```{block}
-You should leave at 5 AM.
-```
+
+
 
 4. Worst Flight Numbers for each Destination
     - In a single series of steps, with no intermediate variables, complete the following steps in one set of piped code to produce *a single output*:
@@ -114,57 +79,12 @@ You should leave at 5 AM.
         
     - Extra Credit (1 pt), Repeat but instead of the worst trip for a destination, 
     - Replace step 2 with Compute for each *flight number* to a destination. step 4, choose for each flight number, and step 5 Show the worst flight number ...
-```{r}
-#worst individual flight
-flights %>%
-  group_by(dest) %>%
-  mutate(dest__avg_delay = sum(arr_delay, na.rm = TRUE),
-         prop_delay = arr_delay / dest__avg_delay,
-         n=n()) %>%
-  arrange(dest, desc(prop_delay)) %>% 
-  select(dest, dest__avg_delay, flight, prop_delay,n, year, month, day, dep_time) %>% 
-  filter(dest__avg_delay >=0, prop_delay == max(prop_delay, na.rm = TRUE))
-  
-# or
-flights %>%
-  group_by(dest) %>%
-  mutate(dest_delay = sum(arr_delay, na.rm = TRUE),
-         prop_delay = arr_delay / dest_delay,
-         n=n()) %>%
-  arrange(dest, desc(prop_delay)) %>% 
-  select(dest, dest_delay, flight, prop_delay,n, year, month, day, dep_time) %>%  
-  filter(dest_delay >=0) %>% 
-    slice_max(prop_delay, with_ties = TRUE)  
 
-
-#Worst flight number
-flights %>%
-  group_by(dest) %>%
-  mutate(dest_delay = sum(arr_delay, na.rm = TRUE)) %>% 
-  ungroup() %>% 
-  group_by(dest, flight) %>% 
-  summarize(fprop_delay = sum(arr_delay, na.rm = TRUE) / dest_delay, dest_delay = dest_delay,
-         n=n()) %>% 
-  select(dest, dest_delay, flight, fprop_delay,n) %>% 
-  distinct() %>% 
-  arrange(dest, desc(fprop_delay)) %>% 
-  filter(dest_delay >=0) %>% 
-  ungroup() %>% 
-  group_by(dest) %>% 
-  slice_max(fprop_delay, with_ties = TRUE)
-```
   
 5. Destinations with Multiple Carriers from NYC Area  
     - Find all destinations that are flown by at least two carriers and show the destination airports that has the most carriers flying into them out of the NYC airports. (hint: `distinct()` or `n_distinct()` will help here!)
   
-```{r}
-flights %>%
-  group_by(dest) %>%
-  summarize(ncarr = n_distinct(carrier)) %>%
-  filter(ncarr >= 2) %>% 
-  arrange(desc(ncarr)) %>% 
-  slice_max(order_by = ncarr)
-```
+
 
 
 
@@ -176,50 +96,21 @@ The `starwars` data frame in the dplyr package contains demographic characterist
 
 1. Load the data into R and load any necessary packages
 
-```{r, eval = TRUE, message = FALSE}
-library(tidyverse)
-data("starwars")
-```
+
 
 
 2.  Use appropriate R code to determine which individuals have missing gender. Make sure to only print out their names and heights, arranged in ascending order of height.
 
-```{r}
-starwars %>%
-  filter(is.na(gender)) %>%
-  arrange(height) %>%
-  select(name, height)
-```
+
 
 
 3. Change their gender to `"droid"` (even if they are not droids) and save to a new dataframe named `starwars_clean`.
 
-```{r}
-starwars_clean <- starwars %>%
-  mutate(gender = if_else(is.na(gender), "droid", gender))
-  
-starwars_clean <-starwars %>%
-  mutate(gender = case_when(is.na(gender) ~ "droid", 
-                            TRUE ~ gender))
 
-starwars_clean <-starwars %>%
-  mutate(gender = replace_na(gender, "droid"))
-
-```
 
 4. Use across to calculate the median and mean of both height and mass for each gender of `starwars_clean` show the results.
 
-```{r}
-# starwars %>%
-#   group_by(gender) %>%
-#   summarise(mean = mean(height, na.rm = TRUE),
-#             median = median(height, na.rm = TRUE))
 
-
-starwars_clean %>%
-  group_by(gender) %>%
-  summarise(across(c(height,mass), list(mean = mean, median = median), na.rm = TRUE))
-```
 
 
 5. The body mass index (BMI) is defined as
@@ -231,44 +122,18 @@ starwars_clean %>%
     - Calculate the BMI for each individual in the `starwars` data frame and add it to the `starwars_clean` data frame.
     - Sanity check: The median BMI should be in the 20-30 range.
     
-```{r}
-starwars_clean <- starwars_clean %>%
-  mutate(bmi = mass / (height / 100) ^ 2) 
 
-```
     
     
 6. Make boxplots of gender vs BMI from `starwars_clean`. Include only masculine, feminine, and droids. Use the black and white theme.
 
-```{r}
 
-
-starwars_clean %>%
-  filter(gender == "feminine" | gender == "masculine" | gender == "droid") %>% 
-  ggplot(mapping = aes(x = gender, y = bmi)) +
-  geom_boxplot() +
-  theme_bw()
-```
 
 7. Make scatterplots of height vs mass, faceting by gender.
 
-```{r}
-ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
-  geom_point() +
-  facet_wrap(. ~ gender) +
-  theme_bw()
-```
+
 
 
 8.  Reproduce the following plot (hint: filter based on birth year):
 
-```{r, eval = TRUE, echo = FALSE, message=FALSE}
-starwars_clean %>%
-  filter(birth_year < 200) %>%
-  ggplot(mapping = aes(x = birth_year, y = height )) +
-  geom_point(aes(color = gender)) +
-  ylab("Height") +
-  xlab("Birth Year") +
-  geom_smooth(se = FALSE, color = "black", linetype = "dashed") +
-  theme_bw()
-```
+

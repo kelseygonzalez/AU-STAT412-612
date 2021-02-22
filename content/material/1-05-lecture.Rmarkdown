@@ -32,7 +32,8 @@ Lesson Objectives
 
 # Loading data
 So far, we've been using packages and `data()` to load in new data to our working session. But what if I want to load in some other data that I have? 
-Go ahead and download the following files and let's work on how to load them into R. 
+Go ahead and download the following files and let's work on how to load them into R.  
+
 > [<i class="fas fa-file-csv"></i>`avengers.csv`](/data/avengers.csv)   ([source](https://github.com/fivethirtyeight/data/blob/master/avengers/avengers.csv))  
 > [<i class="fas fa-file-code"></i> `crf33.dta`](/data/crf33.dta)  ([source](https://stats.idre.ucla.edu/stata/examples/kirk/experimental-design-procedures-for-the-behavioral-sciences-third-edition-by-roger-e-kirk/))  
 > [<i class="fas fa-file-excel"></i> `steak-risk-survey.xlsx`](/data/steak-risk-survey.xlsx) ([source](https://github.com/fivethirtyeight/data/tree/master/steak-survey))
