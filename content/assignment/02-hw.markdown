@@ -136,4 +136,4 @@ The `starwars` data frame in the dplyr package contains demographic characterist
 
 8.  Reproduce the following plot (hint: filter based on birth year):
 
-
+<img src="/assignment/02-hw_files/figure-html/unnamed-chunk-14-1.png" width="672" />

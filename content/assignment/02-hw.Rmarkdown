@@ -262,7 +262,7 @@ ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
 
 8.  Reproduce the following plot (hint: filter based on birth year):
 
-```{r, eval = TRUE, echo = FALSE, message=FALSE}
+```{r, eval = TRUE, echo = FALSE, include = TRUE, message=FALSE}
 starwars_clean %>%
   filter(birth_year < 200) %>%
   ggplot(mapping = aes(x = birth_year, y = height )) +
