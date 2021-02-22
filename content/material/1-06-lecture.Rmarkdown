@@ -10,29 +10,24 @@ menu:
     weight: 6
 type: docs
 toc: true
-bibliography: "../../static/bib/references.bib"
-csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
-slides: "04-slides"
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE, 
+                      warning = FALSE)
+```
 
 # Learning Outcomes
 
 - Apply additional dplyr 1.0 functions to manipulate data and data frames for analysis
-  + `rowwise()`
   + `across()`
   + `case_when()`
   + `rownames_to_columns()`
   + `distinct()`
+  + `rowwise()`
+
 - Understand implications of data masking and tidy-select approaches to variables in writing functions with dplyr
-
-
-- **References**
-  - Chapter 5 of [RDS](https://r4ds.had.co.nz/)
-  - [Data Transformation Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf).
-  - [Row-Wise Operations](https://dplyr.tidyverse.org/articles/rowwise.html).
-  - [Column-Wise Operations](https://dplyr.tidyverse.org/articles/colwise.html).
-  - [Programming with dplyr](https://dplyr.tidyverse.org/articles/programming.html)
 
 # Introduction
 - dplyr 1.0 introduced new functions to ease manipulating or summarizing data frames by rows or by columns. We will follow the vignettes for these new capabilities `rowwise()` and `across()`
@@ -42,138 +37,31 @@ slides: "04-slides"
 
 - We will be using the tidyverse and the dplyr::starwars data frame (see help or `?dplyr::starwars`)
 - Load the tidyverse and the starwars data and look at the data.
-    ```{r, message=FALSE}
-    library(tidyverse)
-    data(starwars)
-    head(starwars)
-    nrow(starwars)
-    ```
-# Row-wise operations with `rowwise()`
-- Before version 1.0, dplyr did not have special capabilities for operating on subsets of rows. You had to use for-loops for operating across rows or subsets of rows.
-- dplyr 1.0 added the new verb `rowwise()` to create multiple one-row data frames out of an existing data frame
-- These row-wise data frames are "virtual" subsets of the original data frame - - You can operate on each subset data frame as if it were its own data frame.
-- We will discuss a common use case: computing aggregates across multiple columns within a row
+```{r, message=FALSE}
+library(tidyverse)
+data(starwars)
+head(starwars)
+nrow(starwars)
+```
 
-## Creating row-wise data frames
-- Row-wise operations require a special type of grouping where each group consists of a **single row**. 
-- You create this grouping using `rowwise()`:
-    ```{r}
-    df <- tibble(x = 1:2, y = 3:4, z = 5:6)
-    df
-    str(df)
-    df %>% rowwise() %>% str()
-    ```
-
-- Like `group_by()`, `rowwise()` doesn’t really do anything itself; it just changes how the other dplyr verbs work. 
-- For example, compare the results of `mutate()` in the following code:
-    ```{r}
-    df <- tibble(name = c("Mara", "Hadley"), x = 1:2, y = 3:4, z = 5:6)
-    
-    df %>% mutate(m = mean(c(x, y, z))) 
-    # mean across all values all rows
-    
-    df %>% 
-      rowwise(name) %>% 
-      summarise(m = mean(c(x, y, z)), .groups = "drop")
-    # mean across all values in each row
-    ```
-
-- `rowwise()` is just a special form of grouping, so if you want to remove it from a data frame, just call `ungroup()`
-    ```{r}
-    df %>% rowwise() %>% ungroup() %>% str()
-    ```
-
-## Per-row Summary Statistics
-- `dplyr::summarize()` makes it really easy to summarize values across the rows within one column. 
-- We can combine `rowwise()` and `summarize()` to make it easy to summarize values *across columns within one row*. 
-- We’ll start by making a little dataset:
-
-    ```{r}
-    df <- tibble(id = 1:6, w = 10:15, x = 20:25, y = 30:35, z = 40:45)
-    df
-    ```
-- Let’s say we want compute the sum of w, x, y, and z for each row. 
-- We start by making a row-wise data frame:
-- We then use `mutate()` to add a new column to each row, or.
-- Just use `summarise()` to return the summary:
-    ```{r}
-    rf <- df %>% rowwise(id)
-    # mutate to add new column for each row
-    rf %>% mutate(total = sum(c(w, x, y, z)))
-    # summarize without mutate
-    rf %>% summarise(total = sum(c(w, x, y, z)), .groups= "drop")
-    ```
-
-- If you have a lot of variables, you can use `c_across()` to succinctly select many variables (`c_across()` uses tidy select helpers)
-- The `where(is.numeric())` ensures we only select numeric columns
-
-    ```{r}
-    rf %>% mutate(total = sum(c_across(w:z)))
-    rf %>% mutate(total = sum(c_across(where(is.numeric))))
-    ```
-- You could combine this with column-wise operations (covered next) to compute the proportion of the total for each column:
-    ```{r}
-    rf %>% #our row-wise data frame
-      mutate(total = sum(c_across(w:z))) %>% #total each row
-      ungroup() %>% # ungroup the rows
-      mutate(across(w:z, ~ . / total)) # the . represents each column
-    ```
-
-## Row-wise Summary Functions
-
-- The `rowwise()` approach will work for any summary function. 
-- However, if you need greater speed, look for a built-in row-wise variant of your summary function. 
-- These are more efficient because they are designed to operate on the data frame as whole; they don’t split it into rows, compute the summary, and then join the results back together again.
-- Two common ones are `rowSums()` and `rowMeans()`
-    ```{r}
-    df %>% mutate(total = rowSums(across(where(is.numeric))))
-    df %>% mutate(mean = rowMeans(across(where(is.numeric))))
-    ```
-### Exercise
-- Let's create a new variable for the starwars data frame with the maximum of the height, mass, or birth year for each starwars character. Who has the maximum of all the characters?
-    ```{r, echo = params$solutions, eval = params$solutions, warning = FALSE}
-    starwars %>% 
-      #filter(!is.na(height), !is.na(mass), !is.na(birth_year)) %>% 
-      rowwise() %>% 
-      mutate(max_a = max(height, mass, birth_year, na.rm = TRUE)) %>% 
-      relocate(max_a) %>% 
-      ungroup() %>% 
-      select(name, is.numeric) %>% 
-      slice_max(max_a) 
-    
-    starwars %>% 
-      #filter(!is.na(height), !is.na(mass), !is.na(birth_year)) %>% 
-      rowwise() %>% 
-      mutate(max_a = max(height, mass, birth_year, na.rm = TRUE)) %>% 
-      relocate(max_a) %>% 
-      ungroup() %>% 
-      select(name, is.numeric) %>% 
-      filter(max_a == max(max_a))
-    
-    #[Jabba the Hutt](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DBPfFoG5DRE4&psig=AOvVaw22t9RWy1fWDvFU2dVVZoj9&ust=1600956469257000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKj56t65_-sCFQAAAAAdAAAAABAI)
-    # Trying without rowwise!
-    starwars %>% 
-      #filter(!is.na(height), !is.na(mass), !is.na(birth_year)) %>% 
-      mutate(max_a = max(height, mass, birth_year, na.rm = TRUE)) %>% 
-      relocate(max_a) %>% 
-      select(name, is.numeric) %>% 
-      slice_max(max_a) 
-    ```
 
 # Column-wise operations with `across()`
+~[]("/img/dplyr_across.png")
 
 - dplyr has had more capability for functions for operating on columns than on rows but it was not always convenient.
 - If you want to perform the same operation on multiple columns, copying and pasting could be tedious and error prone:
-
-      df %>% 
-        group_by(g1, g2) %>% 
-        summarise(a = mean(a), b = mean(b), c = mean(c), d = mean(d))
+```{r eval = FALSE}
+df %>% 
+      group_by(g1, g2) %>% 
+      summarise(a = mean(a), b = mean(b), c = mean(c), d = mean(d))
+```
 
 - We can now use the `across()` function to write this kind of operation more succinctly and transparently:
-
-      df %>% 
-        group_by(g1, g2) %>% 
-        summarise(across(a:d, mean))
+```{r eval = FALSE}
+df %>% 
+      group_by(g1, g2) %>% 
+      summarise(across(a:d, mean))
+```
       
 - `across()` provides new functionality while replacing older functions such as `mutate_if()` or `mutate_at()`    
 
@@ -201,191 +89,177 @@ slides: "04-slides"
 - We use `where()` inside the across to select only those columns of the desired type
 - `.fns=` can take a single function
 - You can add additional arguments to be passed to the function, e.g., `na.rm = TRUE` ...
-    ```{r, message = FALSE}
-    starwars %>% 
-      summarise(across(where(is.numeric), 
-                       .fns = median), 
-                groups = "drop")
+```{r, message = FALSE}
+starwars %>% 
+  summarise(across(where(is.numeric), 
+                   .fns = median))
 
-    # Example with argument    
-    starwars %>% 
-      summarise(across(where(is.numeric), 
-                       .fns = median, 
-                       na.rm = TRUE),
-                .groups = "drop")
- 
-    ```
+# Example with argument    
+starwars %>% 
+  summarise(across(where(is.numeric), 
+                   .fns = median, 
+                   na.rm = TRUE))
+
+```
 
 - The formula approach gives us the ability to combine functions with arguments
-
-    ```{r}
-    starwars %>% 
-              summarise(across(where(is.numeric), 
-                               ~ median(.x,na.rm = TRUE)), 
-                        .groups = "drop")
-    ```
+    + Using this, you start with the `~` to signify "as a function of" and then put wherever your column name would normally as a `.x`. 
+```{r}
+starwars %>% 
+          summarise(across(where(is.numeric), 
+                           ~ median(.x, na.rm = TRUE)))
+```
 
 - Let's count how many unique values for character variables using formula style 
 
-    ```{r, message = FALSE}
-# summarize all rows
-    starwars %>% 
-      summarise(across(where(is.character), 
-                       ~ length(unique(.x))))
+```{r, message = FALSE}
+# length of unique characters just for hair_color
+starwars %>% 
+  summarize(unique(hair_color))
+
+starwars %>% 
+  summarize(length(unique(hair_color)))
+
+# summarize all character columns... 
+starwars %>% 
+  summarise(across(where(is.character), 
+                   ~ length(unique(.x))))
 ```
 
 - Example with group by species and filter for groups with >1 row and adding a summary that is not inside across to count the rows in each group
-    ```{r, message = FALSE}
-    starwars %>% 
-      group_by(species) %>% 
-      filter(n() > 1) %>% 
-      summarise(across(c(sex, gender, homeworld), 
-                       ~ length(unique(.x))),
-                       n=n())
-    ```
+```{r, message = FALSE}
+starwars %>% 
+  group_by(species) %>% 
+  filter(n() > 1) %>% 
+  summarise(across(c(sex, gender, homeworld), 
+                   ~ length(unique(.x))),
+                   n=n())
+```
 
 - Example with group by homeworlds
-    ```{r, message = FALSE}
-    starwars %>% 
-      group_by(homeworld) %>% 
-      filter(n() > 1) %>% 
-      summarise(across(where(is.numeric), 
-                       ~ max(.x, na.rm = TRUE)))    
-    ```
+```{r, message = FALSE}
+starwars %>% 
+  group_by(homeworld) %>% 
+  filter(n() > 1) %>% 
+  summarise(across(where(is.numeric), 
+                   ~ max(.x, na.rm = TRUE)))    
+```
 
 - Because across() is usually used in combination with `summarize()` and `mutate()`, **it doesn’t select grouping variables** to avoid accidentally modifying them:
 - Example where the grouping variable `g` is not selected, even though it is numeric, so is not summed.
-    ````{r, message= FALSE}
-    df <- data.frame(g = c(1, 1, 2), x = c(-1, 1, 3), y = c(-1, -4, -9))
-    df
-    df %>% 
-      group_by(g) %>% 
-      summarise(across(where(is.numeric), sum))
-    ```
+````{r, message= FALSE}
+df <- data.frame(g = c(1, 1, 2), x = c(-1, 1, 3), y = c(-1, -4, -9))
+df
+df %>% 
+  group_by(g) %>% 
+  summarise(across(where(is.numeric), sum))
+```
 
 
 ## Using `across()` with Multiple Functions
 
 - You can transform each variable with more than one function 
-- Supply a **named list** of functions  in the second argument:
-    ```{r}
-        # Example with list and argument
-        starwars %>% 
-          summarise(across(where(is.numeric),
-                           .fns = list(median = median, mean = mean), 
-                            na.rm = TRUE))  
-    ```
-- Example of creating a list of functions using formula syntax and then using it as `.fns= my_list`
-    ```{r}
-    min_max <- list(
-      min = ~min(.x, na.rm = TRUE), 
-      max = ~max(.x, na.rm = TRUE)
-    )
-    starwars %>% summarise(across(where(is.numeric), min_max))
-    
-    ```
+- Supply a **named list** of functions in the second argument:
+```{r}
+
+# Example with no list but argument
+starwars %>% 
+  summarise(across(where(is.numeric),
+                   .fns = list(median, mean), 
+                    na.rm = TRUE))  
+
+# Example with list and argument
+starwars %>% 
+  summarise(across(where(is.numeric),
+                   .fns = list(median = median, mean = mean), 
+                    na.rm = TRUE))  
+
+```
+
+### Controlling  Names
+In the last case where we wanted to create a median and mean across all numeric variables, you'll notice that the new variable names were always `{name_of_variable}_{mean/median}`. This is the default behavior of across - the name, an underscore, and the name of the function from the named list provided. To customize how things are named, you can use `glue` syntax (we'll cover what glue is in a few weeks) and the `.names` argument. 
++ `{.fn}` will refer to the name of the function you used
++ `{.col}` will refer to the name of the column
+
+```{r}
+
+#change to {function}_{column}
+starwars %>% 
+  summarise(across(where(is.numeric),
+                   .fns = list(median = median, mean = mean), 
+                    na.rm = TRUE,
+                   .names = "{.fn}_{.col}"))  
+
+#change to {function}_{column}
+starwars %>% 
+  summarise(across(where(is.numeric),
+                   .fns = list(median = median, mean = mean), 
+                    na.rm = TRUE,
+                   .names = "The {.fn} of {.col}"))  
+```
 
 ## Gotchas - Order Matters
 
 - Be careful when combining numeric summaries with `is.numeric()`:
 
-    ```{r}
-    df <- data.frame(x = c(1, 2, 3), y = c(1, 4, 9))
-    df
-    df %>% 
-      summarise(n = n(), across(where(is.numeric), sd))
-    ```
+```{r}
+df <- data.frame(x = c(1, 2, 3), y = c(1, 4, 9))
+df
+df %>% 
+  summarise(n = n(), across(where(is.numeric), sd))
+```
     
 - Here n became `NA` because n is numeric, so the `across()` computes its standard deviation, and the standard deviation of 3 (a constant) is `NA`. 
 - You probably want to compute `n()` last to avoid this problem:
 
-    ```{r}
-    df %>% 
-      summarise(across(where(is.numeric), sd), n = n())
-    ```
-## Other Verbs
-
-- So far we’ve focused on the use of `across()` with `summarize()`, but it works with any other dplyr verb that uses **data masking**:
-  + data masking means you can use data variables as if they were variables in the environment (i.e., you write `my_variable` not `df$myvariable`).
-  + These are the main data masking verbs: `arrange()`, `count()`, `filter()`, `group_by()`, `mutate()`, and `summarize() `
-- The alternative is **tidy select** syntax 
-  + `across()`, `relocate()`, `rename()`, `select()`, and `pull()` use tidy selection so you can easily choose variables based on their position, name, or type (e.g. `starts_with("x")` or `is.numeric()`).
-- To determine whether a function argument uses data masking or tidy selection, look at the documentation: in the arguments list, you’ll see `data-masking` or `tidy-select`.
-
-- Example with `mutate()`: Rescale all numeric variables to range 0-1:
-    ```{r}
-    # Create a rescale function
-    rescale01 <- function(x) {
-      rng <- range(x, na.rm = TRUE)
-      (x - rng[1]) / (rng[2] - rng[1])
-    }
-    # Create a sample tibble
-    df <- tibble(x = 1:4, y = rnorm(4))
-    df
-    # Use across() with mutate()
-    df %>% mutate(across(where(is.numeric), rescale01))
-    ```
+```{r}
+df %>% 
+  summarise(across(where(is.numeric), sd), n = n())
+```
+### Some other examples 
 
 - Example: Find all rows where no variable has missing values:
-    ```{r}
-    starwars %>% filter(across(everything(), ~ !is.na(.x)))
-    ```
+```{r}
+starwars %>% filter(across(everything(), ~ !is.na(.x)))
+```
 
 - For some verbs, like `group_by()`, `count()` and `distinct()`, you can omit the summary functions:
 - Example: Find all distinct rows for variables with the word color in the name
-    ```{r}
-    starwars %>% distinct(across(contains("color"))) %>% 
-      arrange(hair_color, skin_color)
-    ```
+```{r}
+starwars %>% distinct(across(contains("color"))) %>% 
+  arrange(hair_color, skin_color)
+```
 
 - Example: Count all combinations of variables with a given pattern:
-    ```{r}
-    starwars %>% count(across(contains("color")), sort = TRUE) %>% 
-      arrange(hair_color, skin_color)
-    ```
+```{r}
+starwars %>% count(across(contains("color")), sort = TRUE) %>% 
+  arrange(hair_color, skin_color)
+```
 - `across()` doesn’t work with `select()` or `rename()` because they already use tidy select syntax; 
-- If you want to transform column names with a function, you can use `rename_with()`.
 
-## Why `across() `is Replacing the dplyr Functions using `_if()`, `_at`, and `_all`
-
-1. `across()` makes it possible to express useful summaries that were previously impossible:
-
-      df %>%
-        group_by(g1, g2) %>% 
-        summarise(
-          across(where(is.numeric), mean), 
-          across(where(is.factor), nlevels),
-          n = n(), 
-        )
-
-2. `across()` reduces the number of functions that dplyr needs to provide. This makes dplyr easier for you to use (because there are fewer functions to remember) and easier for the developers to implement new verbs (since we only need to implement one function, not four).
-
-3. `across()` unifies `_if` and `_at` semantics so that you can select by position, name, and type, and you can now create compound selections that were previously impossible. For example, you can now transform all numeric columns whose name begins with “x”: `across(where(is.numeric) & starts_with("x"))`.
 
 ### Exercise
 
-- Calculate the median for each numeric variable for each species and gender and count how many are in each group and sort from largest to smallest count. 
-    ```{r, echo = params$solutions, eval = params$solutions, message = FALSE, warning = FALSE}
-    starwars %>% 
-      group_by(species, gender) %>% 
-      summarise(across(where(is.numeric), 
-                       ~ median(.x, na.rm = TRUE)), n=n()) %>% 
-      arrange(desc(n))
-    ```
-   
-- Calculate the min and max for each numeric variable other than birth year for each species and gender and count how many are in each group and sort from largest to smallest count.    
-    ```{r, echo = params$solutions, eval = params$solutions, message = FALSE, warning = FALSE}
-    starwars %>% 
-      group_by(species, gender) %>% 
-      summarise(across(where(is.numeric) & !birth_year, 
-                       .fns = min_max), # list of functions from earlier
-                n=n()) %>% 
-      arrange(desc(n))
-    ```
-    
-# Other Useful dplyr Functions
+- Calculate the median for each numeric variable for each species and gender 
+```{r}
+starwars %>% 
+  group_by(species, gender) %>% 
+  summarise(across(where(is.numeric), 
+                   ~ median(.x, na.rm = TRUE)))
+```
 
-## `case_when()`
+- Calculate the min and max for each numeric variable other than birth year for each species and gender and count how many are in each group and sort from largest to smallest count.    
+```{r}
+starwars %>% 
+  group_by(species, gender) %>% 
+  summarise(across(where(is.numeric) & !birth_year, 
+                   .fns = list(min = ~ min(.x, na.rm = TRUE), 
+                               max = ~ max(.x, na.rm = TRUE))), 
+            n=n()) %>% 
+  arrange(desc(n))
+```
+
+# `case_when()`
 ~[]("/img/dplyr_case_when_sm.png")
 
 - This function allows you to vectorize (and replace) multiple `if_else()` statements in a succinct and clear manner.
@@ -397,62 +271,70 @@ slides: "04-slides"
   + you always end with a case of TRUE for when all of the other cases are FALSE
 
 - Example of a vectorized if - else
-    ```{r}
-    x <- 1:16
-    case_when(
-      x %% 35 == 0 ~ "fizz buzz",
-      x %% 5 == 0 ~ "fizz",
-      x %% 7 == 0 ~ "buzz",
-      TRUE ~ as.character(x)
-    )
-    ```
+```{r}
+x <- 1:16
+
+case_when(
+  x < 5 ~ "less than 5",
+  x < 10 ~ "less than 10",
+  TRUE ~ as.character(x)
+)
+
+
+# From https://www.hackerrank.com/challenges/fizzbuzz/problem
+case_when(
+  x %% 15 == 0 ~ "fizz buzz",
+  x %% 3 == 0 ~ "fizz",
+  x %% 5 == 0 ~ "buzz",
+  TRUE ~ as.character(x)
+)
+```
 
 - Like an if statement, the arguments are evaluated in order, so you must proceed from the most specific to the most general. 
 - This won't work:
 
-    ```{r}
-    case_when(
-      TRUE ~ as.character(x),
-      x %%  5 == 0 ~ "fizz",
-      x %%  7 == 0 ~ "buzz",
-      x %% 35 == 0 ~ "fizz buzz"
-    )
-    ```
+```{r}
+case_when(
+  TRUE ~ as.character(x),
+  x %%  5 == 0 ~ "fizz",
+  x %%  7 == 0 ~ "buzz",
+  x %% 35 == 0 ~ "fizz buzz"
+)
+```
     
-- If none of the cases match, `NA` is used:
-
-    ```{r}
-    case_when(
-      x %%  5 == 0 ~ "fizz",
-      x %%  7 == 0 ~ "buzz",
-      x %% 35 == 0 ~ "fizz buzz"
-    )
-    ```
-
-- Note that `NA` values in the vector x do not get special treatment. 
-- If you want to explicitly handle `NA` values you can use the `is.na` function:
-    ```{r}
-    x[2:4] <- NA_real_
-    case_when(
-      x %% 35 == 0 ~ "fizz buzz",
-      x %% 5 == 0 ~ "fizz",
-      x %% 7 == 0 ~ "buzz",
-      is.na(x) ~ "nope",
-      TRUE ~ as.character(x)
-    )
-    ```
 - `case_when()` is **particularly useful inside `mutate()`** when you want to create a new variable that relies on a complex combination of existing variables     
-    ```{r}
-    starwars %>%
-      select(name:mass, gender, species) %>%
-      mutate(
-        type = case_when(
-          height > 200 | mass > 200 ~ "large",
-          species == "Droid"        ~ "robot",
-          TRUE                      ~ "other"
-        )
-      )
-    ```
+```{r}
+starwars %>%
+  select(name:mass, gender, species) %>%
+  mutate(
+    height_cat = case_when(
+      height > 191 ~ "tall",
+      height < 167 ~ "short",
+      TRUE  ~ "average"
+    )
+  )
+
+starwars %>%
+  select(name:mass, gender, species) %>%
+  mutate(
+    height_cat = case_when(
+      height > quantile(height, 3/4, na.rm = TRUE) ~ "tall",
+      height < quantile(height, 1/4, na.rm = TRUE) ~ "short",
+      TRUE  ~ "average"
+    )
+  ) 
+
+# But this can be even more complicated... 
+starwars %>%
+  select(name:mass, gender, species) %>%
+  mutate(
+    type = case_when(
+      height > 200 | mass > 200 ~ "large",
+      species == "Droid"        ~ "robot",
+      TRUE                      ~ "other"
+    )
+  )
+```
   
 ## `tibble::rownames_to_columns()` 
 - You many occasionally see data sets where there are row names. 
@@ -461,33 +343,32 @@ slides: "04-slides"
 - dplyr had a function `add_rownames()` but that has been replaced (deprecated) by the `tibble::rownames_to_columns()`
 - Generally, it is best to avoid row names, because they are basically a character column with different semantics than every other column.
 - To detect if a data frame has row_names use `has_rownames()`
-    ```{r}
-    head(state.x77)
-    str(state.x77)
-    has_rownames(as_tibble(state.x77))
-    has_rownames(state.x77)
-    has_rownames(as.data.frame(state.x77))
-    
-    ```
+```{r}
+head(state.x77)
+str(state.x77)
+has_rownames(as_tibble(state.x77))
+has_rownames(state.x77)
+has_rownames(as.data.frame(state.x77))
+
+```
 
 - To convert the row names to a variable, convert to a data.frame is necessary, and use `rownames_to_column()`
 - e.g., `rownames_to_column(.data, var = "rowname")`
 - Then convert to a tibble using `as_tibble()`
-    ```{r}
-    rownames_to_column(as.data.frame(state.x77), "State") %>% 
-      str()
-    rownames_to_column(as.data.frame(state.x77), "State") %>% 
-      as_tibble()
-    ```
+```{r}
+rownames_to_column(as.data.frame(state.x77), "State") %>% 
+  str() %>% 
+  as_tibble()
+```
 
 ### Exercise
 
 - Check if the `mtcars` data set has row names. If so, convert the rownames to a column named `car` and convert to a tibble
-    ```{r, echo = params$solutions, eval = params$solutions}
-    has_rownames(mtcars)
-    rownames_to_column(mtcars, var = "car") %>% 
-      as_tibble()
-    ```
+```{r}
+has_rownames(mtcars)
+rownames_to_column(mtcars, var = "car") %>% 
+  as_tibble()
+```
 
 ## `distinct()`
 - We used `distinct()` earlier to remove duplicate entries in a group by grouping. 
@@ -497,45 +378,134 @@ slides: "04-slides"
 - Groups are not modified.
 - Data frame attributes are preserved.
 - Example with 
-    ```{r}
-    distinct(starwars, across(contains("color"))) %>% 
-      arrange(hair_color, skin_color, eye_color)
-    
-    ```
-# Programming with dplyr (Advanced)
-- Most dplyr verbs use tidy evaluation in some way. 
-- Tidy evaluation is a special type of non-standard evaluation used throughout the tidyverse. 
-- There are two basic forms found in dplyr:
-  + data masking where you can use data variables as if they were variables in the environment 
-  + tidy selection where you can choose variables based on their position, name, or type 
+```{r}
+starwars %>% 
+  distinct(homeworld) 
 
-- Data masking and tidy selection make interactive data exploration fast and fluid, but they add some new challenges when you attempt to use them indirectly such as in a for loop or a function. 
+starwars %>% 
+  distinct(homeworld, species)
 
-## Data Masking
-- Data masking makes data manipulation faster because it requires less typing. 
-- In most (but not all1) base R functions you need to refer to variables with $, leading to code that repeats the name of the data frame many times:
+#Very similar to count()... 
+starwars %>% 
+  count(homeworld, species)
 
-      starwars[starwars$homeworld == "Naboo" & starwars$species == "Human", ,]
+# Example from a "student hours question on gapminder... 
+library(gapminder)
+data(gapminder)
+gapminder %>% 
+  distinct(continent, country) %>% 
+  count(continent)
+```
 
-      starwars %>% filter(homeworld == "Naboo", species == "Human")
 
-### Data- and env-variables
-- The key idea behind data masking is that it *blurs the line* between the two different meanings of the word “variable”:
+# Row-wise operations with `rowwise()`
+- Before version 1.0, dplyr did not have special capabilities for operating on subsets of rows. You had to use for-loops for operating across rows or subsets of rows.
+- dplyr 1.0 added the new verb `rowwise()` to create multiple one-row data frames out of an existing data frame
+- These row-wise data frames are "virtual" subsets of the original data frame - - You can operate on each subset data frame as if it were its own data frame.
+- We will discuss a common use case: computing aggregates across multiple columns within a row
 
-  + env-variables are “programming” variables that live in an environment. They are usually created with <-.
-  + data-variables are “statistical” variables that live in a data frame. They usually come from data files (e.g. .csv, .xls), or are created manipulating existing variables.
+## Creating row-wise data frames
+- Row-wise operations require a special type of grouping where each group consists of a **single row**. 
+- You create this grouping using `rowwise()`
+- Like `group_by()`, `rowwise()` doesn’t really do anything itself; it just changes how the other dplyr verbs work. 
+- For example, compare the results of `mutate()` in the following code:
+```{r}
+fruits <- tribble(
+  ~"fruit", ~"height_1", ~"height_2", ~"height_3", ~"width", ~"weight",
+  "Banana", 4, 4.2, 3.5, 1, 0.5,
+  "Strawberry", 1, .9, 1.2, 1, .25,
+  "Pineapple", 18, 17.7, 19.2, 6, 3)
+fruits
 
-### Indirection
-- The main challenge of programming with functions that use data masking arises when you introduce some *indirection*, i.e. when you want to *get the data-variable from an env-variable* instead of directly typing the data-variable’s name. 
+# mean across all values in all rows
+fruits %>% 
+  mutate(height_mean = mean(c(height_1, height_2, height_3))) 
 
-## Tidy selection
-- Data masking makes it easy to compute on values within a dataset. Tidy selection is a complementary tool that makes it easy to work with the columns of a dataset.
 
-### Indirection
-- As with data masking, tidy selection makes a common task easier at the cost of making a less common task harder. 
-- When you want to use tidy select indirectly with the column specification stored in an intermediate variable, you’ll need to learn some new tools.
+# mean across all values in each row
+fruits %>% 
+  rowwise(fruit) %>% 
+  mutate(height_mean = mean(c(height_1, height_2, height_3)))
+
+
+```
+
+## Per-row Summary Statistics
+- `dplyr::summarize()` makes it really easy to summarize values across the rows within one column. 
+- We can combine `rowwise()` and `summarize()` to make it easy to summarize values *across columns within one row*. 
+- We’ll start by making a little dataset:
+
+```{r}
+df <- tibble(id = 1:6, w = 10:15, x = 20:25, y = 30:35, z = 40:45)
+df
+```
+- Let’s say we want compute the sum of w, x, y, and z for each row. 
+- We start by making a row-wise data frame:
+- We then use `mutate()` to add a new column to each row, or.
+- Just use `summarise()` to return the summary:
+```{r}
+rf <- df %>% rowwise(id)
+# mutate to add new column for each row
+rf %>% mutate(total = sum(c(w, x, y, z)))
+
+# summarize without mutate
+rf %>% summarise(total = sum(c(w, x, y, z)), .groups= "drop")
+```
+
+- If you have a lot of variables, you can use `c_across()` to succinctly select many variables (`c_across()` uses tidy select helpers)
+- The `where(is.numeric())` ensures we only select numeric columns
+
+```{r}
+rf %>% mutate(total = sum(c_across(w:z)))
+rf %>% mutate(total = sum(c_across(where(is.numeric))))
+
+# If we want to use our fruits example... 
+fruits %>% 
+  rowwise(fruit) %>% 
+  mutate(height_mean = mean(c_across(contains("height"))))
+
+```
+- so c_across is a _rowwise_ version of the function we learned earlier, across. 
+
+- You could combine c_across with column-wise across to compute the proportion of the total for each column:
+```{r}
+rf %>% #our row-wise data frame
+  mutate(total = sum(c_across(w:z))) %>% #total each row
+  ungroup() %>% # ungroup the rows
+  mutate(across(w:z, ~ .x / total)) # the .x represents each column
+```
+
+
+### Exercise
+- Let's create a new variable for the starwars data frame with the maximum of the height, mass, or birth year for each starwars character. Who has the maximum of all the characters?
+```{r}
+starwars %>% 
+  filter(!is.na(height), !is.na(mass),) %>%
+  rowwise() %>% 
+  mutate(max_a = max(height, mass, na.rm = TRUE)) %>% 
+  relocate(max_a) %>% 
+  ungroup() %>% 
+  select(name, where(is.numeric)) %>% 
+  slice_max(max_a) 
+
+starwars %>% 
+  filter(!is.na(height), !is.na(mass)) %>%
+  rowwise() %>% 
+  mutate(max_a = max(height, mass, na.rm = TRUE)) %>% 
+  relocate(max_a) %>% 
+  ungroup() %>% 
+  select(name, where(is.numeric)) %>% 
+  filter(max_a == max(max_a))
+```
+
 
 ## Bottom Line
 - Be aware of the issues that can arise if you try to write complex functions where you are passing arguments with names of variables from the environment, as opposed to referring to variables within a data frame.
 - There are solutions but they require additional effort and understanding.
 
+- **References**
+  - Chapter 5 of [RDS](https://r4ds.had.co.nz/)
+  - [Data Transformation Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf).
+  - [Row-Wise Operations](https://dplyr.tidyverse.org/articles/rowwise.html).
+  - [Column-Wise Operations](https://dplyr.tidyverse.org/articles/colwise.html).
+  - [Programming with dplyr](https://dplyr.tidyverse.org/articles/programming.html)

@@ -45,6 +45,22 @@ toc: true
 |2.7|1.00|Correct Scatter Plot with facets|
 |2.8|2.00|Correct Plot|
 |**Total**|25| Plus extra Credit|
+|Question.Part:|Points|Topic|
+|---|--:|-------------|
+|1.1a|.50|Correct data|
+|1.1b|.50|Correct number of rows based on code|
+|1.2a|1.00|correct calculations|
+|2.2b|.50|updated data frame|
+|2.3|1.50|correct results|
+|2.4a|1.00|Correct data|
+|2.4b|2.00|Correct plot|
+|2.4c|.50|Interpretation|
+|2.5|1.00|Correct results|
+|2.6|1.50|Correct Results|
+|**Total**|10| |
+
+
+
 # The `flights` data frame from the nycflights13 package.
 1. Load and review the data
 - Load the tidyverse nycflights 13 packages 
@@ -429,6 +445,7 @@ penguins %>%
    filter(across(everything(), ~ !is.na(.x)))
 #333
 ```
+
 6. How many unique values are there for each of the columns that end in "_mm" for each sex
 ```{r}
 penguins %>% 

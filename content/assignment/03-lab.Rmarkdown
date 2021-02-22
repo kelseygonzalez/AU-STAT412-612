@@ -72,7 +72,7 @@ flights %>%
 
 ```
 
-5. What airline has the highest and lowest average departure delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
+6. What airline has the highest and lowest average departure delay? Try using functions so that you only get one row for your highest function and one row for your lowest function. 
     * hint: `slice_*()` is likely very useful here - explore the documentation! 
     * if you want to just grab the airline of the highest, `pull()` can also come in handy here. 
 ```{r}
