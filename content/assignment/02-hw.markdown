@@ -24,17 +24,18 @@ toc: true
 |1.1a|1.00|Loads packages and data|
 |1.1b|.50|Variables|
 |1.1c|.50|Observations|
-|1.1d|.50|first three rows|
 |1.2a|1.00|worst three planes|
 |1.2b|.50|num flights|
 |1.2c|1.50|worst three with more than 12|
 |1.3a|1.50|Correct data|
 |1.3b|1.50|Correct Plot|
 |1.3c|.50|Correct Interpretation|
-|1.4a|2.00|Correct worst flights for each destination|
-|1.5|1.50|Correct Results for |
+|1.4a|1.00|Correct proportion of the total arrival delay|
+|1.4b|1.00|Correct worst flights|
+|1.5a|1.00|Finds correct destinations |
+|1.5b|0.50|selects only the destinations with max carriers|
 |2.1|.50|Loads packages and data|
-|2.2a|1.00|Missing gender|
+|2.2|1.00|Missing gender|
 |2.3|1.00|Update Droids|
 |2.4a|0.50|Correct medians and mean of height and mass|
 |2.4b|0.50|Uses Across|
@@ -42,9 +43,10 @@ toc: true
 |2.6|1.00|Correct Box Plots|
 |2.7|1.00|Correct Scatter Plot with facets|
 |2.8|2.00|Correct Plot|
-|**Total**|21| Plus extra Credit|
+|**Total**|20.5| Plus extra Credit|
 
----
+  
+
 
 
 # The `flights` data frame from the nycflights13 package.
@@ -64,9 +66,9 @@ toc: true
 
 
 3. Best Time of Day to Fly
-    - Use a plot to see what _hour_ of the day you should fly to minimize your expected (average) delay time?  
+    - Use a plot to see what _hour_ of the day you should fly to minimize your expected (average) delay time. Which time is best? 
 
-
+    - Which time is best?
 
 
 4. Worst Flight Numbers for each Destination
@@ -82,7 +84,7 @@ toc: true
 
   
 5. Destinations with Multiple Carriers from NYC Area  
-    - Find all destinations that are flown by at least two carriers and show the destination airports that has the most carriers flying into them out of the NYC airports. (hint: `distinct()` or `n_distinct()` will help here!)
+    - Find all destinations that are flown to by at least two carriers. Of these, show the destination airports that have the most carriers flying into them from any of the NYC airports. (hints: `distinct()` or `n_distinct()` will help here, your final data frame will have 5 rows. )
   
 
 
@@ -115,7 +117,7 @@ The `starwars` data frame in the dplyr package contains demographic characterist
 
 5. The body mass index (BMI) is defined as
     $$
-    \frac{\text{mass}_{\text{kg}}}{\text{height}_{m}^2}.
+    BMI = \frac{\text{mass}_{\text{kg}}}{\text{height}_{m}^2}.
     $$
     
     - That is, the BMI is the weight of the individual (in kg) divided by the height of the individual (in m) squared. There are 100 cm in each m.
