@@ -12,11 +12,14 @@ toc: true
 
 ---
 
-
+{{% div fyi %}}
 # Instructions 
-
+- Download the .Rmd template used for this homework [<i class="fas fa-file-code"></i> `here`](/homework/02-hw.Rmd)
 - After completing the questions, upload both the .RMD and PDF files to Canvas.
 - Use dplyr functions wherever possible. 
+{{% /div %}}
+
+
 
 # Grading Rubric 
 |Question.Part:|Points|Topic|
