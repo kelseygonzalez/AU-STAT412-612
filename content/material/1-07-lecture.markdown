@@ -13,11 +13,7 @@ toc: true
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      message = FALSE, 
-                      warning = FALSE)
-```
+
 
 
 # Learning Outcomes
@@ -59,7 +55,8 @@ knitr::opts_chunk$set(echo = TRUE,
 - Note, tidyr has two relatively new functions, `pivot_longer()` and `pivot_wider()`, which replace functions called `gather()` and `spread()` that are now deprecated. They still work and you will see them in web searches but they are not as capable as the new functions so we will focus on the new functions.
 - Let's load the tidyverse
 
-```{r, message = FALSE}
+
+```r
 library(tidyverse)
 ```
 
@@ -75,29 +72,96 @@ library(tidyverse)
   + Variables: Country, Year, Cases Consumed, and Population
   + One variable in each column and one observation for each unit in each row
   
-```{r}
+
+```r
 table1
+```
+
+```
+## # A tibble: 6 x 4
+##   country      year  cases population
+##   <chr>       <int>  <int>      <int>
+## 1 Afghanistan  1999    745   19987071
+## 2 Afghanistan  2000   2666   20595360
+## 3 Brazil       1999  37737  172006362
+## 4 Brazil       2000  80488  174504898
+## 5 China        1999 212258 1272915272
+## 6 China        2000 213766 1280428583
 ```
 
 - **Untidy data** where variables are combined in one column
   + Same units and information but, ...
   + Two variables are in one column - `type` and their values are also in one column - `count`
   + They are not different levels of the same variable
-```{r}
+
+```r
 slice_head(table2, n = 12)
+```
+
+```
+## # A tibble: 12 x 4
+##    country      year type            count
+##    <chr>       <int> <chr>           <int>
+##  1 Afghanistan  1999 cases             745
+##  2 Afghanistan  1999 population   19987071
+##  3 Afghanistan  2000 cases            2666
+##  4 Afghanistan  2000 population   20595360
+##  5 Brazil       1999 cases           37737
+##  6 Brazil       1999 population  172006362
+##  7 Brazil       2000 cases           80488
+##  8 Brazil       2000 population  174504898
+##  9 China        1999 cases          212258
+## 10 China        1999 population 1272915272
+## 11 China        2000 cases          213766
+## 12 China        2000 population 1280428583
 ```
     
 - **Untidy data** where observations are combined into one column-  `rate`
-```{r}
+
+```r
 table3
+```
+
+```
+## # A tibble: 6 x 3
+##   country      year rate             
+## * <chr>       <int> <chr>            
+## 1 Afghanistan  1999 745/19987071     
+## 2 Afghanistan  2000 2666/20595360    
+## 3 Brazil       1999 37737/172006362  
+## 4 Brazil       2000 80488/174504898  
+## 5 China        1999 212258/1272915272
+## 6 China        2000 213766/1280428583
 ```
     
 - **Untidy data** where data of interest are spread across two data frames. 
   + Within each data frame, a variable is split into multiple columns.
 
-```{r}
+
+```r
 table4a
+```
+
+```
+## # A tibble: 3 x 3
+##   country     `1999` `2000`
+## * <chr>        <int>  <int>
+## 1 Afghanistan    745   2666
+## 2 Brazil       37737  80488
+## 3 China       212258 213766
+```
+
+```r
 table4b
+```
+
+```
+## # A tibble: 3 x 3
+##   country         `1999`     `2000`
+## * <chr>            <int>      <int>
+## 1 Afghanistan   19987071   20595360
+## 2 Brazil       172006362  174504898
+## 3 China       1272915272 1280428583
 ```
 
 ## Why Tidy Data    
@@ -120,9 +184,23 @@ table4b
 - Column names are actually *values* of a implied variable
 
 - Examples in `table4a` and `table4b`
-```{r echo = FALSE}
-head(table4a)
-head(table4b)
+
+```
+## # A tibble: 3 x 3
+##   country     `1999` `2000`
+##   <chr>        <int>  <int>
+## 1 Afghanistan    745   2666
+## 2 Brazil       37737  80488
+## 3 China       212258 213766
+```
+
+```
+## # A tibble: 3 x 3
+##   country         `1999`     `2000`
+##   <chr>            <int>      <int>
+## 1 Afghanistan   19987071   20595360
+## 2 Brazil       172006362  174504898
+## 3 China       1272915272 1280428583
 ```
 
 
@@ -145,46 +223,102 @@ head(table4b)
   2. The name of the *new* variable with the old *column names*  (`names_to`), and
   3. The name of the *new* variable with the *values* spread across the current column cells (`values_to`).
   
-```{r}
+
+```r
 table4a
+```
+
+```
+## # A tibble: 3 x 3
+##   country     `1999` `2000`
+## * <chr>        <int>  <int>
+## 1 Afghanistan    745   2666
+## 2 Brazil       37737  80488
+## 3 China       212258 213766
+```
+
+```r
 tidy4ap <- table4a %>%
   pivot_longer(cols = c(`1999`, `2000`), 
                names_to = "Year", 
                values_to = "Cases" ) 
 tidy4ap
 ```
+
+```
+## # A tibble: 6 x 3
+##   country     Year   Cases
+##   <chr>       <chr>  <int>
+## 1 Afghanistan 1999     745
+## 2 Afghanistan 2000    2666
+## 3 Brazil      1999   37737
+## 4 Brazil      2000   80488
+## 5 China       1999  212258
+## 6 China       2000  213766
+```
     
-```{r}
+
+```r
 table4b
+```
+
+```
+## # A tibble: 3 x 3
+##   country         `1999`     `2000`
+## * <chr>            <int>      <int>
+## 1 Afghanistan   19987071   20595360
+## 2 Brazil       172006362  174504898
+## 3 China       1272915272 1280428583
+```
+
+```r
 tidy4bp <- table4b %>%
   pivot_longer(cols = c('1999', '2000'), 
                names_to = "Year", 
                values_to = "Population") 
 tidy4bp
 ```
+
+```
+## # A tibble: 6 x 3
+##   country     Year  Population
+##   <chr>       <chr>      <int>
+## 1 Afghanistan 1999    19987071
+## 2 Afghanistan 2000    20595360
+## 3 Brazil      1999   172006362
+## 4 Brazil      2000   174504898
+## 5 China       1999  1272915272
+## 6 China       2000  1280428583
+```
     
 - We will learn next class how to *join* two data frames but for now we will use `dplyr:: left_join()`
 
-```{r}
+
+```r
 tidy4ap %>% 
   left_join(tidy4bp, by = c("country","Year"))
+```
+
+```
+## # A tibble: 6 x 4
+##   country     Year   Cases Population
+##   <chr>       <chr>  <int>      <int>
+## 1 Afghanistan 1999     745   19987071
+## 2 Afghanistan 2000    2666   20595360
+## 3 Brazil      1999   37737  172006362
+## 4 Brazil      2000   80488  174504898
+## 5 China       1999  212258 1272915272
+## 6 China       2000  213766 1280428583
 ```
   
 
 ### Exercises
 1. Tidy the `monkeymem` data frame (available at https://dcgerard.github.io/stat_412_612/data/monkeymem.csv). The cell values represent identification accuracy of some objects (in percent of 20  trials).
 
-```{r echo = FALSE, eval = FALSE}
-monkeymem <- read_csv("https://dcgerard.github.io/stat_412_612/data/monkeymem.csv")
-head(monkeymem)
 
-monkeymem %>%
-  pivot_longer(cols = Week2:Week16,
-               names_to = "Week",
-               values_to = "Percent")
-```
 
-```{r echo = TRUE, eval = FALSE}
+
+```r
 monkeymem <- read_csv("https://dcgerard.github.io/stat_412_612/data/monkeymem.csv")
 glimpse(monkeymem)
 
@@ -195,7 +329,8 @@ monkeymem %>%
   
 2. Why does this code fail?
 
-```{r, eval = FALSE, error = TRUE}
+
+```r
 table4a %>% 
   pivot_longer(cols = 1999, 2000, 
                names_to = "year", 
@@ -244,8 +379,17 @@ table4a %>%
 - This can be more challenging to tidy as you have multiple variables to address
 
 - Example is `table2`
-```{r echo = FALSE}
-head(table2)
+
+```
+## # A tibble: 6 x 4
+##   country      year type           count
+##   <chr>       <int> <chr>          <int>
+## 1 Afghanistan  1999 cases            745
+## 2 Afghanistan  1999 population  19987071
+## 3 Afghanistan  2000 cases           2666
+## 4 Afghanistan  2000 population  20595360
+## 5 Brazil       1999 cases          37737
+## 6 Brazil       1999 population 172006362
 ```
 
 
@@ -266,12 +410,46 @@ head(table2)
   1. The column with the column names (`names_from =`), and 
   2. The column with the values (`values_from = `).
 
-```{r}
+
+```r
 table2
+```
+
+```
+## # A tibble: 12 x 4
+##    country      year type            count
+##    <chr>       <int> <chr>           <int>
+##  1 Afghanistan  1999 cases             745
+##  2 Afghanistan  1999 population   19987071
+##  3 Afghanistan  2000 cases            2666
+##  4 Afghanistan  2000 population   20595360
+##  5 Brazil       1999 cases           37737
+##  6 Brazil       1999 population  172006362
+##  7 Brazil       2000 cases           80488
+##  8 Brazil       2000 population  174504898
+##  9 China        1999 cases          212258
+## 10 China        1999 population 1272915272
+## 11 China        2000 cases          213766
+## 12 China        2000 population 1280428583
+```
+
+```r
 table2 %>%
   pivot_wider(id_cols = c(country, year),
               names_from = type, 
               values_from = count)
+```
+
+```
+## # A tibble: 6 x 4
+##   country      year  cases population
+##   <chr>       <int>  <int>      <int>
+## 1 Afghanistan  1999    745   19987071
+## 2 Afghanistan  2000   2666   20595360
+## 3 Brazil       1999  37737  172006362
+## 4 Brazil       2000  80488  174504898
+## 5 China        1999 212258 1272915272
+## 6 China        2000 213766 1280428583
 ```
 
 
@@ -279,7 +457,8 @@ table2 %>%
 
 1. Tidy (reshape) the `flowers1` data frame (available at https://dcgerard.github.io/stat_412_612/data/flowers1.csv).
 
-```{r eval = FALSE}
+
+```r
 flowers1 <- read_csv2("https://dcgerard.github.io/stat_412_612/data/flowers1.csv")
 slice(flowers1,20:28)
 
@@ -288,19 +467,44 @@ flowers1 %>%
 ```
 
 
-```{r echo = FALSE}
-flowers1 <- read_csv2("https://dcgerard.github.io/stat_412_612/data/flowers1.csv")
-slice(flowers1,20:28)
 
-flowers1 %>% 
-  pivot_wider(names_from = Variable, 
-              values_from = Value )
+```
+## # A tibble: 9 x 4
+##    Time replication Variable  Value
+##   <dbl>       <dbl> <chr>     <dbl>
+## 1     2           8 Flowers    52.2
+## 2     2           9 Flowers    60.3
+## 3     2          10 Flowers    45.6
+## 4     2          11 Flowers    52.6
+## 5     2          12 Flowers    44.4
+## 6     1           1 Intensity 150  
+## 7     1           2 Intensity 150  
+## 8     1           3 Intensity 300  
+## 9     1           4 Intensity 300
+```
+
+```
+## # A tibble: 24 x 4
+##     Time replication Flowers Intensity
+##    <dbl>       <dbl>   <dbl>     <dbl>
+##  1     1           1    62.3       150
+##  2     1           2    77.4       150
+##  3     1           3    55.3       300
+##  4     1           4    54.2       300
+##  5     1           5    49.6       450
+##  6     1           6    61.9       450
+##  7     1           7    39.4       600
+##  8     1           8    45.7       600
+##  9     1           9    31.3       750
+## 10     1          10    44.9       750
+## # ... with 14 more rows
 ```
 
 
 2. (RDS 13.3.3.3): Why does using pivot_wider on this data frame fail?
 
-```{r, eval = FALSE}
+
+```r
 people <- tribble(
   ~name,             ~key,    ~value,
   #-----------------|--------|------
@@ -328,8 +532,17 @@ yourself a concept map like the one below, which I drew for myself.
 ## Problem: One Column Contains Values from Two (or more) Variables in Each Row.
 
 - Example is `table3`
-```{r echo = FALSE}
-head(table3)
+
+```
+## # A tibble: 6 x 3
+##   country      year rate             
+##   <chr>       <int> <chr>            
+## 1 Afghanistan  1999 745/19987071     
+## 2 Afghanistan  2000 2666/20595360    
+## 3 Brazil       1999 37737/172006362  
+## 4 Brazil       2000 80488/174504898  
+## 5 China        1999 212258/1272915272
+## 6 China        2000 213766/1280428583
 ```
 
 
@@ -355,19 +568,48 @@ head(table3)
   2. The character vector of the names of the new variables, and
   3. The character or numeric positions by which to separate out the new variables from the current column.
          
-```{r}
+
+```r
 head(table3)
+```
+
+```
+## # A tibble: 6 x 3
+##   country      year rate             
+##   <chr>       <int> <chr>            
+## 1 Afghanistan  1999 745/19987071     
+## 2 Afghanistan  2000 2666/20595360    
+## 3 Brazil       1999 37737/172006362  
+## 4 Brazil       2000 80488/174504898  
+## 5 China        1999 212258/1272915272
+## 6 China        2000 213766/1280428583
+```
+
+```r
 table3 %>%
   separate(rate, 
            into = c("cases", "population"), 
            sep = "/")
 ```
 
+```
+## # A tibble: 6 x 4
+##   country      year cases  population
+##   <chr>       <int> <chr>  <chr>     
+## 1 Afghanistan  1999 745    19987071  
+## 2 Afghanistan  2000 2666   20595360  
+## 3 Brazil       1999 37737  172006362 
+## 4 Brazil       2000 80488  174504898 
+## 5 China        1999 212258 1272915272
+## 6 China        2000 213766 1280428583
+```
+
 
 ### Exercise 
 1. Tidy the `flowers2` data frame (available at 
   https://dcgerard.github.io/stat_412_612/data/flowers2.csv).
-```{r eval = FALSE}
+
+```r
 flowers2 <- read_csv2("https://dcgerard.github.io/stat_412_612/data/flowers2.csv")
 head(flowers2)
 
@@ -375,14 +617,17 @@ flowers2_sep <- flowers2 %>%
   separate()
 ```
 
-```{r echo = FALSE}
-flowers2 <- read_csv2("https://dcgerard.github.io/stat_412_612/data/flowers2.csv")
-head(flowers2)
 
-flowers2_sep <- flowers2 %>%
-  separate(col = `Flowers/Intensity`, 
-           into = c("Flowers", "Intensity"), 
-           sep = "/")
+```
+## # A tibble: 6 x 2
+##   `Flowers/Intensity`  Time
+##   <chr>               <dbl>
+## 1 62.3/150                1
+## 2 77.4/150                1
+## 3 55.3/300                1
+## 4 54.2/300                1
+## 5 49.6/450                1
+## 6 61.9/450                1
 ```
 
 
@@ -393,8 +638,17 @@ flowers2_sep <- flowers2 %>%
 - This is a much less common problem.
 - You can see it with dates and/or times
 - Example has Year split into century and two-digit year
-```{r echo = FALSE}
-head(table5)
+
+```
+## # A tibble: 6 x 4
+##   country     century year  rate             
+##   <chr>       <chr>   <chr> <chr>            
+## 1 Afghanistan 19      99    745/19987071     
+## 2 Afghanistan 20      00    2666/20595360    
+## 3 Brazil      19      99    37737/172006362  
+## 4 Brazil      20      00    80488/174504898  
+## 5 China       19      99    212258/1272915272
+## 6 China       20      00    213766/1280428583
 ```
 
 ## Solution: `unite()` Multiple Columns to Create a New Variable
@@ -412,28 +666,53 @@ head(table5)
   2. The columns to unite, and
   3. The separator of the variables in the new column (`sep`) if none use ("")  
 
-```{r}
+
+```r
 table5 %>%
   unite( col = "Year",  # new name
          century, year,  #unite these cols
          sep = "" #if you want a delimiter
          )
 ```
+
+```
+## # A tibble: 6 x 3
+##   country     Year  rate             
+##   <chr>       <chr> <chr>            
+## 1 Afghanistan 1999  745/19987071     
+## 2 Afghanistan 2000  2666/20595360    
+## 3 Brazil      1999  37737/172006362  
+## 4 Brazil      2000  80488/174504898  
+## 5 China       1999  212258/1272915272
+## 6 China       2000  213766/1280428583
+```
     
 ### Exercises 
 1. Re-unite the data frame you separated from the `flowers2`  exercise.
 - Use a comma for the separator.
 
-```{r eval = FALSE}
+
+```r
 flowers2_sep %>%
   unite()
 ```
 
-```{r echo = FALSE}
-flowers2_sep %>%
-  unite(col = "Flowers,Intensity", 
-        Flowers, Intensity, 
-        sep = ",")
+
+```
+## # A tibble: 24 x 2
+##    `Flowers,Intensity`  Time
+##    <chr>               <dbl>
+##  1 62.3,150                1
+##  2 77.4,150                1
+##  3 55.3,300                1
+##  4 54.2,300                1
+##  5 49.6,450                1
+##  6 61.9,450                1
+##  7 39.4,600                1
+##  8 45.7,600                1
+##  9 31.3,750                1
+## 10 44.9,750                1
+## # ... with 14 more rows
 ```
   
 2. Use the flights data from the nycflights13 package.
