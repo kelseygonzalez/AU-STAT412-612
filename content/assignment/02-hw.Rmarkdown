@@ -15,7 +15,7 @@ toc: true
 {{% div fyi %}}
 # Instructions 
 - Download the .Rmd template used for this homework [<i class="fas fa-file-code"></i> `here`](/homework/02-hw.Rmd)
-- After completing the questions, upload both the .RMD and PDF files to Canvas.
+- After completing the questions, upload both the .RMD and .pdf OR .HTML files to Canvas.
 - Use dplyr functions wherever possible. 
 {{% /div %}}
 
@@ -227,10 +227,8 @@ starwars_clean %>%
 ```
 
 
-5. The body mass index (BMI) is defined as
-    $$
-    BMI = \frac{\text{mass}_{\text{kg}}}{\text{height}_{m}^2}.
-    $$
+5. The body mass index (BMI) is defined as $$ BMI = \frac{\text{mass}_{\text{kg}}}{\text{height}_{m}^2} $$.
+
     
     - That is, the BMI is the weight of the individual (in kg) divided by the height of the individual (in m) squared. There are 100 cm in each m.
     - Calculate the BMI for each individual in the `starwars` data frame and add it to the `starwars_clean` data frame.
