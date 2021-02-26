@@ -16,23 +16,7 @@ editor_options:
 
 Get them into your current project in a `data` subdirectory with your favorite method:
 
-```{r eval = FALSE, include = FALSE, echo = FALSE}
-library(tidyverse)
-fship <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
-ttow <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv")
-rking <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv") 
 
-lotr_untidy <- bind_rows(fship, ttow, rking) %>% 
-  write_csv(file = here::here("static", "data", "lotr_untidy1.csv"))
-
-lotr_untidy %>% 
-  pivot_longer(cols = c(Female, Male), names_to = "gender", values_to = "words_spoken") %>% 
-  pivot_wider(id_cols = c(Race, gender), names_from = Film, values_from = words_spoken) %>% 
-  unite(c(`The Fellowship Of The Ring`,`The Return Of The King`,`The Two Towers`),
-        col = "FOTR_ROTK_TTT",
-        sep = ",") %>% 
-  write_csv(file = here::here("static", "data", "lotr_untidy2.csv"))
-```
 # Tidy Data
 Data comes in many formats but R prefers just one: _tidy data_.
 

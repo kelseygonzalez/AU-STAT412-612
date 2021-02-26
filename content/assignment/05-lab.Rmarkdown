@@ -57,7 +57,9 @@ Arrange descending by your new lifeExp_range variable.
 ```{r}
 gapminder %>%
   group_by(country) %>%
-  summarize(across(lifeExp, list(min = min, mean = mean, med = median, max = max), na.rm = TRUE)) %>% 
+  summarize(across(lifeExp, 
+                   list(min = min, mean = mean, med = median, max = max), 
+                   na.rm = TRUE)) %>% 
   rowwise() %>% 
   mutate(lifeExp_range = lifeExp_max - lifeExp_min) %>% 
   arrange(-lifeExp_range)
@@ -104,14 +106,18 @@ diamonds %>%
 ```
 
 ```{r}
-diamonds %>% 
+x13 <- diamonds %>% 
   mutate(perfect = case_when((cut %in% c("Premium", "Ideal")) & 
                                (color %in% c("D", "E")) & 
                                (carat > 1) &
                                (clarity %in% c("VVS1", "IF")) ~ "Perfect",
-                                 TRUE ~ "Not Perfect")) %>% 
-  ggplot(aes(x = carat, y = price, color = perfect)) + geom_point(alpha = 0.5)
-```
+                                 TRUE ~ "Not Perfect")) 
+
+  ggplot() + 
+  geom_point(x13 %>% filter(perfect == "Perfect"), aes(x = carat, y = price),
+             color = "blue", alpha = 1) +
+  geom_point(x13 %>% filter(perfect == "Not Perfect"), 
+             color = "pink", alpha = 0.5)
 
 
 
