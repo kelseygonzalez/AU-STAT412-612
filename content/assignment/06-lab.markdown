@@ -29,8 +29,8 @@ A data set is tidy if and only if:
 # Lab Questions
 1. Download the lotr_untidy.csv data and save to your data folder.
 
-- [<i class="fas fa-file-csv"></i> `lotr_untidy1.csv`]("/data/lotr_untidy1.csv")  
-- [<i class="fas fa-file-csv"></i> `lotr_untidy2.csv`]("/data/lotr_untidy2.csv")
+- [<i class="fas fa-file-csv"></i> `lotr_untidy1.csv`](/data/lotr_untidy1.csv)  
+- [<i class="fas fa-file-csv"></i> `lotr_untidy2.csv`](/data/lotr_untidy2.csv)
 
 About the data:
 
