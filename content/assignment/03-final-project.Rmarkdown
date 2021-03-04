@@ -17,20 +17,6 @@ editor_options:
 
 - **04/19/2021**: Each group submits a zipped folder to Canvas containing all of your analyses, scripts, and inputs/data in the appropriate directory structure. I should be able to run everything after unzipping the project folder.
 
-
-# Progress Report Requirements
-Submit an approximately two-page report on the group's progress to date. Topics should include: 
-
-- Title of the project and type of analysis (research or application)
-- Names of the group members and their course (412 or 612) 
-- General discussion of the topic area
-- Status of the literature review and the initial sources
-- Initial Questions of Interest
-- Data source and status of data collection and tidying
-- Planned next steps and schedule
-- Planned roles for group members
-- Any concerns or major challenges
-
 # Final Report Requirements
 
 The entire report may be no more than 10 pages (12 point font, 1 inch margins) not counting appendices. The References and any other Appendices do not count toward your page limits. 
@@ -85,76 +71,8 @@ Your final report must include **all** of the following elements:
 - Any additional R code you want to reference in the main body of the report. 
 - There is no need to provide all the code, the data, or all the figures you used in your analysis in the appendix. 
 
-# Group Presentation Requirements
 
-- Your group must prepare a *20-25 minute* oral presentation to be delivered in person or on Zoom.
-- There are two deliverables: A presentation document with the slides and the actual group oral presentation to the class using the slides.
-  + No R code should be shown during the presentation (unless it is really cool R code).
-
-## Presentation Document
-
-- Each group will prepare a document in R Markdown using a slide output format. 
-- Presentation documents will be knit to PDF for submission. 
-- You may also change the .Rmd output to another format such as PowerPoint for final formatting if desired. 
-  + If you do so, submit those documents in original and PDF format as well as the original .Rmd file and its PDF
-- The presentation document must be consistent with the final report and include the following elements: 
-
-1. **Title Page**: include the title of the project, the type of analysis (research or application),  the date and the names and course of all group members. 
-
-2. **Executive Summary**: One slide summarizing the context, the primary questions of interest, the data source, the overall approach, and significant findings and/or recommendations. 
-
-3. **Introduction**:  provide context for why and how you are doing the analysis. 
-- What is the motivation for the analysis and what are the overarching research/business questions of interest? 
-- What is the data source, the general nature of the variables, and the time period of the data.
-- Include a *brief* literature review and cite peer-reviewed or widely-published articles related to your questions of interest. 
-  + You may want to use a publication search engine such as Google Scholar. 
-  + Cite as many articles as individuals in your study group. 
-
-4. **Initial Hypotheses**: State what variables and relationships your group specifically wants to analyze based on your literature review and questions of interest, before tidying or looking at the data 
-  + i.e., is variable X associated with variable Y, or is the association mediated through a third variable.
-  
-5. **Data Preparation**: Describe any significant challenges in tidying the data and your approach to overcoming the challenges.
-
-6. **Exploratory Data Analysis and Statistical Analysis**: Use multiple slides to describe your analysis of the initial and/or adjusted hypotheses and the key results
-- Do not just include all your output from R as you will run out of room. 
-- Describe your EDA on key variables and relationships using numerical and graphical summaries. 
-- Show important graphs and numerical summaries from statistical analyses (if a 612 group)
-- Use Slide Titles, Captions and/or bullets to provide your interpretations
-- If the analysis changed your hypotheses, explain the rationale for change 
-- State new hypotheses and any results.
-- Summarize your analysis and results in specific findings for each hypothesis.
-
-7. **Summary**: 
-- Include a brief discussion of what your findings mean in the overall context of the literature and research or business situation. 
-- Discuss your findings relative to your questions of interest and any recommendations for future work or implementation.
-
-
-## Oral Presentation
-  
-- Use your presentation document to present your project to the other members of the class.   
-- Everyone from the group must participate in the presentation. 
-+ If something known prevents a person from attending the class group presentation, the individual must coordinate with their group to present a pre-recorded video of their portion of the presentation during the group presentation. 
-  + If an emergency prevents attendance, the individual must submit a recording of their portion of the presentation as soon as possible after the class.
-- Each presentation will be a combination of group and individual grades
-- Each presentation will be evaluated by all other members of the class no in the group.
-
-# Grading Rubric (55 Pts)
-
-## Progress Report (5 Pts)
-|Question.Part:|Points|Topic|
-|------|--:|-------------|
-|Progress Report.1|1.|Title of the project and type of analysis (research or application)|
-|Progress Report.2|1.|Names of the group members and their course (412 or 612)|
-|Progress Report.3|1.|General discussion of the topic area|
-|Progress Report.4|1.|Status of the literature review and the initial sources|
-|Progress Report.5|1.|initial Questions of Interest|
-|Progress Report.6|1.|Data source and Status of Data collection and tidying|
-|Progress Report.1|1.|Planned next steps and schedule|
-|Progress Report.2|1.|Planned roles for group members|
-|Progress Report.7|1.|Any concerns or major challenges|
-|**Total**|**5**||
-
-## Report (25 Pts) - per element descriptions above
+# Grading Rubric - Report (25 Pts) 
 |Question.Part:|Points|Topic|
 |------|--:|-------------|
 |Final Report.Overall Format|3.|Proper File structure, R Code and R Markdown to be Reproducible|
@@ -170,22 +88,6 @@ Your final report must include **all** of the following elements:
 |Final Report.Optional Appendixes|.|Concise|
 |**Total**|**25**||
 
-
-## Presentation (25 Pts) - per element descriptions above
-
-|Question.Part:|Points|Topic|
-|------|--:|-------------|
-|Presentation.Format|3.|Clean Style and Easy to read and reference. Slides are not "too busy" or overcrowded. No typographical errors|
-|Presentation.Title Page|1.|Correct Elements|
-|Presentation.Exec Summary|2.|Effectively conveys the situation, the approach, and key findings and recommendations|
-|Presentation.Introduction|1.|Complete Motivation, Data Description, and Literature|
-|Presentation.Initial Hypotheses|2.|Discussion of variables and relationships is consistent with Introduction|
-|Presentation.Data Preparation|2.|Covers relevant details to set up the analysis|
-|Presentation.EDA and Statistical Analysis|8.|Tells a "story" in a logical order showing appropriate EDA and Statistical methods with proper interpretations|
-|Presentation.Summary|1.|Captures Main findings and recommendations relevant to Questions if Interest|
-|Presentation.Individual Presentation|3.|Demonstrates knowledge of material. Presentation style: confident, articulate, focused, and timely. Able to answer questions on the presentation|
-|Presentation.Peer Assessments|2.|Was the presentation style professional? Was the presentation convincing?|
-|**Total**|**25**||    
 
 
 # Appendices
@@ -217,29 +119,7 @@ Your final report must include **all** of the following elements:
 - That allows you to do your analysis in a logical sequence but not show the initial pieces and then show the final plot or numerical summary.
 
 
-## Appendix 2: Presentation Assessment Form - Peers 
-
-Your Name______________________
-
-### Presentation Group 1: Subject __________________________________
-
-1. Was the Presentation professional?  Major Gaps\hspace{.25in}Minor Gaps\hspace{.25in}Very Nice\hspace{.25in}Great!
-
-    - Clean Slide layout
-    - Slide content easy to understand
-    - Presenters told a story (not just read the slides)
-    
-2. Was the Presentation Convincing?  Major Gaps\hspace{.25in}Minor Gaps\hspace{.25in}Very Nice\hspace{.25in}Great!
-    - Situation Clear
-    - Analysis Approach was appropriate
-    - Findings supportable
-    - Recommendations relevant
-    
-Comments: 
-
-
-
-## Appendix 3: Data Sources
+## Appendix 2: Data Sources
 
 Here are some possible sources for data. I will not accept small curated datasets, or those that come from a paper where the data has already been analyzed.
 

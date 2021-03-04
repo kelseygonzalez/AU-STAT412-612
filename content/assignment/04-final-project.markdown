@@ -1,6 +1,6 @@
 ---
 title: "Oral Presentation"
-date: "2021-01-19"
+date: "2021-03-03"
 due_date: "2021-04-19"
 due_time: "11:59 PM"
 menu:
@@ -68,9 +68,7 @@ editor_options:
 - Each presentation will be a combination of group and individual grades
 - Each presentation will be evaluated by all other members of the class no in the group.
 
-# Grading Rubric (55 Pts)
-
-## Presentation (25 Pts) - per element descriptions above
+# Grading Rubric - Presentation (25 Pts) 
 
 |Question.Part:|Points|Topic|
 |------|--:|-------------|
