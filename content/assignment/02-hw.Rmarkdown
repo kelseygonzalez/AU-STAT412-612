@@ -1,15 +1,14 @@
 ---
-title: "HW 2: Wrangling"
-date: "2021-02-22"
-due_date: "2021-02-28"
+title: 'HW 2: Wrangling'
+date: '2021-02-22'
+due_date: '2021-02-28'
 due_time: "11:59 PM"
 menu:
   assignment:
     parent: Homework
     weight: 2
 type: docs
-toc: true
-
+toc: yes
 ---
 
 {{% div fyi %}}

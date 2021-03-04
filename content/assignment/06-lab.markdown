@@ -12,9 +12,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Import untidy Lord of the Rings data
-
-Get them into your current project in a `data` subdirectory with your favorite method:
 
 
 # Tidy Data
