@@ -959,12 +959,12 @@ b
 ```
 
     ## # A tibble: 4 x 2
-    ##       y      z
-    ##   <int>  <dbl>
-    ## 1     1 0.914 
-    ## 2     2 0.988 
-    ## 3     3 0.0329
-    ## 4     4 0.298
+    ##       y     z
+    ##   <int> <dbl>
+    ## 1     1 0.177
+    ## 2     2 0.198
+    ## 3     3 0.801
+    ## 4     4 0.550
 
 ``` r
 a %>% 
@@ -972,21 +972,22 @@ a %>%
 ```
 
     ## # A tibble: 7 x 3
-    ##       x     y       z
-    ##   <int> <dbl>   <dbl>
-    ## 1     1     4 NA     
-    ## 2     2     5 NA     
-    ## 3     3    NA NA     
-    ## 4    NA     1  0.914 
-    ## 5    NA     2  0.988 
-    ## 6    NA     3  0.0329
-    ## 7    NA     4  0.298
+    ##       x     y      z
+    ##   <int> <dbl>  <dbl>
+    ## 1     1     4 NA    
+    ## 2     2     5 NA    
+    ## 3     3    NA NA    
+    ## 4    NA     1  0.177
+    ## 5    NA     2  0.198
+    ## 6    NA     3  0.801
+    ## 7    NA     4  0.550
 
 # References
 
 -   Chapter 13 of [RDS](https://r4ds.had.co.nz/).
 -   [Data Transformation Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf)
 -   [TidyExplain GIFs](https://github.com/gadenbuie/tidyexplain)
+-   Lahman Database visualization [code](http://bergant.github.io/datamodelr/lahman.html)
 
 # Appendix on dbplyr
 
