@@ -68,7 +68,7 @@ editor_options:
 - Each presentation will be a combination of group and individual grades
 - Each presentation will be evaluated by all other members of the class no in the group.
 
-# Grading Rubric - Presentation (25 Pts) 
+# Grading Rubric - Document (20 Pts) 
 
 |Question.Part:|Points|Topic|
 |------|--:|-------------|
@@ -80,6 +80,15 @@ editor_options:
 |Presentation.Data Preparation|2.|Covers relevant details to set up the analysis|
 |Presentation.EDA and Statistical Analysis|8.|Tells a "story" in a logical order showing appropriate EDA and Statistical methods with proper interpretations|
 |Presentation.Summary|1.|Captures Main findings and recommendations relevant to Questions if Interest|
-|Presentation.Individual Presentation|3.|Demonstrates knowledge of material. Presentation style: confident, articulate, focused, and timely. Able to answer questions on the presentation|
-|Presentation.Peer Assessments|2.|Was the presentation style professional? Was the presentation convincing?|
-|**Total**|**25**||    
+|**Total**|**20**||    
+
+
+# Grading Rubric - Presentation (10 Pts) 
+
+|Question.Part:|Points|Topic|
+|------|--:|-------------|
+|Individual Presentation|2.|Demonstrates knowledge of material. |
+|Individual Presentation|2.|Presentation style: confident, articulate, focused, and timely.|
+|Individual Presentation|2.|Able to answer questions on the presentation|
+|Presentation.Peer Assessments|4.|Was the presentation style professional? Was the presentation convincing?|
+|**Total**|**10**||    

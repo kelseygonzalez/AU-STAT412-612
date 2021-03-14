@@ -72,17 +72,17 @@ Your final report must include **all** of the following elements:
 - There is no need to provide all the code, the data, or all the figures you used in your analysis in the appendix. 
 
 
-# Grading Rubric - Report (25 Pts) 
+# Grading Rubric - Report (30 Pts) 
 |Question.Part:|Points|Topic|
 |------|--:|-------------|
-|Final Report.Overall Format|3.|Proper File structure, R Code and R Markdown to be Reproducible|
+|Final Report.Overall Format|4.|Proper File structure, R Code and R Markdown to be Reproducible|
 |Final Report.Title Page|1.|Correct Title Page Elements|
-|Final Report.Executive Summary|2.|Complete Exec Summary of proper length|
-|Final Report.Introduction|3.|Complete Motivation, Data Description,|
+|Final Report.Executive Summary|2.5|Complete Exec Summary of proper length|
+|Final Report.Introduction|4.|Complete Motivation, Data Description,|
 |Final Report.Introduction|1.|Concise Literature Review with sufficient sources|
 |Final Report.Initial Hypotheses|1.|Clear hypotheses about relationships among variables|
 |Final Report.Data Preparation|3.|Clear discussion of Data Preparation Challenges and solutions|
-|Final Report.EDA and Statistical Analysis|8.|Logical application of appropriate EDA and Statistical methods with proper interpretations|
+|Final Report.EDA and Statistical Analysis|10.|Logical application of appropriate EDA and Statistical methods with proper interpretations|
 |Final Report.Summary|2.|Concise and consistent statement of findings related to questions of interest|
 |Final Report.References|1.|References Relevant and properly formatted|
 |Final Report.Optional Appendixes|.|Concise|
@@ -92,7 +92,7 @@ Your final report must include **all** of the following elements:
 
 # Appendices
 ## Appendix 1: R Markdown Code Chunk Options to Control Display of Code and Chunk Output
-- One of the beauties of R Markdown is you can use Code Chunk options to determine which portions of your analysis get included in a report. For more info see:  [knittr](https://yihui.org/knitr/options/#:~:text=The%20knitr%20package%20provides%20a,to%20customize%20the%20knitting%20process.)
+- One of the beauties of R Markdown is you can use Code Chunk options to determine which portions of your analysis get included in a report. For more info see:  [knitr](https://yihui.org/knitr/options/#:~:text=The%20knitr%20package%20provides%20a,to%20customize%20the%20knitting%20process.)
 - Options go after the r, in the `{r} separated by a comma and space,
   + e.g., `{r, echo = FALSE, eval = TRUE, include = FALSE}`
 
