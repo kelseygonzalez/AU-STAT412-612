@@ -154,7 +154,7 @@ lessons:
     session: "Thursday"
     date: "March 19"
     lab: "07-lab"
-    reading: "2-08-reading"
+    reading: "2-09-reading"
     bg: 1
 
   - title: "Homework 3: Pivots & Joins"
@@ -178,7 +178,7 @@ lessons:
     session: "Thursday"
     date: "March 26"
     lab: "08-lab"
-    reading: "2-09-reading"
+    reading: "2-10-reading"
     bg: 2
     bottomborder: True
 
@@ -195,7 +195,7 @@ lessons:
     session: "Thursday"
     date: "April 2"
     lab: "09-lab"
-    reading: "2-10-reading"
+    reading: "2-11-reading"
     bg: 1
     
   - title: "Homework 4: Data Types"
@@ -219,7 +219,7 @@ lessons:
     session: "Thursday"
     date: "April 7"
     lab: "10-lab"
-    reading: "2-10-reading"
+    reading: "2-12-reading"
     bg: 2
     bottomborder: True
 
@@ -236,7 +236,7 @@ lessons:
     session: "Thursday"
     date: "April 14"
     lab: "11-lab"
-    reading: "2-12-reading"
+    reading: "2-13-reading"
     bg: 1
 
   - title: "Homework 5: Functions & Flow"
