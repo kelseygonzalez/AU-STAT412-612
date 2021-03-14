@@ -1,0 +1,150 @@
+---
+title: "Lab 7"
+date: "2021-03-18"
+due_date: "2021-03-19"
+due_time: "11:59 PM"
+menu:
+  assignment:
+    parent: Labs
+    weight: 7
+type: docs
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(echo       = FALSE,
+                      include    = FALSE,
+                      fig.height = 3, 
+                      fig.width  = 6,
+                      fig.align  = "center")
+```
+
+We'll work more with the nycflights13 dataset here.
+
+Here's a plot of how the data is related to each other:
+![](https://d33wubrfki0l68.cloudfront.net/245292d1ea724f6c3fd8a92063dcd7bfb9758d02/5751b/diagrams/relational-nycflights.png)
+
+1. Load the nycflights13 and all five data frames into R.
+
+```{r, message = FALSE}
+library(tidyverse)
+library(nycflights13)
+```
+
+```{r, message = FALSE}
+data("airlines")
+data("airports")
+data("flights")
+data("planes")
+data("weather")
+```
+
+2. How many different plane "brands" (i.e. manufacturers) fly from "LGA"? 
+```{r}
+planes %>% 
+  right_join(flights, by = "tailnum") %>% 
+  filter(origin == "LGA") %>% 
+  count(manufacturer)
+planes %>% 
+  right_join(flights, by = "tailnum") %>% 
+  filter(origin == "LGA") %>% 
+  count(manufacturer)
+```
+
+3. Calculate the average age of each plane for each flight; How does the average age of each plane differ by origin airport?  
+
+```{r}
+planes %>% 
+  right_join(flights, by = "tailnum") %>% 
+  mutate(age = 2021-year.x) %>% 
+  group_by(origin) %>% 
+  summarize(avg_age = mean(age, na.rm=TRUE))
+```
+
+3. How many airports are in the `airports` data frame that are not a direct destination from any of the NYC airports (i.e. the `flights` dataframe)?
+```{r}
+airports %>% 
+  anti_join(flights, by = c("faa" = "dest")) %>% 
+  summarize(num=n())
+```
+
+4. Calculate the number of tailnumbers (observations) per carrier. Arrange in alphabetical order by the **full** carrier name from the `airlines` dataframe. 
+```{r}
+flights %>% 
+  count(carrier) %>% 
+  left_join(airlines, by = "carrier") %>% 
+  arrange(name)
+```
+
+5. How many flights were made to an "America/Los_Angeles" timezone from "JFK"? Which destination within that timezone received the most flights from "JFK"? 
+```{r}
+flights %>% 
+  inner_join(airports, by = c("dest" = "faa")) %>% 
+  filter(tzone == "America/Los_Angeles",
+         origin == "JFK") %>% 
+  nrow()
+  
+flights %>% 
+  inner_join(airports, by = c("dest" = "faa")) %>% 
+  filter(tzone == "America/Los_Angeles",
+         origin == "JFK") %>% 
+  count(dest, name) %>% 
+  slice_max(n)
+
+
+```
+
+6. For each flight, find if it departed with decent weather. Drop observations that we don't have weather information or dep_delay information. See if decent weather is associated with the delay of the plane.
+    - Define "fair weather" to mean no precipitation, wind-speeds under 20 mph, and visibility of at least 10 miles.
+```{r include = TRUE, eval = FALSE, echo = TRUE}
+flights %>%
+  mutate(hour = dep_time %/% 100) %>%
+  YOUDECIDE_join() %>%
+  mutate() ... and so on
+```
+
+```{r}
+
+flights %>%
+  select(origin, year, month, day, dep_time, dep_delay) %>%
+  mutate(hour = dep_time %/% 100) %>%
+  right_join(weather, by = c("origin", "year", "month", "day", "hour")) %>%
+  mutate(is_fair = ifelse(precip == 0 & wind_speed < 20 & visib >= 10, "fair", "poor")) %>%
+  filter(!is.na(dep_delay)) %>% 
+  ggplot(aes(y = dep_delay, x = is_fair)) +
+  geom_boxplot(alpha = .5) +
+  theme_bw()
+```
+
+7. Working with sets
+    + Create a table called "high_altitude" that contains the faa and name of only altitudes above 5000. 
+    + Create a second table called "low_arr_delay" and display the faa and name of airports with an average arrival delay under 3.  
+    + Which airlines are both high_altitude and low_arr_delay? 
+    + Which airports are in low_arr_delay but not in high_altitude?
+    + Combine these two dataframes into one using a function we learned this week. 
+
+```{r}
+high_altitude <- airports %>% 
+  filter(alt > 5000) %>% 
+  select(faa, name)
+
+low_arr_delay <- flights %>% 
+  group_by(dest) %>% 
+  summarize(avg_arr_delay = mean(arr_delay, na.rm = T)) %>% 
+  filter(avg_arr_delay < 3) %>% 
+  left_join(airports, by = c("dest" = "faa")) %>% 
+  select(faa = dest, name)
+
+intersect(high_altitude, low_arr_delay)
+
+
+setdiff(low_arr_delay, high_altitude)
+
+
+bind_rows(low_arr_delay, high_altitude)
+union(low_arr_delay, high_altitude)
+```
+
+
