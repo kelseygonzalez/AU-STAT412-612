@@ -392,11 +392,6 @@ div.fyi {
     border: dotted 4px nth($colors, 3);
 }
 
-div.fyi:before {
-    content: "\f05a";
-    left: 20px;
-}
-
 div.puzzle {
     color: nth($colors, 4);
     background-color: lighten(nth($colors, 4), 50%);

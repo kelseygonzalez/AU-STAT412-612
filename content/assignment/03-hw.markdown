@@ -50,13 +50,7 @@ toc: true
 |3.4|2.0|Correct data in Correct Order|
 |**Total**|**21.5**|
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      eval = FALSE,
-                      include = FALSE,
-                      message = FALSE,
-                      warning = FALSE)
-```
+
 
 #  Billboard Data
 
@@ -66,175 +60,65 @@ Download the billboard dataset: [<i class="fas fa-file-csv"></i> `billboard.csv`
 1. a. Use a readr function to import the billboard dataset from a data directory. 
     - The values in column `wkx` are a song's ranking after `x` weeks of being released.
 
-```{r, message = FALSE, eval = TRUE}
-library(tidyverse)
-billboard <- read_csv(here::here("static", "data", "billboard.csv"))
-```
+
 
     b. what makes billboard _untidy_? 
-```{block}
 
-```
   
 2. Convert all the week columns into a row for each week for each song (where there is an entry). 
     - Ensure the week and ranking are numeric (hint: _names_prefix_ & _names_transform_) and unnecessary `NA`s go away (hint: _values_drop_na_).
     - You should wind up with 5,307 rows
        
-    ```{r}
-    billboard <- billboard %>% 
-      pivot_longer(cols = wk1:wk76, 
-                   names_to = "week",
-                   values_to = "ranking", 
-                   values_drop_na = TRUE, 
-                   names_prefix = "wk", 
-                   names_transform = list(week = as.numeric))
-    head(billboard,10)
-    nrow(billboard)
-    ```
+    
        
 3. Sort the data by artist, track and week. 
-```{r}
-billboard %>%
-  arrange(artist, track, week) %>% 
-  head(20)
-```
+
        
 4. Use a `tidyr` command to create a `minutes` and `seconds` column from the `time` column. Don't remove the `time` column (You will receive a warning which you can ignore). Create a new column called `total_seconds` with the `minutes` and `seconds` columns, calculating the total seconds each song lasts (e.g. if `time` == "4:22", then `total_seconds` == 262). 
 
-```{r}
-billboard5 <- billboard %>% 
-  separate(time, into = c("minutes", "seconds"), sep = ":", remove = FALSE, convert = TRUE) %>% 
-  mutate(total_second = (minutes * 60) + seconds)
-```
+
 
 5. Calculate the intial average billboard ranking for each song (the average ranking for the first 4 weeks after it was released (week <= 4)). However, make sure you maintain the `total_seconds` column, we will want that for plotting in question 6! 
-```{r}
-billboard6 <- billboard5 %>% 
-  filter(week <= 4) %>% 
-  group_by(artist, track, total_second) %>% 
-  summarize(average_rank = mean(ranking, na.rm = TRUE))
-```
+
 
 6. Does there appear to be a relationship between song length (`total_seconds`) and intial average billboard ranking? 
-```{r}
-billboard6 %>% 
-  ggplot(aes(x = total_second, y = average_rank)) +
-  geom_point() +
-  geom_smooth(method = "lm")
-```
+
 
 
 #  Identifying Table Keys in the NASA Weather Dataset
 - You might need to install the nasaweather package using the console
 - Read the description of the nasaweather dataset with the below
 
-```{r eval=FALSE, echo=TRUE, message=FALSE, include=TRUE}
+
+```r
 library(help = "nasaweather")
 ```
     
 1. What are the data frames in this data set?
 
-```{block, type = "html"}
-- `atmos`: Atmospheric Data
-- `borders`: Country Borders
-- `elev`: Elevation
-- `glaciers`: Glacier locations
-- `storms`: Storm tracks data
-```
+
 
 
 2. What are the primary keys in each data frame? (One doesn't have a key)
 
-```{block, type = "html"}
-- `atmos`: Atmospheric Data
-    - Key: `year`, `month`, `lat`, and `long`.
-- `borders`: Country Borders
-    - Key: No key.
-- `elev`: Elevation
-    - Key: `lat` and `long`.
-- `glaciers`: Glacier locations
-    - Key: `id`
-- `storms`: Storm tracks data
-    - Key: Almost `name`, `year`, `month`, `day`, and `hour`. However, Lenny has
-      two measurements at midnight on November 21, 1999.
-      
-Below is some verification.
-```
+
 
 
 3. Demonstrate the primary keys generate unique rows. Note you may have to use `ungroup()` with one of them to avoid an error       
-    ```{r, error = TRUE, warning = FALSE}
-    library(nasaweather)
     
-    atmos %>% 
-      group_by(year, month, lat, long) %>%
-      count() %>%
-      filter(n > 1)
-    
-    ## group by all variables and show no key
-    borders %>% ungroup() %>% 
-      group_by(country, lat, long, group) %>%
-      count() %>%
-      filter(n > 1)
-    
-    elev %>%
-      group_by(lat, long) %>%
-      count() %>%
-      filter(n > 1)
-    
-    glaciers %>% 
-      group_by(id) %>%
-      count() %>%
-      filter(n> 1)
-    
-    storms %>%
-      group_by(name, year, month, day, hour) %>%
-      count() %>%
-      filter(n > 1)
-    
-    storms %>%
-      filter(name == "Lenny", year == 1999, month == 11, day == 21, hour == 0)
-    
-    storms %>%
-      group_by(name, year, month, day, hour, type) %>%
-      count() %>%
-      filter(n > 1)
-    # Multiple Answers are possible to get to 0 rows. Need to check student response.
-    ```
 
 
 # Lahman's Baseball Dataset
 For this exercise, we'll use the `Master`, `Batting`, `Pitching`, `Fielding`, `Teams`, and `Salaries` data frames from the `Lahman` package. 
 
 1. Load these six data frames into R and read about them.
-```{r, eval = TRUE}
-library(Lahman)
-data("Master")
-data("Batting")
-data("Pitching")
-data("Fielding")
-data("Teams")
-data("Salaries")
-```
+
 
 2. Some players play on multiple teams each year. 
     a. Construct a data frame containing the total salary for each player for each year. Show the number of rows  - should be 26,323.
     b. Construct a second data frame containing the total number of at bats and hits for each player in a year. Show the number of rows - should be 99,402.
    
-```{r}
-subSal <- Salaries %>%
-  group_by(yearID, playerID) %>% 
-  summarize(tot_sal = sum(salary, na.rm = TRUE)) 
-  
-nrow(subSal)
 
-subBat <- Batting %>%
-  group_by(yearID, playerID) %>%
-  summarize(H = sum(H, na.rm = TRUE), 
-            AB = sum(AB, na.rm = TRUE))
-  
-nrow(subBat)
-```
    
 3. The batting average of a player is the *number of Hits divided by the number of at bats*   
     (a larger value is is better).  
@@ -242,62 +126,23 @@ nrow(subBat)
     b. Use a hex plot to explore the association between a player's batting average (x axis) and their salary (y axis). Use a log scale for salary. Interpret the plot  
     c. Use a single (not faceted) plot of *just the Ordinary Least Squares lines* for batting average and salary to explore if this association has changed over time. Use a log scale for salary. Interpret the plot.
    
-    ```{r, warning = FALSE}
-sal_ba <- subBat %>%
-      filter(yearID >= 1985,
-             AB >= 400) %>%
-      mutate(BA = H / AB) %>%
-      left_join(subSal, by = c("yearID", "playerID")) %>% 
-      filter(!is.na(BA), !is.na(tot_sal))
-      
-    nrow(sal_ba)
-    ## Multiple answers are possible,
-    ## If you left join salaries to batting you don't need to filter on year
-
-    ## It looks like there is a very small positive marginal relationship 
-    ## between salary and batting average
-    ggplot(sal_ba, aes(x = BA, y = tot_sal)) +
-      geom_hex() +
-      geom_smooth(method = "lm", se = FALSE, col = "black", lwd = 2, lty = 2) +
-      scale_y_log10() +
-      ylab("Salary") +
-      xlab("Batting Average") +
-      theme_bw() +
-      scale_fill_continuous(low = "grey90", high = "black")
     
-    ## For conditional association, slopes of all of the lines look about 
-    ## the same. So it doesn't seem like the association has changed over time.
-    ggplot(sal_ba, aes(x = BA, y = tot_sal, color = as.factor(yearID))) +
-      geom_smooth(method = "lm", se = FALSE) +
-      scale_y_log10() +
-      theme_bw() +
-      xlab("Batting Average") +
-      ylab("Salary") +
-      scale_color_discrete(name = "Year")
-```
 
 
 4. Find the annual salary of all players with first name "John" in even numbered years after 1985. 
     - Show only the first ten values arranged in descending order of salary.
     - Your output should start like this:
 
-```{r, eval = TRUE}
-subSal <- Salaries %>%
-      filter(yearID %% 2 == 0)
-      
-    
-johnMaster <- People %>%
-      filter(nameFirst == "John")
-      
-```
 
-```{r, eval = TRUE, include = TRUE}
-subSal %>% 
-  inner_join(johnMaster, by = "playerID") %>%
-  select(yearID, salary, nameFirst, nameLast) %>%
-  group_by(yearID, nameFirst, nameLast) %>%
-  summarize(salary = sum(salary)) %>% 
-  ungroup() %>%
-  arrange(desc(salary)) %>%
-  head(5) 
+
+
+```
+## # A tibble: 5 x 4
+##   yearID nameFirst nameLast   salary
+##    <int> <chr>     <chr>       <int>
+## 1   2010 John      Lackey   18700000
+## 2   2016 John      Lackey   16000000
+## 3   2012 John      Lackey   15950000
+## 4   2016 John      Danks    15750000
+## 5   2014 John      Lackey   15250000
 ```
