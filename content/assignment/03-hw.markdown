@@ -15,12 +15,12 @@ toc: true
 # Instructions 
 - Download the .Rmd template used for this homework [<i class="fas fa-file-code"></i> `here`](/homework/03-hw.Rmd)
 - After completing the questions, upload both the .RMD and .pdf OR .HTML files to Canvas.
-- Use dplyr functions wherever possible. 
+- Use tidyverse functions wherever possible. 
 {{% /div %}}
 
 - Learning outcomes:
   - Apply tidyr, readr, and dplyr capabilities
-  - Select the correct parsing function
+  - Select the correct parsing functions
   - Identify keys in relational database tables.
   - Manipulate data from multiple tables/data frames using dplyr functions.
   
