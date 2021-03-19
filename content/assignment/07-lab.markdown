@@ -54,9 +54,9 @@ flights %>%
 
 
 
-7. Working with sets
-    + Create a table called "high_altitude" that contains the faa and name of only altitudes above 5000. 
-    + Create a second table called "low_arr_delay" and display the faa and name of airports with an average arrival delay under 3.  
+8. Working with sets
+    + Create a table called "high_altitude" that contains the faa and full name of the aiport only altitudes above 5000. 
+    + Create a second table called "low_arr_delay" and display the faa and full name of airports with an average arrival delay under 3.  
     + Which airlines are both high_altitude and low_arr_delay? 
     + Which airports are in low_arr_delay but not in high_altitude?
     + Combine these two dataframes into one using a function we learned this week. 
