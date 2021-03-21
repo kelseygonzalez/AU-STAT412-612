@@ -10,15 +10,552 @@ menu:
     weight: 9
 type: docs
 toc: true
-bibliography: "../../static/bib/references.bib"
-csl: "../../static/bib/chicago-fullnote-bibliography-no-bib.csl"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-Content to be loaded
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = TRUE, 
+                      fig.height = 3, 
+                      fig.width  = 6,
+                      fig.align  = "center")
+```
 
-`Separate` https://youtu.be/NDHSBUN_rVU?t=1072
+# Learning Outcomes
 
+-   Manipulate strings with the stringr package.
+-   Employ regular expressions (REGEX) to manipulate strings
+
+# Intro to strings and character vectors
+
+-   In R, strings (also called "characters") are created and displayed
+    within quotes:
+
+```{r}
+x <- "I am a string!"
+x
+class(x)
+```
+
+-   Anything within quotes is a string, even numbers!
+
+```{r, error=TRUE}
+y <- "3"
+class(y)
+```
+
+-   You can have a vector of strings.
+
+```{r}
+z <- c("I", "am", "a", "string", "vector")
+z[2:3]
+```
+
+-   The backslash `"\"` means what is after the backslash is special in
+    some way.
+-   For example, if you want to put a quotation mark in a string, you
+    can "escape" the quotation mark with a backslash.
+
+```{r}
+a <- "As Michael Scott said, \"I'm not superstitious, but I am a little stitious.\""
+a
+```
+
+-   `cat()` will print out the string itself.
+-   \*`print()` will print out the printed representation of the string
+    (with backslashes and all).
+
+```{r}
+print(x)
+cat(x)
+
+print(y)
+cat(y)
+
+print(z)
+cat(z)
+
+print(a)
+cat(a)
+```
+
+-   `"\n"` represents a new line
+
+```{r}
+n <- "I'm not superstitious,\nbut I am a little stitious."
+cat(n)
+# what happens if we put spaces around \n? 
+```
+
+-   `"\t"` represents a tab
+
+```{r}
+t <- "I'm not superstitious,\tbut I am a little stitious."
+cat(t)
+```
+
+-   You can add any Unicode character with a `\u` followed by the
+    hexadecimal [unicode
+    representation](https://en.wikipedia.org/wiki/List_of_Unicode_characters)
+    of that character.
+-   Be careful about whether knitr will accept it though!
+
+```{r}
+mu <- "\u00b5"
+cat(mu)
+
+cat(c("(","\u2310","\u25A0","\u2022","\u25A0",")"))
+
+# http://pages.ucsd.edu/~dkjordan/resources/unicodemaker.html
+```
+
+# `stringr`
+
+-   The stringr package has functions to make manipulating strings
+    easier - (more user-friendly than base R's `grep()` and `gsub()`).
+-   stringr is part of the tidyverse so you do not have to load it
+    separately.
+
+```{r, message = FALSE}
+library(tidyverse)
+```
+
+All of stringr's functions begin with "`str_`", so in R Studio you can
+press tab after typing "`str_`" and a list of possible string
+manipulation functions will pop up (in RStudio).
+
+For example, use `str_length()` to get the number of characters in a
+string.
+
+```{r}
+beyonce <- "I am Beyoncé, always."
+str_length(beyonce)
+```
+
+What about spaces and punctuation marks - they count! What about escaped
+characters? The '' does not but the character itself does.
+
+```{r}
+str_length("I am Beyoncé, \nalways.")
+```
+
+## Combining Strings with `str_c()`
+
+`str_c()` collapses two strings together:
+
+```{r}
+x <- "Would I rather be feared or loved?"
+y <- "Easy. Both."
+z <- "I want people to be afraid of how much they love me."
+
+str_c(x, y, z)
+
+
+```
+
+The default is to separate strings by nothing, but you can **use `sep`
+to change the separator**.
+
+```{r}
+str_c(x, y, z,  sep = " ")
+```
+
+Just like `c()`, `str_c()` can take multiple arguments.
+
+```{r}
+str_c("Where", "are", "the", "turtles?!", sep = " ")
+```
+
+## subsetting substrings with `str_sub()`
+
+`str_sub()` extracts a substring between the location of two characters.
+
+```{r}
+bankrupt <- "I… Declare… Bankruptcy!"
+str_sub(bankrupt, start = 4, end = 10)
+```
+
+You often want to use str_sub when the data is highly structured
+
+```{r}
+phone <- "800-800-8553"
+#first three
+str_sub(phone, end = 3)
+# last four
+str_sub(phone, start = -4)
+
+```
+
+-   Replace substrings with assignment
+
+```{r}
+str_sub(bankrupt, start = 1, end = 1) <- "We"
+bankrupt
+```
+
+## replacing words with `str_replace()`
+
+If I want to replace a specific pattern of text with another pattern,
+`str_replace()` or `str_replace_all()` are very useful.
+
+```{r}
+str_replace(bankrupt, "We", "I")
+```
+
+Back with our phone number example, you'll see there's a difference
+between `str_replace()` or `str_replace_all()`. The first only replaces
+the first instance
+
+```{r}
+phone
+str_replace(phone, "800-", "")
+str_replace_all(phone, "800-", "")
+```
+
+If I only want to change the *second* instance of "800-", I'll need to
+use a more complicated pattern match. This would require a regular
+expression
+
+# Regular Expressions
+
+## Intro
+
+-   Regular expressions (regex or regexp) are a syntax for **pattern
+    matching** in strings.
+
+-   Regex structure is used in many different computer languages
+
+-   `str_replace()` and `str_replace_all()` search for a pattern as
+    defined by the regex and then replace it (all) with another string.
+
+-   Wherever there is a `pattern` argument in a stringr function, you
+    can use regex (to extract strings, get a logical if there is a
+    match, etc...).
+
+-   regex includes special characters, e.g., "." and "". These must be
+    escaped using "" if you want to match their normal value.
+
+## Finding pattern matches with `str_view()` and `str_view_all()`
+
+-   Basic usage: find exact match of a string pattern
+
+```{r}
+fruit <- c("Apple", "Strawberry", "Banana", "Pear", "Blackberry", "*berry")
+str_view(fruit, "an")
+str_view_all(fruit, "an")
+```
+
+-   A period "`.`" matches any character.
+-   A `[:alpha:]` matches any alphabetical character.
+
+```{r}
+str_view_all(fruit, ".berry")
+str_view_all(fruit, "[:alpha:]berry")
+```
+
+-   You can "escape" a symbol with two backslashes "`\\.`" to match. If
+    you don't, the asterisk in this case will be interpreted as a
+    regular expression command, not a symbol.
+
+```{r}
+# str_view_all(fruit, "*berry")
+str_view_all(fruit, "\\*berry")
+
+```
+
+Exercise: Use one function call to replace `"love"` and `"loved"` with
+`"X"` in the following.
+
+```{r, echo = TRUE}
+love <- "Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me."
+```
+
+```{r}
+str_view_all(love, "love[:alpha:]*")
+str_replace_all(love, "love[:alpha:]*", "X")
+```
+
+## Anchoring the regex so search starts at the beginning or at the end of a string
+
+-   You can anchor the regex pattern to begin looking for a match from
+    the start (left-to-right) of the string or backwards from the end of
+    a string (working-right to left).
+
+-   `^` forces matching to begin **from the start** of a string.
+
+-   `$` forces matching to begin **from the end** of a string.
+
+```{r}
+str_view(fruit, "^B")
+str_view(fruit, "a$")
+```
+
+Exercise: Use `str_replace()` to replace all four letter words beginning
+with an `"a"` with `"foo"` in the following list:
+
+```{r, echo = TRUE}
+x <- c("apple", "barn", "ape", "cart", "alas", "pain", "ally")
+```
+
+```{r,  }
+str_replace(x, "^a...$", "foo")
+```
+
+## Special Characters
+There are a lot of regular expression character matches in R and I don't
+expect you to memorize them all - I often have [the
+cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf)
+open next to me while working. Some important ones you should however be
+able to recognize:
+
+| type this: | to mean this: |
+|------------|---------------|
+| \\\\n                   | new line                        |
+| \\\\s or \[:space:\]    | any whitespace                  |
+| \\\\d or \[:digit:\]    | any digit                       |
+| \\\\w  \[:alpha:\]      | any word character              |
+| \[:punct:\]             | any punctuation                 |
+| .                       | every character except new line |
+
+
+-   We'll use this character vector for practice:
+
+```{r}
+phones <- c("Abba: 555-1234", "Anna: 555-0987", "Andy: 555-7654")
+```
+
+-   `\\d`: matches any digit
+
+```{r}
+str_view(phones, "\\d\\d\\d-\\d\\d\\d\\d")
+```
+
+-   `\\s`: matches any white space (e.g. space, tab, newline).
+
+```{r}
+str_view(phones, "\\s")
+```
+
+-   `[abc]`: matches `a`, `b`, or `c`.
+
+```{r}
+str_view(phones, "A[bn][bn]a", "XXXX")
+```
+
+-   `[^abc]`: **matches anything except `a`, `b`, or `c`.**
+-   Note this is a different use of `^` since it is inside the `[ ]`
+
+```{r}
+str_view(phones, "A[^b]", "XXXX")
+```
+
+-   `abc|xyz`: matches either `abc` or `xyz`. This is called
+    *alternation*
+-   You can use parentheses to control where the alternation occurs.
+-   `a(bc|xy)z` matches either `abcz` or `axyz`.
+
+```{r}
+str_view(phones, "An(na|dy)")
+```
+
+-   To ignore case, place a `(?i)` before the regex.
+
+```{r}
+str_view("AB", "ab")
+str_view("AB", "(?i)ab")
+```
+
+
+## Repetition using `?`, `+`, `*`, `{n}`, `{n,}`,`{0,n}`, `{n,m}`
+
+-   Can match a pattern multiple times in a row:
+-   `?`: **0 or 1**
+-   `+`: **1 or more**
+-   `*`: **0 or more**
+
+```{r}
+x <- c("A", "AA", "AAA", "AAAA", "B", "BB")
+str_view_all(x, "^A?", "X")
+str_view_all(x, "^A+", "X")
+str_view_all(x, "^A*", "X")
+```
+
+-   A more realistic example:
+
+```{r}
+str_view_all("color and colour", "colou?r", "X")
+```
+
+-   **Control exactly how many repetitions** allowed in a match:
+
+-   `{n}`: exactly `n`.
+
+-   `{n,}`: `n` or more.
+
+-   `{0,m}`: at most `m`.
+
+-   `{n,m}`: between `n` and `m`.
+
+```{r}
+str_view_all(x, "A{2}", "X")
+str_view_all(x, "A{2,}", "X")
+str_view_all(x, "A{0,2}", "X")
+str_view_all(x, "A{3,4}", "X")
+```
+
+-   Regex is "greedy" and will automatically match the longest string possible.
+
+```{r}
+str_view("AAAA", "A*",)
+```
+
+Exercise: Create regular expressions to find all words with the
+following patterns and replace the patterns with "X":
+
+1.  Start with three consonants. Test on
+
+```{r}
+x1 <- c("string", "priority", "value", "distinction")
+str_replace_all(x1, "^[^aeiouAEIOU]{3}", "X")
+```
+
+
+There is a lot more to learn about regular expressions what we won't cover here,
+like groups and look arounds. Groups allows you to define which part of the
+expression you want to extract or replace and look arounds allow you to define
+what follows or precedes the expression. When you need to learn more, there are
+many tools online like [https://regex101.com/](https://regex101.com/) to help
+you learn. The only important thing to remember with online regular expression
+tools is that `r` needs an extra `\` preceding each `\` in other coding
+languages.
+
+# more `stringr`
+
+There are a lot of functions to analyze, compare and adjust strings.
+
+## Changing Case
+
+-   `str_to_lower()` and `str_to_upper()` convert all letters to lower
+    or capital case.
+-   `str_to_sentence` converts all words and letters to sentence
+    case. Includes Acronyms
+-   `str_to_title` converts the first letter of every word to capital case.
+    
+```{r}
+cause <- "I have cause. It is beCAUSE I hate him."
+str_to_lower(cause)
+str_to_upper(cause)
+str_to_sentence(cause)
+str_to_title(cause)
+```
+
+
+## Detecting matches
+
+-   `str_detect()`: **Returns `TRUE` if a regex pattern matches a string
+    and `FALSE` if it does not.** Very useful for filters.
+
+```{r, message = FALSE}
+## Get all John's and Joe's from the Lahman dataset
+library(Lahman)
+data("People")
+People <- People %>% 
+  as_tibble()
+```
+
+```{r}
+  People %>%
+  filter(str_detect(nameFirst, "^Jo(e|hn)$")) %>%
+  select(nameFirst, nameLast) %>% 
+  head()
+```
+
+## Counting Matches
+
+-   `str_count()`: **Counts the occurrence of a match within a string**.
+-   It counts *non-overlapping* matches
+```{r}
+str_view_all(c("banana", "coco"), "[^aeiou][aeiou]")
+str_count(c("banana", "coco"), "[^aeiou][aeiou]")
+
+str_view_all("abababa", "aba")
+str_count("abababa", "aba")
+```
+
+## Extracting Matches
+
+-   `str_extract()` returns *the first match* for pattern.
+-   `str_extract_all()` returns *all matches* but as a list.
+
+```{r}
+colorstr <- str_c("red", "blue", "yellow", "orange", "brown", sep = "|")
+colorstr
+str_view_all("I like blue and brown and that's it", colorstr)
+
+str_extract("I like blue and brown and that's it", colorstr)
+str_extract_all("I like blue and brown and that's it", colorstr)
+```
+
+
+# Combining strings
+
+## `paste` & `paste0`
+Base R provides us with a useful tool to collapse strings together (often
+referred to as concatenation). However, this tool has limits and is less useful
+in data science that glue, which I will teach below.
+
+
+## `glue`
+
+```{r}
+# install.packages("glue")
+
+library(glue)
+
+name <- "Fred"
+age <- 50
+anniversary <- as.Date("1991-10-12")
+
+glue('My name is {name}, my age next year is {age + 1}, and my anniversary is {format(anniversary, "%A, %B %d, %Y")}.') 
+
+#equivalent in paste:
+paste('My name is', name, 'my age next year is', age + 1, 'and my anniversary is', format(anniversary, "%A, %B %d, %Y"), '.')
+
+```
+
+glue relies on variable calls to be placed inside of curly brackets `{}` and will interpret the variables within the function.
+
+Use within dataframes:
+
+```{r}
+employees <- tibble::tribble(
+     ~Name,              ~Job,  ~Descriptor,
+     "Jim",           "sales",     "quirky",
+     "Pam",       "reception",   "artistic",
+  "Angela",      "accounting",     "strict",
+  "Dwight",           "sales",  "eccentric",
+    "Toby", "Human Resources", "monotonous"
+  ) 
+
+
+employees  %>%
+  mutate(description = glue("{Name} works in {str_to_title(Job)}"))
+```
+
+Use `glue_data` to collapse dataframes into one text output:
+
+```{r}
+employees %>% 
+  glue_data("{Name} is {Descriptor} and works in {str_to_title(Job)} at Dunder Mifflin")
+```
 
 # More Resources
-* [R Strings Cheathsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf)
-* [R Regex Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/regex.pdf)
+
+-   Chapter 14 of [RDS](https://r4ds.had.co.nz/).
+-   [R Strings
+    Cheathsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf)
+-   [R Regex
+    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/regex.pdf)
+-   [Stringr Overview](https://stringr.tidyverse.org/)
+-   [glue Overview](https://glue.tidyverse.org/index.html)

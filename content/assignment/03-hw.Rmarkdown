@@ -204,9 +204,9 @@ Below is some verification.
 
 
 # Lahman's Baseball Dataset
-For this exercise, we'll use the `Master`, `Batting`, `Pitching`, `Fielding`, `Teams`, and `Salaries` data frames from the `Lahman` package. 
+For this exercise, we'll use the `Master`, `Batting`, `Pitching`, `Fielding`, `Teams`, `People`, and `Salaries` data frames from the `Lahman` package. 
 
-1. Load these six data frames into R and read about them.
+1. Load these seven data frames into R and read about them.
 ```{r, eval = TRUE}
 library(Lahman)
 data("Master")
@@ -215,6 +215,7 @@ data("Pitching")
 data("Fielding")
 data("Teams")
 data("Salaries")
+data("People")
 ```
 
 2. Some players play on multiple teams each year. 
