@@ -193,7 +193,7 @@ lessons:
 
   - title: 'Lab 9'
     session: "Thursday"
-    date: "April 2"
+    date: "April 1"
     lab: "09-lab"
     reading: "2-11-reading"
     bg: 1
@@ -217,7 +217,7 @@ lessons:
 
   - title: 'Lab 10'
     session: "Thursday"
-    date: "April 7"
+    date: "April 8"
     lab: "10-lab"
     reading: "2-12-reading"
     bg: 2
@@ -234,7 +234,7 @@ lessons:
 
   - title: 'Lab 11'
     session: "Thursday"
-    date: "April 14"
+    date: "April 15"
     lab: "11-lab"
     reading: "2-13-reading"
     bg: 1

@@ -1,14 +1,15 @@
 ---
-title: "HW 3: Pivots & Joins"
-date: "2021-03-15"
-due_date: "2021-03-21"
-due_time: "11:59 PM"
+title: 'HW 3: Pivots & Joins'
+date: '2021-03-15'
+due_date: '2021-03-21'
+output: pdf_document
 menu:
   assignment:
     parent: Homework
     weight: 3
 type: docs
-toc: true
+toc: yes
+due_time: 11:59 PM
 ---
 
 {{% div fyi %}}
@@ -207,7 +208,7 @@ Below is some verification.
 For this exercise, we'll use the `Master`, `Batting`, `Pitching`, `Fielding`, `Teams`, `People`, and `Salaries` data frames from the `Lahman` package. 
 
 1. Load these seven data frames into R and read about them.
-```{r, eval = TRUE}
+```{r, eval = TRUE, results="hide"}
 library(Lahman)
 data("Master")
 data("Batting")
