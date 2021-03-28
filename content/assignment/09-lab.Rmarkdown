@@ -1,0 +1,143 @@
+---
+title: "Lab 9"
+date: "2021-04-01"
+due_date: "2021-04-02"
+due_time: "11:59 PM"
+menu:
+  assignment:
+    parent: Labs
+    weight: 8
+type: docs
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = FALSE, 
+                      warning    = FALSE,
+                      message    = FALSE,
+                      eval       = FALSE,
+                      fig.height = 3, 
+                      fig.width  = 6,
+                      fig.align  = "center")
+```
+# Learning Outcomes
+- Use `forcats` functions to manage factors in R
+- Use `lubridate` functions in R in conjunction with functions from `dplyr` and `tidyr`.
+
+# Factors
+
+1. Load the `gss_cat` data from the `forcats` package. 
+```{r}
+library(tidyverse)
+library(lubridate)
+data("gss_cat")
+```
+
+2. Find how many observations fell into each factor level of `rincome`. Don't overthink this one - it's one function we've been using for over a month!
+```{r}
+gss_cat %>% 
+  count(marital)
+```
+
+3. Plot a barplot of the distribution of `rincome`, ordering levels from by frequency
+```{r}
+gss_cat %>% 
+  mutate(rincome = fct_infreq(rincome)) %>%
+  ggplot(aes(x = rincome)) +
+  geom_bar() + 
+  coord_flip()
+```
+
+4. You think "Not applicable", "Don't Know", "No answer", and "Refused" aren't very useful for your plot. Use `fct_other()` to collapse these into one factor level and *plot again*. Note: `fct_other()` is new! Read the documentation. 
+```{r}
+gss_cat %>% 
+  mutate(rincome = fct_infreq(rincome),
+         rincome = fct_other(rincome, drop = c("Not applicable", "Don't Know", "No answer", "Refused"))) %>%
+  ggplot(aes(x = rincome)) +
+  geom_bar() + 
+  coord_flip()
+```
+
+5. Reorder the levels of the relig variable by the mean number of tv hours watched. Show the new factor order when complete. Plot with a boxplot. 
+```{r}
+gss_cat <- gss_cat %>% 
+  mutate(marital2 = fct_reorder(marital, tvhours, mean, na.rm = TRUE))
+levels(gss_cat$marital )
+levels(gss_cat$marital2)
+
+gss_cat %>% 
+  ggplot(aes(x = marital2, y = tvhours )) +
+  geom_boxplot() + 
+  coord_flip()
+```
+
+# dates
+
+1. Many people have created a "Coronavirus Birthday", the first date they went into lockdown, quarantine, or began extreme social distancing. This is usually in March 2020. Many seconds have passed since this time (i.e., calculate the duration in seconds)? If you can't remember, use March 15, 2020. 
+```{r}
+covid <- mdy("March 15, 2020")
+today <- today()
+seconds <- as.duration(today - covid)
+seconds
+```
+
+2. Use `seconds_to_period()` to go from your duration (q1) to the period since your "Coronavirus Birthday". 
+```{r}
+seconds_to_period(seconds)
+```
+
+3. For the rest of this exercise, we will use the data from [<i class="fas fa-file-csv"></i> `capital_trips_2016.csv`](/data/capital_trips_2016.csv). Read these data into R from the data directory and review the variables with `glimpse()`. These data are from a bikesharing program.
+
+```{r, message = FALSE}
+cap <- read_csv(here::here("static", "data", "capital_trips_2016.csv"))
+glimpse(cap)
+```
+
+4. Rename variables to conform to "best practices" for variable names i.e., no spaces in the names. Feel free to  experiment with the handy `janitor::clean_names()` function here if you'd like. 
+
+```{r}
+cap <- cap %>%
+  rename(duration             = `Duration (ms)`,
+         start_time           = `Start date`,
+         end_time             = `End date`,
+         start_station_number = `Start station number`,
+         start_station        = `Start station`,
+         end_station_number   = `End station number`,
+         end_station          = `End station`,
+         bike_number          = `Bike number`,
+         member_type          = `Member Type`) 
+```
+
+
+5. Convert the start date and end date variables to be date-times.
+
+```{r}
+cap <- cap %>%
+  mutate(start_time = mdy_hm(start_time),
+         end_time   = mdy_hm(end_time)) 
+
+glimpse(cap)
+```
+
+6. Use the start date and end date variables to calculate the duration of each trip. 
+
+```{r}
+cap <- cap %>%
+  mutate(my_duration = as.duration(end_time - start_time),
+         dur_diff = my_duration - given_duration) 
+```
+
+
+7. How much time elapsed between the start of the first trip and the end of the the last trip.
+
+```{r}
+extremes <- cap %>%
+  summarize(min_start = min(start_time),
+            max_end   = max(end_time)) 
+  
+
+as.duration(extremes$max_end - extremes$min_start)
+```
+
+
+
