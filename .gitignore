@@ -11,3 +11,6 @@ static/slides/*.pdf
 static/slides/**/*_cache/*
 blogdown/md5sum.txt
 *.sqlite
+hw3key.pdf
+hw3key.Rmd
+themes/hugo-academic/
