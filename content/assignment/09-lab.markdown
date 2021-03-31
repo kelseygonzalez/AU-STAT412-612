@@ -30,15 +30,16 @@ editor_options:
 4. You think "Not applicable", "Don't Know", "No answer", and "Refused" aren't very useful for your plot. Use `fct_other()` to collapse these into one factor level and *plot again*. Note: `fct_other()` is new! Read the documentation. 
 
 
-5. Reorder the levels of the relig variable by the mean number of tv hours watched. Show the new factor order when complete. Plot with a boxplot. 
+5. Reorder the levels of the relig variable by the mean number of tv hours watched. Show the new factor order and then plot with a boxplot. 
 
 
-# dates
+# Dates
 
-1. Many people have created a "Coronavirus Birthday", the first date they went into lockdown, quarantine, or began extreme social distancing. This is usually in March 2020. Many seconds have passed since this time (i.e., calculate the duration in seconds)? If you can't remember, use March 15, 2020. 
+1. Many people have created a "Coronavirus Birthday", the first date they went into lockdown, quarantine, or began extreme social distancing. This is usually in March 2020. How many seconds have passed since this time (i.e., calculate the duration in seconds)? If you can't remember, use March 15, 2020.
+    - Hint: This is the same as the BTS example from the lecture. 
 
 
-2. Use `seconds_to_period()` to go from your duration (q1) to the period since your "Coronavirus Birthday". 
+2. Use `seconds_to_period()` to go from the duration (q1) to the period since your "Coronavirus Birthday". 
 
 
 3. For the rest of this exercise, we will use the data from [<i class="fas fa-file-csv"></i> `capital_trips_2016.csv`](/data/capital_trips_2016.csv). Read these data into R from the data directory and review the variables with `glimpse()`. These data are from a bikesharing program.

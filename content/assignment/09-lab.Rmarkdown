@@ -58,7 +58,7 @@ gss_cat %>%
   coord_flip()
 ```
 
-5. Reorder the levels of the relig variable by the mean number of tv hours watched. Show the new factor order when complete. Plot with a boxplot. 
+5. Reorder the levels of the relig variable by the mean number of tv hours watched. Show the new factor order and then plot with a boxplot. 
 ```{r}
 gss_cat <- gss_cat %>% 
   mutate(marital2 = fct_reorder(marital, tvhours, mean, na.rm = TRUE))
@@ -71,9 +71,10 @@ gss_cat %>%
   coord_flip()
 ```
 
-# dates
+# Dates
 
-1. Many people have created a "Coronavirus Birthday", the first date they went into lockdown, quarantine, or began extreme social distancing. This is usually in March 2020. Many seconds have passed since this time (i.e., calculate the duration in seconds)? If you can't remember, use March 15, 2020. 
+1. Many people have created a "Coronavirus Birthday", the first date they went into lockdown, quarantine, or began extreme social distancing. This is usually in March 2020. How many seconds have passed since this time (i.e., calculate the duration in seconds)? If you can't remember, use March 15, 2020.
+    - Hint: This is the same as the BTS example from the lecture. 
 ```{r}
 covid <- mdy("March 15, 2020")
 today <- today()
@@ -81,7 +82,7 @@ seconds <- as.duration(today - covid)
 seconds
 ```
 
-2. Use `seconds_to_period()` to go from your duration (q1) to the period since your "Coronavirus Birthday". 
+2. Use `seconds_to_period()` to go from the duration (q1) to the period since your "Coronavirus Birthday". 
 ```{r}
 seconds_to_period(seconds)
 ```
