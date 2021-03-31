@@ -50,6 +50,7 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Baltimore City Crime Data:
 1. Download the Baltimore City Crime dataset: [<i class="fas fa-file-csv"></i> `baltimore_crime.csv`](/data/baltimore_crime.csv). This data was originally available at [this URL](https://data.baltimorecity.gov/Public-Safety/BPD-Part-1-Victim-Based-Crime-Data/wsfq-mvij), but it has since been moved. Use a readr function to load the data.
+
 ```{r q1, message = FALSE}
 library(tidyverse)
 library(lubridate)
@@ -100,6 +101,7 @@ names(balt)
 4. Fix duplicate rows
     - Are there any duplicate rows? 
     - Remove them from the current data frame
+    
 ```{r q4}
 nrow(balt)
 

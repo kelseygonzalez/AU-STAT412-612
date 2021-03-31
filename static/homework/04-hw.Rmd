@@ -37,13 +37,14 @@ knitr::opts_chunk$set(message = FALSE,
 
 # Baltimore City Crime Data:
 1. Download the Baltimore City Crime dataset: [<i class="fas fa-file-csv"></i> `baltimore_crime.csv`](/data/baltimore_crime.csv). This data was originally available at [this URL](https://data.baltimorecity.gov/Public-Safety/BPD-Part-1-Victim-Based-Crime-Data/wsfq-mvij), but it has since been moved. Use a readr function to load the data.
+
 ```{r q1}
 
 ```
 
 2. Review the data and fix variable types. 
-    - Make sure you convert `CrimeCode`, `Description`, `Inside/Outside`, `Weapon`, and  `District` each to a factors, 
-    - You can change col_types in your `read_csv()` function and / or using `mutate()`.
+    - Make sure you convert `CrimeCode`, `Description`, `Inside/Outside`, `Weapon`, and  `District` each to factors, 
+        - You can change col_types in your `read_csv()` function and / or using `mutate()`.
     - Parse `CrimeDate` and `CrimeTime` into date and time (_or period_) objects using `lubridate` functions.
     - hint: There will be parse failure dialogue if you didn't declare `quiet = TRUE`. That's okay. 
 
@@ -62,22 +63,24 @@ knitr::opts_chunk$set(message = FALSE,
 4. Fix duplicate rows
     - Are there any duplicate rows? 
     - Remove them from the current data frame
+    
 ```{r q4}
 
 ```
 
 5. Fix different codings for variables
     - Find the unique levels for Inside_Outside.
-    - It appears there are two different coding systems in place. 
+        - It appears there are two different coding systems in place. 
     - Use a `forcats` function to update the data frame to use a single coding system with the values Inside, Outside, and `NA`.
-    - hint: there is more than one option here, but you can think about _renaming_ or _collapsing_ the levels
+    - hint: there is more than one option here, but it may help to think about _renaming_ or _collapsing_ the levels
 
 ```{r q5}
 
 ```
 
 6. Find the hour of each crime
-    - From the `CrimeDateTime` variable, create a new variable called `CrimeHour` with the extracted the hour the crime occurred. 
+    - From the `CrimeDateTime` variable, create a new variable called `CrimeHour` with the extracted hour that the crime occurred. 
+    
 ```{r q6}
 
 ```
@@ -97,7 +100,7 @@ knitr::opts_chunk$set(message = FALSE,
 
 ```
 
-9. Which days of the week has the most homicides in Baltimore? list all 7 labelled days in descending order. 
+9. Which days of the week has the most homicides in Baltimore? list all 7 labeled days in descending order. 
 ```{r q9}
 
 ```
