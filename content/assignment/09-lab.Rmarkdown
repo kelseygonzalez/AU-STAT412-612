@@ -39,7 +39,7 @@ gss_cat %>%
   count(marital)
 ```
 
-3. Plot a barplot of the distribution of `rincome`, ordering levels from by frequency
+3. Plot a barplot of the distribution of `rincome`, ordering levels by frequency
 ```{r}
 gss_cat %>% 
   mutate(rincome = fct_infreq(rincome)) %>%
@@ -48,11 +48,14 @@ gss_cat %>%
   coord_flip()
 ```
 
-4. You think "Not applicable", "Don't Know", "No answer", and "Refused" aren't very useful for your plot. Use `fct_other()` to collapse these into one factor level and *plot again*. Note: `fct_other()` is new! Read the documentation. 
+4. You think "Not applicable", "Don't know", "No answer", and "Refused" aren't very useful for your plot. Use `fct_other()` to collapse these into one factor level and *plot again*. Note: `fct_other()` is new! Read the documentation. 
 ```{r}
 gss_cat %>% 
   mutate(rincome = fct_infreq(rincome),
-         rincome = fct_other(rincome, drop = c("Not applicable", "Don't Know", "No answer", "Refused"))) %>%
+         rincome = fct_other(rincome, drop = c("Not applicable",
+                                               "Don't know",
+                                               "No answer", 
+                                               "Refused"))) %>%
   ggplot(aes(x = rincome)) +
   geom_bar() + 
   coord_flip()

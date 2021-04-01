@@ -79,7 +79,7 @@ knitr::opts_chunk$set(message = FALSE,
 ```
 
 6. Find the hour of each crime
-    - From the `CrimeDateTime` variable, create a new variable called `CrimeHour` with the extracted hour that the crime occurred. 
+    - From the `CrimeTime` variable, create a new variable called `CrimeHour` with the extracted hour that the crime occurred. 
     
 ```{r q6}
 
