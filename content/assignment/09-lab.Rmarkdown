@@ -61,15 +61,15 @@ gss_cat %>%
   coord_flip()
 ```
 
-5. Reorder the levels of the relig variable by the mean number of tv hours watched. Show the new factor order and then plot with a boxplot. 
+5. Reorder the levels of the relig variable by the mean number of tv hours watched. Show the new factor order and then plot relig by tvhours with a boxplot. 
 ```{r}
 gss_cat <- gss_cat %>% 
-  mutate(marital2 = fct_reorder(marital, tvhours, mean, na.rm = TRUE))
-levels(gss_cat$marital )
-levels(gss_cat$marital2)
+  mutate(relig2 = fct_reorder(relig, tvhours, mean, na.rm = TRUE))
+levels(gss_cat$relig )
+levels(gss_cat$relig2)
 
 gss_cat %>% 
-  ggplot(aes(x = marital2, y = tvhours )) +
+  ggplot(aes(x = relig2, y = tvhours )) +
   geom_boxplot() + 
   coord_flip()
 ```
