@@ -1,0 +1,56 @@
+---
+title: "Lab 10"
+date: "2021-04-08"
+due_date: "2021-04-09"
+due_time: "11:59 PM"
+menu:
+  assignment:
+    parent: Labs
+    weight: 10
+type: docs
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = FALSE, 
+                      warning    = FALSE,
+                      message    = FALSE,
+                      eval       = FALSE,
+                      fig.height = 3, 
+                      fig.width  = 6,
+                      fig.align  = "center")
+```
+
+1. Create a function that takes a variable as input and outputs a standardized version of that column.
+    - A standardized / normalized variable takes the datapoint (each row / observation) minus the mean of the variable divided by the standard deviation of the variable. In mathematical notation,  $Z = \frac{x - \mu}{ \sigma}$
+    - Build in tests and stops that makes sure the variable (1) has more than one observation (`length()`), and (2) is numeric.
+    - Build in a return statement
+```{r}
+standardize <- function(data) {
+  if(!is.numeric(data)){
+    stop('I am so sorry, but this function only works for numeric input!\n',
+         'You have provided an object of class: ', class(data))
+  } else if (length(data) < 1) {
+    stop("This provided variable needs more than one observation.")
+  }
+  # Calculate mean of data
+  mean_data <- mean(data)
+  # Calculate standard deviation of data
+  sd_data <- sd(data)
+  # Calculate standardized scores
+  stand_data <- (data - mean_data)/sd_data
+  return(stand_data)
+}
+```
+ 
+ 
+2. Load the gapminder data and run your function on `gapminder$lifeExp` and `gapminder$country`. Show the first six values of the output. 
+
+```{r}
+library(gapminder)
+standardize(gapminder$lifeExp) %>% head()
+standardize(gapminder$country) %>% head()
+standardize(as.numeric(c())) %>% head()
+
+```
+
