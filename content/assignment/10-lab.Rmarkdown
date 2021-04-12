@@ -25,6 +25,7 @@ knitr::opts_chunk$set(echo       = FALSE,
     - A standardized / normalized variable takes the datapoint (each row / observation) minus the mean of the variable divided by the standard deviation of the variable. In mathematical notation,  $Z = \frac{x - \mu}{ \sigma}$
     - Build in tests and stops that makes sure the variable (1) has more than one observation (`length()`), and (2) is numeric.
     - Build in a return statement
+
 ```{r}
 standardize <- function(data) {
   if(!is.numeric(data)){

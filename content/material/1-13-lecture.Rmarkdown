@@ -13,7 +13,6 @@ type: docs
 toc: true
 ---
 Learning Objectives:
-
 - Manipulate Vectors and Lists using Base R syntax.  
 - Apply techniques of iteration to reduce and simplify your code.
 

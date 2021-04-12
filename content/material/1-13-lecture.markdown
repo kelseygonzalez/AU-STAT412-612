@@ -13,9 +13,8 @@ type: docs
 toc: true
 ---
 Learning Objectives:
-
 - Manipulate Vectors and Lists using Base R syntax.  
-
+- Apply techniques of iteration to reduce and simplify your code.
 
 # Vectors
 R has Only Two Kinds of Vectors: **Atomic Vectors** and **Lists** 
@@ -780,7 +779,7 @@ flips
 ```
 
 ```
-## [1] 5
+## [1] 6
 ```
 
 # Mapping with purrr 

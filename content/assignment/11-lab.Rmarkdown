@@ -1,0 +1,188 @@
+---
+title: "Lab 11"
+date: "2021-04-15"
+due_date: "2021-04-16"
+due_time: "11:59 PM"
+menu:
+  assignment:
+    parent: Labs
+    weight: 11
+type: docs
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = FALSE, 
+                      warning    = FALSE,
+                      message    = FALSE,
+                      eval       = FALSE,
+                      fig.height = 3, 
+                      fig.width  = 6,
+                      fig.align  = "center")
+```
+```{r eval = TRUE, echo=FALSE}
+library(tidyverse)
+```
+
+## The questions on this lab are meant to be challenging. Do what you can, work in your groups, and try and solve the puzzles! You'll you many skills from throughout the semester. 
+
+
+1. Create the following vector:
+```{r  echo = TRUE, eval = TRUE}
+nintendo <- c(Yoshi = 10L,
+              Mario = 31L,
+              Luigi = 72L,
+              Peach = 11L,
+              Toad  = 38L)
+```
+
+- Extract Yoshi and Peach from the above vector using:
+    + Integer subsetting (with numbered indexes).
+    + Negative integer subsetting (removal of unwanted indexes).
+    + Logical subsetting (subsetting with TRUE/FALSE).
+    + Name subsetting.
+
+```{r}
+nintendo[c(1, 4)]
+nintendo[c(-2, -3, -5)]
+nintendo[c(TRUE, FALSE, FALSE, TRUE, FALSE)]
+nintendo[c("Yoshi", "Peach")]
+```
+
+2. Create the following list:
+
+```{r  echo = TRUE, eval = TRUE}
+wedding <- list(venue = "chick-fil-a",
+                guest = tidyr::tribble(~name,     ~meal, ~age,
+                                ##--------/------/-----
+                                "Yoshi",   "V",   29L,
+                                "Wario",   "C",   27L,
+                                "Bowser",  "V",   34L,
+                                "Luigi",   "C",   36L,
+                                "Toad",    "B",   34L), 
+                bride = "Peach",
+                groom = "Mario",
+                date = lubridate::ymd("1999/04/01"))
+```
+
+2a. Wario can't actually make it. Remove his row from the data frame.
+
+```{r}
+wedding$guest <- wedding$guest %>%
+  filter(name != "Wario") 
+  
+wedding$guest
+```
+
+2b. Extract the venue and the date from `wedding`. Try to use three different techniques to do this.
+
+```{r}
+wedding[c(1, 5)]
+wedding[c("venue", "date")]
+wedding$venue
+wedding$date
+```
+
+2c. `"chick-fil-a"` should be capitalized. Capitalize the first `"c"` and last `"a"`.
+
+```{r}
+wedding$venue <- wedding$venue %>%
+  str_replace(pattern = "^c", "C") %>% 
+  str_replace(pattern = "a$", "A") 
+  
+wedding$venue
+```
+
+
+3. Use a for loop to print out the following pattern:
+
+```{r echo=FALSE, eval = TRUE}
+x <- ""
+for (i in 1:5){
+  x <- paste(x, i)
+  cat(paste(x, "\n"))
+}
+```
+
+4. Write a function that accepts a numeric vector. This function should loop through the vector and print out any number that is divisible by 5 and if a number is greater than 150, use "break" to stop the loop. (hint: `?break`). Use the following as input of your function: 
+
+```{r eval = TRUE}
+div5 <- function(vec){
+  for (i in vec){
+    if (i > 150){
+      break
+    } else if (i %% 5 == 0){
+      print(i)
+    } else {
+      next
+    }
+  }
+}
+```
+
+```{r  echo = TRUE, eval = TRUE}
+div5(c(12,15,32,42,55,75,122,132,150,180,200))
+```
+
+5. Write a function to computer the factorial of a number. That is, the product of an integer and all the integers below it; e.g. $n! = n * (n-1) * (n-2) * .... * 2 * 1$
+$facto(5) = 5 * 4 * 3 * 2 * 1 = 120$
+
+```{r eval = TRUE}
+facto <- function(x){
+  if(length(x) > 1){
+    stop("must be only 1 number")
+  }
+  result <- 1
+  for (i in 1:x){
+    result <- result * i
+  }
+  return(result)
+}
+```
+
+```{r  echo = TRUE, eval = TRUE}
+facto(5)
+facto(7)
+facto(3)
+```
+
+
+
+## Challenge
+Combining Functions and loops with the Ice Cream Parlor
+Adapted from [hackerrank](https://www.hackerrank.com/challenges/icecream-parlor/problem): 
+Two friends like to pool their money and go to the ice cream parlor. They always
+choose two distinct flavors and they spend all of their money. Given a list of
+prices for the flavors of ice cream, select the two that will cost all of the
+money they have.
+
+Your icecreamParlor function should have the following parameter(s):  
+- m: the amount of money they have to spend
+- costs: a vector of the cost of each flavor of ice cream
+
+and returns:
+- a vector of length 2 which contains the the prices of the two flavors they buy, sorted ascending
+
+Use **any** tools in this class to solve this problem, from nested loops to data wrangling. 
+
+
+```{r echo = FALSE, eval = TRUE}
+icecreamParlor <- function(m, costs){
+  costs<-costs[costs<m]
+  costs2 <- costs
+  df_costs <- crossing(costs, costs2) %>% 
+    filter(costs != costs2) %>% 
+    mutate(total = costs + costs2) %>% 
+    filter(total == m, 
+           costs < costs2)
+  output <- glue::glue("{df_costs$costs} {df_costs$costs2}")
+  return(output)
+}
+```
+
+Example inputs and expected outputs you can test: 
+```{r echo = TRUE, eval = TRUE}
+icecreamParlor(m = 4, costs = c(1, 4, 5, 3, 2))
+icecreamParlor(m = 6, costs = c(2, 4, 5, 3, 6))
+icecreamParlor(m = 8, costs = c(9, 4, 5, 3, 2))
+```
