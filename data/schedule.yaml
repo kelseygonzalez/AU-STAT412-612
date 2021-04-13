@@ -239,16 +239,13 @@ lessons:
     reading: "2-13-reading"
     bg: 1
 
-  - title: "Homework 5: Functions & Flow"
+  - title: "<s>Homework 5: Functions & Flow</s> <b>Canceled!</b>"
     date: "April 18"
     homework: "05-hw"
     bg: 1
     bottomborder: True
 
-  - title: 'Cushion Week'
-    header: True      
-
-  - title: '<span class="content-title"> Week 14a: open office hours and group work time</span>'
+  - title: '<span class="content-title"> Week 14a: open office hours and optional group work time</span>'
     session: "Monday"
     date: "April 19–22"
     date_start: "April 19"
