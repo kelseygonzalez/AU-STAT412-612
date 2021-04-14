@@ -48,7 +48,7 @@ editor_options:
 6. **Exploratory Data Analysis and Statistical Analysis**: Use multiple slides to describe your analysis of the initial and/or adjusted hypotheses and the key results
 - Do not just include all your output from R as you will run out of room. 
 - Describe your EDA on key variables and relationships using numerical and graphical summaries. 
-- Show important graphs and numerical summaries from statistical analyses (if a 612 group)
+- Show important graphs and any numerical summaries from statistical analyses you could have performed
 - Use Slide Titles, Captions and/or bullets to provide your interpretations
 - If the analysis changed your hypotheses, explain the rationale for change 
 - State new hypotheses and any results.

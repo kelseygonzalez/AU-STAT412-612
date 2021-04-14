@@ -54,7 +54,7 @@ Your final report must include **all** of the following elements:
 
 - Do not just include all your output from R as you will run out of room. 
 - Describe your EDA on key variables and relationships using numerical and graphical summaries. 
-- Show important graphs and numerical summaries from statistical analyses (if a 612 group)
+- Show important graphs and any numerical summaries from statistical analyses you could (but are not required to) have performed
 - Use Captions and/or texts to provide your interpretations
 - If the analysis changed your hypotheses, explain the rationale for change 
 - State new hypotheses and any results.
