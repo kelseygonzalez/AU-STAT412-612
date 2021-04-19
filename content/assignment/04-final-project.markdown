@@ -23,9 +23,9 @@ editor_options:
 
 ## Presentation Document
 
-- Each group will prepare a document in R Markdown using a slide output format. 
-- Presentation documents will be knit to PDF for submission. 
-- You may also change the .Rmd output to another format such as PowerPoint for final formatting if desired. 
+- Each group will prepare a document in R Markdown or other powerpoint tools using a slide output format. 
+- Presentation documents will be submitted in PDF format. 
+- If you decide to use R for the slides,  you may also change the .Rmd output to another format such as PowerPoint for final formatting if desired. 
   + If you do so, submit those documents in original and PDF format as well as the original .Rmd file and its PDF
 - The presentation document must be consistent with the final report and include the following elements: 
 

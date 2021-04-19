@@ -71,6 +71,9 @@ wedding <- list(venue = "chick-fil-a",
 wedding$guest <- wedding$guest %>%
   filter(name != "Wario") 
   
+wedding 
+
+
 wedding$guest
 ```
 
