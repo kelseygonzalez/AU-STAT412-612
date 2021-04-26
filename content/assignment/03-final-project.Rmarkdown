@@ -79,14 +79,14 @@ Your final report must include **all** of the following elements:
 |Final Report.Title Page|1.|Correct Title Page Elements|
 |Final Report.Executive Summary|2.5|Complete Exec Summary of proper length|
 |Final Report.Introduction|4.|Complete Motivation, Data Description,|
-|Final Report.Introduction|1.|Concise Literature Review with sufficient sources|
+|Final Report.Introduction|1.5|Concise Literature Review with sufficient sources|
 |Final Report.Initial Hypotheses|1.|Clear hypotheses about relationships among variables|
 |Final Report.Data Preparation|3.|Clear discussion of Data Preparation Challenges and solutions|
 |Final Report.EDA and Statistical Analysis|10.|Logical application of appropriate EDA and Statistical methods with proper interpretations|
 |Final Report.Summary|2.|Concise and consistent statement of findings related to questions of interest|
 |Final Report.References|1.|References Relevant and properly formatted|
 |Final Report.Optional Appendixes|.|Concise|
-|**Total**|**25**||
+|**Total**|**30**||
 
 
 
