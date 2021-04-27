@@ -113,7 +113,7 @@ We will be operating in a distributed online classroom this semester. While much
 
 #### Use of Zoom Video Conference Capabilities
 
-We will use the Zoom video conference tool for all class meetings and office hours. To have full access to the capabilities, sign into Zoom before each class using your @american.edu email address (Not your @student.american.edu address).  
+We will use the Zoom video conference tool for all class meetings and office hours. To have full access to the capabilities, sign into Zoom before each class using your \@american.edu email address (Not your \@student.american.edu address).  
 
 Use the [Zoom Test Meeting Room](https://zoom.us/test) to test your connection.
 
@@ -159,9 +159,9 @@ You can find descriptions for all the assignments on the [assignments page](/ass
 ```{r assignments-grades, include=FALSE}
 assignments <- tribble(
   ~Points,   ~Assignment,
-  (10/11) * 11,    "Labs",
-  8 * 5,    "Assignments",
-  50,       "Final project"
+  (15/11) * 11,    "Labs",
+  9 * 5,    "Assignments",
+  40,       "Final project"
 ) %>%
   mutate(Percent = Points / sum(Points),
          Percent = scales::percent(Percent))

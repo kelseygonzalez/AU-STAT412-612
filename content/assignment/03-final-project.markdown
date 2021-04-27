@@ -29,6 +29,9 @@ Your report should be **well written**. Your goal should be to tell a story with
 
 Your report should be **reproducible** and **well-organized**. 
 
+No R code should be be included in the report, unless it is really cool R code or can help elucidate your process.
+
+
 ##  Elements of the Final Report
 
 Your final report must include **all** of the following elements:

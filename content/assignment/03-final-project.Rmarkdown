@@ -29,6 +29,9 @@ Your report should be **well written**. Your goal should be to tell a story with
 
 Your report should be **reproducible** and **well-organized**. 
 
+No R code should be be included in the report, unless it is really cool R code or can help elucidate your process.
+
+
 ##  Elements of the Final Report
 
 Your final report must include **all** of the following elements:
@@ -66,6 +69,7 @@ Your final report must include **all** of the following elements:
 
 7. **Appendix A: References**: 
 - List the references cited in your report. Use a standard format for references (such as APA or MLA)
+- Include references for software used. This is good scientific and open source practice. Use [http://citeas.org/](citeas.org) for help with referencing research software. [This](https://libguides.mit.edu/c.php?g=551454&p=3900280) is another good reference for citing research software. 
 
 8. **Appendix B  (Optional)**: 
 - Any additional R code you want to reference in the main body of the report. 
